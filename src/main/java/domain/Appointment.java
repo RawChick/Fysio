@@ -9,15 +9,19 @@ public class Appointment {
 
     private int appointmentNumber;
     private LocalDate appointmentDate;
+    private LocalTime appointmentStartTime;
+    private LocalTime appointmentStopTime;
     private Employee fysio;
     private Patient patient;
 
     private String fysioName;
     private String patientName;
 
-    public Appointment(int appointmentNumber, LocalDate appointmentDate, Employee fysio, Patient patient) {
+    public Appointment(int appointmentNumber, LocalDate appointmentDate, LocalTime startTime, LocalTime stopTime, Employee fysio, Patient patient) {
         setAppointmentNumber(appointmentNumber);
         setAppointmentDate(appointmentDate);
+        setAppointmentStartTime(startTime);
+        setAppointmentStopTime(stopTime);
         setFysio(fysio);
         setPatient(patient);
         setFysioName(fysio.getName());
@@ -54,6 +58,22 @@ public class Appointment {
 
     private void setAppointmentDate(LocalDate appointmentDate) {
         this.appointmentDate = appointmentDate;
+    }
+
+    public LocalTime getAppointmentStartTime() {
+        return appointmentStartTime;
+    }
+
+    private void setAppointmentStartTime(LocalTime appointmentStartTime) {
+        this.appointmentStartTime = appointmentStartTime;
+    }
+
+    public LocalTime getAppointmentStopTime() {
+        return appointmentStopTime;
+    }
+
+    private void setAppointmentStopTime(LocalTime appointmentStopTime) {
+        this.appointmentStopTime = appointmentStopTime;
     }
 
     public Employee getFysio() {

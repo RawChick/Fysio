@@ -1,143 +1,190 @@
 package presentation;
 
+import businesslogic.AppointmentManager;
 import businesslogic.EmployeeManager;
+import domain.Appointment;
 import domain.Employee;
 import domain.Workday;
 import javafx.application.Application;
-import javafx.geometry.Insets;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class EmployeeGUI extends Application {
+    private TableView<Appointment> table;
+    private EmployeeManager employeeManager;
+    private AppointmentManager appointmentManager;
 
-    private TabPane pane = new TabPane();
-    private Tab appointmentTab = new Tab("Afspraak");
-    private Tab customerTab = new Tab("Patient");
-    private Tab employeeTab = new Tab("Medewerker");
-    private Tab manageEmployeeTab = new Tab("Overzicht Werknemers");
-    private AnchorPane anchorPane = new AnchorPane();
+    private HBox hBox = new HBox();
+    private VBox vBox = new VBox();
+    private TabPane pane;
+    private Tab appointmentTab;
+    private Tab customerTab;
+    private Tab employeeTab;
+    private Tab manageEmployeeTab;
     private BorderPane borderPane = new BorderPane();
-    private HBox hBox = new HBox(20);
-    private DatePicker date = new DatePicker();
-    private TextField text = new TextField();
-    private Label lbl_medewerkerNr = new Label("Medewerkernummer");
-    private Button button = new Button("Zoek");
-    private HBox hBox1 = new HBox(20);
-    private ScrollPane scrollPane = new ScrollPane();
-    private AnchorPane anchorPane1 = new AnchorPane();
-    private VBox vBox = new VBox(20);
-    private Label lbl_employeeName = new Label("Naam");
-    private Label lbl_employeePhone = new Label("Telefoonnummer");
-    private Label lbl_employeeEmail = new Label("Email");
-    private Line line = new Line(-100, 0, 50, 0);
-    private Label lbl_werktijden = new Label("Werktijden");
-    private Label lbl_employeeDatum = new Label();
-    private Label lbl_employeeStartTijd = new Label();
-    private Label lbl_employeeStopTijd = new Label();
-    private Label label8 = new Label();
-    private Label label9 = new Label();
-    private TableView<Employee> tableView = new TableView<>();
-    private EmployeeManager manager = new EmployeeManager();
 
+    ComboBox<String> cb_Employee;
+    DatePicker dp_AppointmentDate;
+    Label lbl_EmployeeNr;
+    Label lbl_EmployeeName;
+    Label lbl_EmployeePhone;
+    Label lbl_workDays;
+    Label lbl_EmployeeDate;
+    Label lbl_EmployeeStartTime;
+    Label lbl_EmployeeStopTime;
+    Label lbl_EmployeeEmail;
+
+
+    String DATE_PATTERN = "dd:MM:yyyy";
+    String TIME_PATTERN = "HH:mm";
+    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DATE_PATTERN);
+    DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern(TIME_PATTERN);
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage stage) throws Exception {
+        employeeManager = new EmployeeManager();
+        appointmentManager = new AppointmentManager();
+        table = new TableView<>();
 
-        tableView.setEditable(true);
+        stage.setTitle("Fysio App");
 
+        table.setEditable(true);
+        Callback<TableColumn, TableCell> cellFactory =
+                p -> new EditingCell();
 
-        tableView.setItems(manager.getData());
+        //region Creating tabs
+        pane = new TabPane();
+        appointmentTab = new Tab("Afspraak");
+        customerTab = new Tab("Patient");
+        employeeTab = new Tab("Medewerker");
+        manageEmployeeTab = new Tab("Overzicht Werknemers");
 
-        employeeTab.setContent(anchorPane);
-        anchorPane.getChildren().addAll(borderPane);
+        pane.getSelectionModel().select(employeeTab);
+
+        //adding action listeners
+        pane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            switch (newValue.getText()) {
+                case "Afspraak":
+                    AppointmentGUI guiAppointment = new AppointmentGUI();
+                    try {
+                        guiAppointment.start(stage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "Medewerker":
+                    break;
+                case "Patient":
+                    PatientGUI guiCustomer = new PatientGUI();
+                    try {
+                        guiCustomer.start(stage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "Overzicht Werknemers":
+                    ManageEmployeeGUI guiManageEmploye = new ManageEmployeeGUI();
+                    try {
+                        guiManageEmploye.start(stage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        });
+        //endregion
+
+        //region Creating columns for table
+        TableColumn numberCol = new TableColumn("Nummer");
+        numberCol.setCellValueFactory(
+                new PropertyValueFactory<Appointment, Integer>("appointmentNumber"));
+        TableColumn fysioCol = new TableColumn("Patient");
+        fysioCol.setCellValueFactory(
+                new PropertyValueFactory<Appointment, String>("patientName"));
+        //endregion
+
+        //region Creating buttons
+        dp_AppointmentDate = new DatePicker();
+        dp_AppointmentDate.setPromptText(dateFormat.format(LocalDate.now()));
+        cb_Employee = new ComboBox<>(employeeManager.getEmployeeNumbers());
+        lbl_EmployeeNr = new Label("Medewerkernummer");
+        lbl_EmployeeName = new Label("Naam");
+        lbl_EmployeePhone = new Label("Telefoonnummer");
+        lbl_workDays = new Label("Werktijden");
+        lbl_EmployeeDate = new Label();
+        lbl_EmployeeStartTime = new Label();
+        lbl_EmployeeStopTime = new Label();
+        lbl_EmployeeEmail = new Label("Email");
+        Line line = new Line(-100, 0, 50, 0);
+
+        Button btn_Search = new Button("Zoek");
+        btn_Search.setOnAction(e -> searchForEmployee());
+        //endregion
+
+        table.getColumns().addAll(numberCol, fysioCol);
+        hBox.getChildren().addAll(cb_Employee, dp_AppointmentDate);
+        vBox.getChildren().addAll(lbl_EmployeeNr, lbl_EmployeeName, lbl_EmployeePhone, lbl_EmployeeEmail, line, lbl_workDays, lbl_EmployeeDate, lbl_EmployeeStartTime, lbl_EmployeeStopTime);
+        vBox.setSpacing(2);
+
         borderPane.setTop(hBox);
-        hBox.getChildren().addAll(date, text, lbl_medewerkerNr, button);
-        borderPane.setCenter(hBox1);
-        hBox1.getChildren().addAll(scrollPane, tableView);
-        scrollPane.setContent(anchorPane1);
-        anchorPane1.getChildren().addAll(vBox);
-        vBox.getChildren().addAll(lbl_employeeName, lbl_employeePhone, lbl_employeeEmail, line, lbl_werktijden, lbl_employeeDatum, lbl_employeeStartTijd, lbl_employeeStopTijd, label8, label9);
-        hBox1.setPadding(new Insets(30, 10, 20, 10));
-        line.setVisible(false);
-        date.setPromptText("Kies een datum");
-        borderPane.setPadding(new Insets(20, 20, 20, 20));
+        borderPane.setLeft(vBox);
+        borderPane.setCenter(table);
+        borderPane.setBottom(btn_Search);
 
         pane.getTabs().addAll(appointmentTab, employeeTab, customerTab, manageEmployeeTab);
+        employeeTab.setContent(borderPane);
         pane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         Scene scene = new Scene(pane);
         scene.getStylesheets().addAll(AppointmentGUI.class.getResource("/Light.css").toExternalForm());
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        pane.getSelectionModel().select(employeeTab);
-
-        pane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.getText().equals("Afspraak")) {
-                AppointmentGUI gui = new AppointmentGUI();
-                try {
-                    gui.start(primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            if (newValue.getText().equals("Patient")) {
-                PatientGUI gui = new PatientGUI();
-                try {
-                    gui.start(primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (newValue.getText().equals("Overzicht Werknemers")) {
-                ManageEmployeeGUI gui = new ManageEmployeeGUI();
-                try {
-                    gui.start(primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        button.setOnAction(e -> search());
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void search() {
-        LocalDate localdate = date.getValue();
-        String employeeNr = text.getText();
-        Employee tempEmployee = manager.searchEmployeeWithNumber(employeeNr);
-        String DATE_PATTERN = "dd.MM.yyyy";
-        String TIME_PATTERN = "HH:mm";
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DATE_PATTERN);
-        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern(TIME_PATTERN);
+
+    private void searchForEmployee() {
+        LocalDate localdate = dp_AppointmentDate.getValue();
+        String employeeNr = cb_Employee.getValue();
+        Employee tempEmployee = employeeManager.searchEmployeeWithNumber(employeeNr);
 
         if (tempEmployee == null) {
             AlertBox.display("Foutmelding", "Geen werknemer gevonden met nummer: " + employeeNr);
+        } else if (localdate == null) {
+            AlertBox.display("Foutmelding", "U heeft geen datum geselecteert");
         } else {
-            lbl_employeeName.setText(tempEmployee.getName());
-            lbl_employeePhone.setText((tempEmployee.getPhone()));
-            lbl_employeeEmail.setText(tempEmployee.getEmail());
-            lbl_werktijden.setText("Werktijden");
-            Workday tempWorkday = manager.searchWorkdayWithDate(employeeNr, localdate);
-
+            Workday tempWorkday = employeeManager.searchWorkdayWithDate(employeeNr, localdate);
             if (tempWorkday == null) {
                 AlertBox.display("Foutmelding", "Medewerker: " + tempEmployee.getName() + " was niet werkzaam op: " + dateFormat.format(localdate));
-                lbl_employeeName.setText("");
-                lbl_employeePhone.setText("");
-                lbl_employeeEmail.setText("");
-                lbl_employeeDatum.setText("");
-                lbl_employeeStartTijd.setText("");
-                lbl_employeeStopTijd.setText("");
+                lbl_EmployeeName.setText("");
+                lbl_EmployeePhone.setText("");
+                lbl_EmployeeEmail.setText("");
+                lbl_EmployeeDate.setText("");
+                lbl_EmployeeStartTime.setText("");
+                lbl_EmployeeStopTime.setText("");
             } else {
-                lbl_employeeDatum.setText(dateFormat.format(tempWorkday.getWorkDate()));
-                lbl_employeeStartTijd.setText(timeFormat.format(tempWorkday.getStartTime()));
-                lbl_employeeStopTijd.setText(timeFormat.format(tempWorkday.getStopTime()));
+                lbl_EmployeeName.setText(tempEmployee.getName());
+                lbl_EmployeePhone.setText((tempEmployee.getPhone()));
+                lbl_EmployeeEmail.setText(tempEmployee.getEmail());
+                lbl_workDays.setText("Werktijden");
+                lbl_EmployeeDate.setText(dateFormat.format(tempWorkday.getWorkDate()));
+                lbl_EmployeeStartTime.setText(timeFormat.format(tempWorkday.getStartTime()));
+                lbl_EmployeeStopTime.setText(timeFormat.format(tempWorkday.getStopTime()));
+
+                table.setItems(appointmentManager.searchWithWorkDateAndEmployeeName(localdate, tempEmployee.getName()));
             }
         }
     }

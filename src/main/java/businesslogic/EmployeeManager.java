@@ -30,6 +30,16 @@ public class EmployeeManager {
         return data;
     }
 
+    public ObservableList<String> getEmployeeNumbers() {
+        ObservableList<String> names = FXCollections.observableArrayList();
+
+        for (Employee e : data) {
+            names.add(e.getEmployeeNr());
+        }
+
+        return names;
+    }
+
     public boolean addEmployee(Employee employee) {
         Employee oldEmployee = searchEmployeeWithNumber(employee.getEmployeeNr());
         boolean returnBoolean = false;
@@ -84,5 +94,4 @@ public class EmployeeManager {
 
         return tempWorkday;
     }
-
 }

@@ -4,6 +4,7 @@ import domain.Appointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 /**
@@ -19,10 +20,8 @@ public class AppointmentManager {
         patientManager = new PatientManager();
 
         data = FXCollections.observableArrayList(
-                new Appointment(1, LocalDate.now(), employeeManager.searchEmployeeWithNumber("1"), patientManager.searchWithBSN(2))
+                new Appointment(1, LocalDate.now(), LocalTime.now(), LocalTime.now(), employeeManager.searchEmployeeWithNumber("1"), patientManager.searchWithBSN(2))
         );
-
-
     }
 
     public ObservableList<Appointment> getData() {
@@ -66,9 +65,20 @@ public class AppointmentManager {
     }
 
     public ObservableList<Appointment> searchWithWorkDate(LocalDate workDate) {
-        ObservableList<Appointment> tempAppointments = null;
+        ObservableList<Appointment> tempAppointments  = FXCollections.observableArrayList();
         for (Appointment a : data) {
             if (a.getAppointmentDate().equals(workDate)) {
+                tempAppointments.add(a);
+            }
+        }
+        return tempAppointments;
+    }
+
+    public ObservableList<Appointment> searchWithWorkDateAndEmployeeName(LocalDate workDate, String employeeName)
+    {
+        ObservableList<Appointment> tempAppointments = FXCollections.observableArrayList();
+        for (Appointment a : data) {
+            if (a.getAppointmentDate().equals(workDate) && a.getFysioName().equals(employeeName)) {
                 tempAppointments.add(a);
             }
         }

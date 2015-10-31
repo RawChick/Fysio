@@ -38,12 +38,7 @@ public class ManageEmployeeGUI extends Application {
         manager = new EmployeeManager();
         validate = new ValidateInput();
 
-        stage.setTitle("Beheer Werknemers");
-
-
-        final Label label = new Label("Werknemers:");
-        label.setFont(new Font("Arial", 20));
-
+        stage.setTitle("Fysio App");
 
         table.setEditable(true);
         Callback<TableColumn, TableCell> cellFactory =
@@ -496,7 +491,7 @@ public class ManageEmployeeGUI extends Application {
 
         vBox.setSpacing(5);
         vBox.setPadding(new Insets(10, 10, 10, 10));
-        vBox.getChildren().addAll(label, table, hBox);
+        vBox.getChildren().addAll(table, hBox);
 
         pane.getTabs().addAll(appointmentTab, employeeTab, customerTab, manageEmployeeTab);
         manageEmployeeTab.setContent(vBox);

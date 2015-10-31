@@ -1,6 +1,7 @@
 package domain;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class Employee {
     public Employee(String nr, String name, String function, String bsn, String city, String address, String dateOfBirth, String zipCode, String phone, String email) {
         if (name.equals("Mark van Turnhout") || name.equals("Noureddine Azzagari")) {
             this.function = new SimpleStringProperty("Baas!");
-        }else {
+        } else {
             this.function = new SimpleStringProperty(function);
         }
         this.employeeNr = new SimpleStringProperty(nr);
@@ -54,8 +55,7 @@ public class Employee {
 
     public boolean addWorkday(Workday workday) {
         boolean tempBool = false;
-        if (workday != null)
-        {
+        if (workday != null) {
             workdays.add(workday);
             tempBool = true;
         }
@@ -182,6 +182,19 @@ public class Employee {
     public void setEmail(String email) {
         this.email.set(email);
     }
+
+    public ArrayList<Workday> getWorkdays() {
+        return workdays;
+    }
+
+    public void setWorkdays(ArrayList<Workday> workdays) {
+        this.workdays = workdays;
+    }
     //endregion
+
+    public String ToString() {
+        return String.valueOf(name);
+    }
+
 }
 

@@ -3,10 +3,8 @@ package presentation;
 import businesslogic.AppointmentManager;
 import domain.*;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -14,37 +12,77 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
+import javafx.util.Callback;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class AppointmentGUI extends Application {
+    private TableView<Appointment> table;
+    private AppointmentManager appointmentManager;
 
-    //appointment
-    private TabPane pane = new TabPane();
-    private Tab appointmentTab = new Tab("Afspraak");
-    private Tab employeeTab = new Tab("Medewerker");
-    private Tab customerTab = new Tab("Patient");
-    private Tab manageEmployeeTab = new Tab("Overzicht Werknemers");
-    private AnchorPane anchorPane = new AnchorPane();
     private HBox hBox = new HBox(20);
-    private VBox vBox = new VBox(20);
-    private DatePicker datePicker = new DatePicker();
-    private VBox box = new VBox(20);
-    private Button button = new Button("Nieuwe Afspraak");
-    private Button changeAppointment = new Button("Afspraak wijzigen");
-    private Button removeAppointment = new Button("Afspraak verwijderen");
-    private AppointmentManager manager = new AppointmentManager();
-    private TableView<Appointment> appointmentTableView = new TableView<>();
-    private TableView<Appointment> appointmentsTodayTable = new TableView<>();
+    private TabPane pane;
+    private Tab appointmentTab;
+    private Tab employeeTab;
+    private Tab patientTab;
+    private Tab manageEmployeeTab;
+    private BorderPane borderPane = new BorderPane();
+
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage stage) throws Exception {
+        appointmentManager = new AppointmentManager();
+        table = new TableView<>();
+
+        stage.setTitle("Fysio App");
+
+        table.setEditable(true);
+        Callback<TableColumn, TableCell> cellFactory =
+                p -> new EditingCell();
+
+        //region Creating tabs
+        pane = new TabPane();
+        appointmentTab = new Tab("Afspraak");
+        employeeTab = new Tab("Medewerker");
+        patientTab = new Tab("Patient");
+        manageEmployeeTab = new Tab("Overzicht Werknemers");
+
         pane.getSelectionModel().select(appointmentTab);
 
-        appointmentTableView.setEditable(true);
-        appointmentsTodayTable.setEditable(true);
+        //adding action listeners
+        pane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            switch (newValue.getText()) {
+                case "Afspraak":
+                    break;
+                case "Medewerker":
+                    EmployeeGUI guiEmployee = new EmployeeGUI();
+                    try {
+                        guiEmployee.start(stage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "Patient":
+                    PatientGUI guiCustomer = new PatientGUI();
+                    try {
+                        guiCustomer.start(stage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "Overzicht Werknemers":
+                    ManageEmployeeGUI guiManageEmploye = new ManageEmployeeGUI();
+                    try {
+                        guiManageEmploye.start(stage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        });
+        //endregion
 
+        //region Creating columns for table
         TableColumn numberCol = new TableColumn("Nummer");
         numberCol.setCellValueFactory(
                 new PropertyValueFactory<Appointment, Integer>("appointmentNumber"));
@@ -57,58 +95,27 @@ public class AppointmentGUI extends Application {
         TableColumn patientCol = new TableColumn("Patient");
         patientCol.setCellValueFactory(
                 new PropertyValueFactory<Appointment, String>("patientName"));
+        //endregion
 
-
-        FilteredList<Appointment> filteredData = new FilteredList<>(manager.getData());
+        //region Refreshing of the list
+        FilteredList<Appointment> filteredData = new FilteredList<>(appointmentManager.getData());
         SortedList<Appointment> sortedData = new SortedList<>(filteredData);
-        sortedData.comparatorProperty().bind(appointmentTableView.comparatorProperty());
-        appointmentTableView.setItems(sortedData);
-        appointmentTableView.getColumns().addAll(numberCol, datumCol, fysioCol, patientCol);
+        sortedData.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedData);
+        //endregion
 
-        pane.getTabs().addAll(appointmentTab, employeeTab, customerTab, manageEmployeeTab);
-        appointmentTab.setContent(anchorPane);
-        anchorPane.getChildren().addAll(hBox);
-        hBox.getChildren().addAll(vBox, box);
-        box.getChildren().addAll(button, changeAppointment);
-        vBox.getChildren().addAll(datePicker, appointmentTableView, removeAppointment);
-        pane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-        hBox.setPadding(new Insets(20, 20, 20, 20));
+        //region Creating buttons
+        Button btn_NewAppointment = new Button("Nieuwe Afspraak");
+        btn_NewAppointment.setOnAction(e -> {});
 
-        Scene scene = new Scene(pane);
-        scene.getStylesheets().addAll(AppointmentGUI.class.getResource("/Light.css").toExternalForm());
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        Button btn_ChangeAppointment = new Button("Afspraak wijzigen");
+        btn_ChangeAppointment.setOnAction(e -> {});
 
-        //adding action listeners
-        pane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.getText().equals("Medewerker")){
-                EmployeeGUI gui = new EmployeeGUI();
-                try {
-                    gui.start(primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            if (newValue.getText().equals("Patient")){
-                PatientGUI gui = new PatientGUI();
-                try {
-                    gui.start(primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+        Button btn_RemoveAppointment = new Button("Afspraak verwijderen");
+        btn_RemoveAppointment.setOnAction(e -> {});
 
-            if (newValue.getText().equals("Overzicht Werknemers")){
-               ManageEmployeeGUI gui = new ManageEmployeeGUI();
-                try {
-                    gui.start(primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+        DatePicker dp_AppointmentDate = new DatePicker();
+        dp_AppointmentDate.valueProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(appointment -> {
                 // If filter text is empty, display all appointments.
                 if (newValue == null) {
@@ -121,29 +128,26 @@ public class AppointmentGUI extends Application {
                 return false;
             });
         });
-        changeAppointment.setOnAction(e -> changeAppointment());
-        removeAppointment.setOnAction(e -> removeAppointment());
-        button.setOnAction(e -> newAppointment());
-    }
-    public void changeAppointment(){
-
-
-    }
-    public void removeAppointment(){
-
-    }
-    public void newAppointment() {
-
-    }
-    public void searchByDate(LocalDate workDate){
-        ObservableList<Appointment> appointmentList = manager.searchWithWorkDate(workDate);
-        String DATE_PATTERN = "dd.MM.yyyy";
+        String DATE_PATTERN = "dd:MM:yyyy";
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DATE_PATTERN);
+        dp_AppointmentDate.setPromptText(dateFormat.format(LocalDate.now()));
+        //endregion
 
-        if (appointmentList == null) {
-            AlertBox.display("Foutmelding", "Geen afspraken op: " + dateFormat.format(workDate));
-        } else {
-            appointmentTableView.setItems(appointmentList);
-        }
+        table.getColumns().addAll(numberCol, datumCol, fysioCol, patientCol);
+        hBox.getChildren().addAll(dp_AppointmentDate, table, btn_NewAppointment, btn_ChangeAppointment, btn_RemoveAppointment);
+        hBox.setSpacing(3);
+
+        borderPane.setTop(dp_AppointmentDate);
+        borderPane.setCenter(table);
+        borderPane.setBottom(hBox);
+
+        pane.getTabs().addAll(appointmentTab, employeeTab, patientTab, manageEmployeeTab);
+        appointmentTab.setContent(borderPane);
+        pane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+
+        Scene scene = new Scene(pane);
+        scene.getStylesheets().addAll(AppointmentGUI.class.getResource("/Light.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 }

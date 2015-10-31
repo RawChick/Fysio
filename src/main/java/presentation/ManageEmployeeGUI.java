@@ -1,13 +1,10 @@
 package presentation;
 
 import businesslogic.EmployeeManager;
-import businesslogic.ManageEmployeeManager;
 import domain.Employee;
-import domain.ManageEmployee;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -23,8 +20,8 @@ import javafx.util.Callback;
  */
 public class ManageEmployeeGUI extends Application {
 
-    private TableView<ManageEmployee> table;
-    private ManageEmployeeManager manager;
+    private TableView<Employee> table;
+    private EmployeeManager manager;
     private ValidateInput validate;
 
     private final HBox hBox = new HBox();
@@ -38,7 +35,7 @@ public class ManageEmployeeGUI extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         table = new TableView<>();
-        manager = new ManageEmployeeManager();
+        manager = new EmployeeManager();
         validate = new ValidateInput();
 
         stage.setTitle("Beheer Werknemers");
@@ -81,7 +78,7 @@ public class ManageEmployeeGUI extends Application {
                     }
                     break;
                 case "Patient":
-                    CustomerGUI guiCustomer = new CustomerGUI();
+                    PatientGUI guiCustomer = new PatientGUI();
                     try {
                         guiCustomer.start(stage);
                     } catch (Exception e) {
@@ -98,15 +95,15 @@ public class ManageEmployeeGUI extends Application {
         TableColumn employeeNrCol = new TableColumn("Nummer");
         employeeNrCol.setMinWidth(100);
         employeeNrCol.setCellValueFactory(
-                new PropertyValueFactory<ManageEmployee, String>("employeeNr"));
+                new PropertyValueFactory<Employee, String>("employeeNr"));
         employeeNrCol.setCellFactory(cellFactory);
         
         employeeNrCol.setOnEditCommit(
-                new EventHandler<CellEditEvent<ManageEmployee, String>>() {
+                new EventHandler<CellEditEvent<Employee, String>>() {
                     @Override
-                    public void handle(CellEditEvent<ManageEmployee, String> t) {
+                    public void handle(CellEditEvent<Employee, String> t) {
                         if (validate.validateNumber(t.getNewValue())) {
-                            ManageEmployee tempEmployee = manager.searchWithNumber(t.getNewValue());
+                            Employee tempEmployee = manager.searchEmployeeWithNumber(t.getNewValue());
 
                             if (tempEmployee == null) {
                                 t.getTableView().getItems().get(
@@ -133,12 +130,12 @@ public class ManageEmployeeGUI extends Application {
         TableColumn nameCol = new TableColumn("Naam");
         nameCol.setMinWidth(100);
         nameCol.setCellValueFactory(
-                new PropertyValueFactory<ManageEmployee, String>("name"));
+                new PropertyValueFactory<Employee, String>("name"));
         nameCol.setCellFactory(cellFactory);
         nameCol.setOnEditCommit(
-                new EventHandler<CellEditEvent<ManageEmployee, String>>() {
+                new EventHandler<CellEditEvent<Employee, String>>() {
                     @Override
-                    public void handle(CellEditEvent<ManageEmployee, String> t) {
+                    public void handle(CellEditEvent<Employee, String> t) {
                         if (validate.validateName(t.getNewValue())) {
                             t.getTableView().getItems().get(
                                     t.getTablePosition().getRow()).setName(t.getNewValue());
@@ -158,12 +155,12 @@ public class ManageEmployeeGUI extends Application {
         TableColumn functionCol = new TableColumn("Function");
         functionCol.setMinWidth(200);
         functionCol.setCellValueFactory(
-                new PropertyValueFactory<ManageEmployee, String>("function"));
+                new PropertyValueFactory<Employee, String>("function"));
         functionCol.setCellFactory(cellFactory);
         functionCol.setOnEditCommit(
-                new EventHandler<CellEditEvent<ManageEmployee, String>>() {
+                new EventHandler<CellEditEvent<Employee, String>>() {
                     @Override
-                    public void handle(CellEditEvent<ManageEmployee, String> t) {
+                    public void handle(CellEditEvent<Employee, String> t) {
                         if (validate.validateName(t.getNewValue())) {
                             t.getTableView().getItems().get(
                                     t.getTablePosition().getRow()).setFunction(t.getNewValue());
@@ -183,12 +180,12 @@ public class ManageEmployeeGUI extends Application {
         TableColumn bsnCol = new TableColumn("Bsn");
         bsnCol.setMinWidth(200);
         bsnCol.setCellValueFactory(
-                new PropertyValueFactory<ManageEmployee, String>("bsn"));
+                new PropertyValueFactory<Employee, String>("bsn"));
         bsnCol.setCellFactory(cellFactory);
         bsnCol.setOnEditCommit(
-                new EventHandler<CellEditEvent<ManageEmployee, String>>() {
+                new EventHandler<CellEditEvent<Employee, String>>() {
                     @Override
-                    public void handle(CellEditEvent<ManageEmployee, String> t) {
+                    public void handle(CellEditEvent<Employee, String> t) {
                         if (validate.validateBSN(t.getNewValue())) {
                             t.getTableView().getItems().get(
                                     t.getTablePosition().getRow()).setBsn(t.getNewValue());
@@ -208,12 +205,12 @@ public class ManageEmployeeGUI extends Application {
         TableColumn cityCol = new TableColumn("Stad");
         cityCol.setMinWidth(200);
         cityCol.setCellValueFactory(
-                new PropertyValueFactory<ManageEmployee, String>("city"));
+                new PropertyValueFactory<Employee, String>("city"));
         cityCol.setCellFactory(cellFactory);
         cityCol.setOnEditCommit(
-                new EventHandler<CellEditEvent<ManageEmployee, String>>() {
+                new EventHandler<CellEditEvent<Employee, String>>() {
                     @Override
-                    public void handle(CellEditEvent<ManageEmployee, String> t) {
+                    public void handle(CellEditEvent<Employee, String> t) {
                         if (validate.validateName(t.getNewValue())) {
                             t.getTableView().getItems().get(
                                     t.getTablePosition().getRow()).setCity(t.getNewValue());
@@ -233,12 +230,12 @@ public class ManageEmployeeGUI extends Application {
         TableColumn addressCol = new TableColumn("Adres");
         addressCol.setMinWidth(200);
         addressCol.setCellValueFactory(
-                new PropertyValueFactory<ManageEmployee, String>("address"));
+                new PropertyValueFactory<Employee, String>("address"));
         addressCol.setCellFactory(cellFactory);
         addressCol.setOnEditCommit(
-                new EventHandler<CellEditEvent<ManageEmployee, String>>() {
+                new EventHandler<CellEditEvent<Employee, String>>() {
                     @Override
-                    public void handle(CellEditEvent<ManageEmployee, String> t) {
+                    public void handle(CellEditEvent<Employee, String> t) {
                         t.getTableView().getItems().get(
                                 t.getTablePosition().getRow()).setAddress(t.getNewValue());
                         table.getColumns().get(0).setVisible(false);
@@ -250,12 +247,12 @@ public class ManageEmployeeGUI extends Application {
         TableColumn dateOfBirthCol = new TableColumn("Geboortedatum");
         dateOfBirthCol.setMinWidth(200);
         dateOfBirthCol.setCellValueFactory(
-                new PropertyValueFactory<ManageEmployee, String>("dateOfBirth"));
+                new PropertyValueFactory<Employee, String>("dateOfBirth"));
         dateOfBirthCol.setCellFactory(cellFactory);
         dateOfBirthCol.setOnEditCommit(
-                new EventHandler<CellEditEvent<ManageEmployee, String>>() {
+                new EventHandler<CellEditEvent<Employee, String>>() {
                     @Override
-                    public void handle(CellEditEvent<ManageEmployee, String> t) {
+                    public void handle(CellEditEvent<Employee, String> t) {
                         if (validate.validateDateOfBirth(t.getNewValue())) {
                             t.getTableView().getItems().get(
                                     t.getTablePosition().getRow()).setDateOfBirth(t.getNewValue());
@@ -275,12 +272,12 @@ public class ManageEmployeeGUI extends Application {
         TableColumn zipCodeCol = new TableColumn("Postcode");
         zipCodeCol.setMinWidth(200);
         zipCodeCol.setCellValueFactory(
-                new PropertyValueFactory<ManageEmployee, String>("zipCode"));
+                new PropertyValueFactory<Employee, String>("zipCode"));
         zipCodeCol.setCellFactory(cellFactory);
         zipCodeCol.setOnEditCommit(
-                new EventHandler<CellEditEvent<ManageEmployee, String>>() {
+                new EventHandler<CellEditEvent<Employee, String>>() {
                     @Override
-                    public void handle(CellEditEvent<ManageEmployee, String> t) {
+                    public void handle(CellEditEvent<Employee, String> t) {
                         if (validate.validateZipCode(t.getNewValue())) {
                             t.getTableView().getItems().get(
                                     t.getTablePosition().getRow()).setZipCode(t.getNewValue());
@@ -300,12 +297,12 @@ public class ManageEmployeeGUI extends Application {
         TableColumn phoneCol = new TableColumn("Telefoonnummer");
         phoneCol.setMinWidth(200);
         phoneCol.setCellValueFactory(
-                new PropertyValueFactory<ManageEmployee, String>("phone"));
+                new PropertyValueFactory<Employee, String>("phone"));
         phoneCol.setCellFactory(cellFactory);
         phoneCol.setOnEditCommit(
-                new EventHandler<CellEditEvent<ManageEmployee, String>>() {
+                new EventHandler<CellEditEvent<Employee, String>>() {
                     @Override
-                    public void handle(CellEditEvent<ManageEmployee, String> t) {
+                    public void handle(CellEditEvent<Employee, String> t) {
                         if (validate.validateNumber(t.getNewValue())) {
                             t.getTableView().getItems().get(
                                     t.getTablePosition().getRow()).setPhone(t.getNewValue());
@@ -325,12 +322,12 @@ public class ManageEmployeeGUI extends Application {
         TableColumn emailCol = new TableColumn("Email");
         emailCol.setMinWidth(200);
         emailCol.setCellValueFactory(
-                new PropertyValueFactory<ManageEmployee, String>("email"));
+                new PropertyValueFactory<Employee, String>("email"));
         emailCol.setCellFactory(cellFactory);
         emailCol.setOnEditCommit(
-                new EventHandler<CellEditEvent<ManageEmployee, String>>() {
+                new EventHandler<CellEditEvent<Employee, String>>() {
                     @Override
-                    public void handle(CellEditEvent<ManageEmployee, String> t) {
+                    public void handle(CellEditEvent<Employee, String> t) {
                         t.getTableView().getItems().get(
                                 t.getTablePosition().getRow()).setEmail(t.getNewValue());
                         table.getColumns().get(0).setVisible(false);
@@ -385,7 +382,7 @@ public class ManageEmployeeGUI extends Application {
         //region Creating buttons
         final Button deleteButton = new Button("Delete");
         deleteButton.setOnAction(e -> {
-                    ManageEmployee tempEmployee = table.getSelectionModel().getSelectedItem();
+                    Employee tempEmployee = table.getSelectionModel().getSelectedItem();
 
                     if (ConfirmBox.display("Bevestiging", "Weet u zeker dat u " + tempEmployee.getName() + " wilt verwijderen?")) {
                         if (tempEmployee.getName().equals("Mark van Turnhout")) {
@@ -403,7 +400,7 @@ public class ManageEmployeeGUI extends Application {
 
         final Button addButton = new Button("Add");
         addButton.setOnAction(e -> {
-                    ManageEmployee tempEmployee = manager.searchWithNumber(addEmployeeNr.getText());
+                    Employee tempEmployee = manager.searchEmployeeWithNumber(addEmployeeNr.getText());
 
                     if (addEmployeeNr.getText().equals("")) {
                         AlertBox.display("Error", "Er is geen medewerkersnummer ingevuld");
@@ -453,7 +450,7 @@ public class ManageEmployeeGUI extends Application {
                     } else if (addEmail.getText().equals("")) {
                         AlertBox.display("Error", "Er is geen email ingevuld");
                     } else {
-                        ManageEmployee newEmployee = new ManageEmployee(
+                        Employee newEmployee = new Employee(
                                 addEmployeeNr.getText(),
                                 addName.getText(),
                                 addFunction.getText(),

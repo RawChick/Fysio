@@ -2,10 +2,14 @@ package domain;
 
 import javafx.beans.property.SimpleStringProperty;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Barrie on 21-10-2015.
  */
-public class ManageEmployee {
+public class Employee {
     private final SimpleStringProperty employeeNr;
     private final SimpleStringProperty name;
     private final SimpleStringProperty function;
@@ -16,8 +20,9 @@ public class ManageEmployee {
     private final SimpleStringProperty zipCode;
     private final SimpleStringProperty phone;
     private final SimpleStringProperty email;
+    private ArrayList<Workday> workdays;
 
-    public ManageEmployee(String nr, String name, String function, String bsn, String city, String address, String dateOfBirth, String zipCode, String phone, String email) {
+    public Employee(String nr, String name, String function, String bsn, String city, String address, String dateOfBirth, String zipCode, String phone, String email) {
         if (name.equals("Mark van Turnhout") || name.equals("Noureddine Azzagari")) {
             this.function = new SimpleStringProperty("Baas!");
         }else {
@@ -32,6 +37,29 @@ public class ManageEmployee {
         this.zipCode = new SimpleStringProperty(zipCode);
         this.phone = new SimpleStringProperty(phone);
         this.email = new SimpleStringProperty(email);
+        this.workdays = new ArrayList<>();
+    }
+
+    public Workday searchWorkdayByDate(LocalDate workDate) {
+        Workday tempWorkday = null;
+
+        for (Workday w : workdays) {
+            if (w.workDate.equals(workDate)) {
+                tempWorkday = w;
+            }
+        }
+
+        return tempWorkday;
+    }
+
+    public boolean addWorkday(Workday workday) {
+        boolean tempBool = false;
+        if (workday != null)
+        {
+            workdays.add(workday);
+            tempBool = true;
+        }
+        return tempBool;
     }
 
     //region Getters and Setters

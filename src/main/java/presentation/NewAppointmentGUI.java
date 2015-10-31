@@ -66,6 +66,6 @@ public class NewAppointmentGUI {
     }
     public static void addAppointment(String bsn, String name, String treatment, String date, String time, String therapist){
         TreatmentManager manager = new TreatmentManager();
-        manager.addAppointment(new Planning(bsn, name, treatment, date, time, therapist));
+
     }
 }

@@ -1,13 +1,11 @@
 package presentation;
 
 import businesslogic.TreatmentManager;
-import domain.Appointment1;
-import domain.Planning;
+import domain.Appointment;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -25,7 +23,7 @@ public class ChangeAppointmentGUI {
     private static final Label treatment = new Label("Behandeling");
     private static final Label therapist = new Label("Fysiotherapeut");
 
-    public static void display(ObservableList<Appointment1> list){
+    public static void display(ObservableList<Appointment> list){
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("verander afspraak");
@@ -34,10 +32,10 @@ public class ChangeAppointmentGUI {
         TextField nameText = new TextField();
         TextField treatText = new TextField();
         TextField therapistText = new TextField();
-        timeText.setText(list.get(0).getTime());
+        /*timeText.setText(list.get(0).getTime());
         nameText.setText(list.get(0).getName());
         treatText.setText(list.get(0).getTreatment());
-        therapistText.setText(list.get(0).getTherapist());
+        therapistText.setText(list.get(0).getTherapist());*/
 
         Button change = new Button("Akkoord");
         Button close = new Button("Anuleren");
@@ -63,6 +61,6 @@ public class ChangeAppointmentGUI {
     }
     public static void changeAppointment(String time, String name, String treatment, String therapist){
         TreatmentManager manager = new TreatmentManager();
-        manager.changeAppointment(time, name, treatment, therapist);
+
     }
 }

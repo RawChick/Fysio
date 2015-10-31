@@ -1,25 +1,22 @@
 package presentation;
 
-import businesslogic.EmployeeManager;
-import businesslogic.TreatmentManager;
+import businesslogic.AppointmentManager;
 import domain.*;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.awt.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 
 public class AppointmentGUI extends Application {
 
@@ -33,48 +30,47 @@ public class AppointmentGUI extends Application {
     private HBox hBox = new HBox(20);
     private VBox vBox = new VBox(20);
     private DatePicker datePicker = new DatePicker();
-    private TableView<Appointment1> appointmentTable = new TableView<>();
-    private TableView<Appointment2> therapistTable = new TableView<>();
     private VBox box = new VBox(20);
     private Button button = new Button("Nieuwe Afspraak");
     private Button changeAppointment = new Button("Afspraak wijzigen");
     private Button removeAppointment = new Button("Afspraak verwijderen");
-    private final static Label planningLabel = new Label("Planning voor deze datum");
-    private final static Label availability = new Label("Beschikbaarheid voor deze datum");
+    private AppointmentManager manager = new AppointmentManager();
+    private TableView<Appointment> appointmentTableView = new TableView<>();
+    private TableView<Appointment> appointmentsTodayTable = new TableView<>();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         pane.getSelectionModel().select(appointmentTab);
 
-        appointmentTable.setEditable(true);
-        therapistTable.setEditable(true);
-        TableColumn<Appointment1, String> time = new TableColumn<>("Tijd");
-        TableColumn<Appointment1, String> name = new TableColumn<>("Naam");
-        TableColumn<Appointment1, String> treatment = new TableColumn<>("Behandeling");
-        TableColumn<Appointment1, String> therapist = new TableColumn<>("Fysiotherapeut");
-        time.setCellValueFactory(new PropertyValueFactory<>("time"));
-        name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        treatment.setCellValueFactory(new PropertyValueFactory<>("treatment"));
-        therapist.setCellValueFactory(new PropertyValueFactory<>("therapist"));
+        appointmentTableView.setEditable(true);
+        appointmentsTodayTable.setEditable(true);
 
-        TableColumn<Appointment2, String> nameCol = new TableColumn<>("Naam");
-        TableColumn<Appointment2, String> age = new TableColumn<>("Leeftijd");
-        TableColumn<Appointment2, String> available = new TableColumn<>("Vrij");
-        TableColumn<Appointment2, String> present = new TableColumn<>("Aanwezig");
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("nameCol"));
-        age.setCellValueFactory(new PropertyValueFactory<>("age"));
-        available.setCellValueFactory(new PropertyValueFactory<>("available"));
-        present.setCellValueFactory(new PropertyValueFactory<>("present"));
+        TableColumn numberCol = new TableColumn("Nummer");
+        numberCol.setCellValueFactory(
+                new PropertyValueFactory<Appointment, Integer>("appointmentNumber"));
+        TableColumn datumCol = new TableColumn("Datum");
+        datumCol.setCellValueFactory(
+                new PropertyValueFactory<Appointment, LocalDate>("appointmentDate"));
+        TableColumn fysioCol = new TableColumn("Fysio");
+        fysioCol.setCellValueFactory(
+                new PropertyValueFactory<Appointment, String>("fysioName"));
+        TableColumn patientCol = new TableColumn("Patient");
+        patientCol.setCellValueFactory(
+                new PropertyValueFactory<Appointment, String>("patientName"));
 
-        appointmentTable.getColumns().addAll(time, name, treatment, therapist);
-        therapistTable.getColumns().addAll(nameCol, age, available, present);
+
+        FilteredList<Appointment> filteredData = new FilteredList<>(manager.getData());
+        SortedList<Appointment> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(appointmentTableView.comparatorProperty());
+        appointmentTableView.setItems(sortedData);
+        appointmentTableView.getColumns().addAll(numberCol, datumCol, fysioCol, patientCol);
 
         pane.getTabs().addAll(appointmentTab, employeeTab, customerTab, manageEmployeeTab);
         appointmentTab.setContent(anchorPane);
         anchorPane.getChildren().addAll(hBox);
         hBox.getChildren().addAll(vBox, box);
-        box.getChildren().addAll(button, availability, therapistTable, changeAppointment);
-        vBox.getChildren().addAll(datePicker, planningLabel, appointmentTable, removeAppointment);
+        box.getChildren().addAll(button, changeAppointment);
+        vBox.getChildren().addAll(datePicker, appointmentTableView, removeAppointment);
         pane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         hBox.setPadding(new Insets(20, 20, 20, 20));
 
@@ -94,7 +90,7 @@ public class AppointmentGUI extends Application {
                 }
             }
             if (newValue.getText().equals("Patient")){
-                CustomerGUI gui = new CustomerGUI();
+                PatientGUI gui = new PatientGUI();
                 try {
                     gui.start(primaryStage);
                 } catch (Exception e) {
@@ -111,56 +107,43 @@ public class AppointmentGUI extends Application {
                 }
             }
         });
+
         datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
-            searchByDate(newValue);
+            filteredData.setPredicate(appointment -> {
+                // If filter text is empty, display all appointments.
+                if (newValue == null) {
+                    return true;
+                }
+
+                if (appointment.getAppointmentDate().equals(newValue)) {
+                    return true; //Filter matched date
+                }
+                return false;
+            });
         });
         changeAppointment.setOnAction(e -> changeAppointment());
         removeAppointment.setOnAction(e -> removeAppointment());
         button.setOnAction(e -> newAppointment());
     }
     public void changeAppointment(){
-        ObservableList<Appointment1> appointment1s = appointmentTable.getSelectionModel().getSelectedItems();
-        ChangeAppointmentGUI.display(appointment1s);
-        searchByDate(datePicker.getValue());
+
 
     }
     public void removeAppointment(){
-        Component component = new Component() {
-            @Override
-            public String getName() {
-                return super.getName();
-            }
-        };
-        ObservableList<Appointment1> appointment1s = appointmentTable.getSelectionModel().getSelectedItems();
-        int remove = JOptionPane.showConfirmDialog(component, "weet u zeker dat u de afspraak van " + appointment1s.get(0).getName() +
-                " om " + appointment1s.get(0).getTime() + " voor de behandeling: " + appointment1s.get(0).getTreatment()
-        + " wilt verwijderen?", "verwijderen", JOptionPane.YES_NO_OPTION);
-        if (remove == 1){
-            TreatmentManager manager = new TreatmentManager();
-            manager.removeAppointment(appointment1s.get(0).getName(),
-                    appointment1s.get(0).getTime(), appointment1s.get(0).getTreatment(), appointment1s.get(0).getTherapist());
-        }
+
     }
     public void newAppointment() {
-        NewAppointmentGUI.display();
-        searchByDate(datePicker.getValue());
+
     }
-    public void searchByDate(LocalDate newValue){
-        TreatmentManager manager1 = new TreatmentManager();
-        ArrayList<Appointment1> appointment1s = manager1.getAppointmet1ByDate(newValue);
-        final ObservableList<Appointment1> data = FXCollections.observableArrayList();
-        for (Appointment1 appointment1 : appointment1s){
-            data.add(appointment1);
-            appointmentTable.setItems(data);
-        }
+    public void searchByDate(LocalDate workDate){
+        ObservableList<Appointment> appointmentList = manager.searchWithWorkDate(workDate);
+        String DATE_PATTERN = "dd.MM.yyyy";
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DATE_PATTERN);
 
-        TreatmentManager manager = new TreatmentManager();
-        ArrayList<Appointment2> appointment2s = manager.getAppointmet2ByDate(newValue);
-        final ObservableList<Appointment2> data2 = FXCollections.observableArrayList();
-        for (Appointment2 appointment2 : appointment2s) {
-            data2.add(appointment2);
-            therapistTable.setItems(data2);
+        if (appointmentList == null) {
+            AlertBox.display("Foutmelding", "Geen afspraken op: " + dateFormat.format(workDate));
+        } else {
+            appointmentTableView.setItems(appointmentList);
         }
-
     }
 }

@@ -1,7 +1,7 @@
 package presentation;
 
-import businesslogic.CustomerManager;
-import domain.Customer;
+import businesslogic.PatientManager;
+import domain.Patient;
 import domain.CustomerTable;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -19,9 +19,8 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 
-public class CustomerGUI extends Application {
+public class PatientGUI extends Application {
 
     private TabPane pane = new TabPane();
     private Tab employeeTab = new Tab("Medewerker");
@@ -41,9 +40,6 @@ public class CustomerGUI extends Application {
     private static final Label ZIPCODE = new Label("Postcode:");
     private static final Label CITY = new Label("Woonplaats:");
     private static final Label DATEOFBIRTH = new Label("Geboorte datum:");
-    private static final Label DIAGNOSECODE1 = new Label("Diagnosecode 1:");
-    private static final Label DIAGNOSECODE2 = new Label("Diagnosecode 2:");
-    private static final Label DIAGNOSECODEN = new Label("Diagnosecode N:");
     private static final Label PHONE = new Label("Telefoon nummer:");
     private static final Label EMAIL = new Label("Email-adres:");
     private Label bsnLabel = new Label();
@@ -58,6 +54,7 @@ public class CustomerGUI extends Application {
     private Label phoneLabel = new Label();
     private Label emailLabel = new Label();
     private TableView<CustomerTable> tableView = new TableView<>();
+    private PatientManager manager = new PatientManager();
 
 
     @Override
@@ -67,13 +64,8 @@ public class CustomerGUI extends Application {
 
 
         tableView.setEditable(true);
-        TableColumn<CustomerTable, String> dateCol = new TableColumn<>("Datum");
-        TableColumn<CustomerTable, String> timeCol = new TableColumn<>("Tijd");
-        TableColumn<CustomerTable, String> treatCol = new TableColumn<>("Behandeling");
-        dateCol.setCellValueFactory(new PropertyValueFactory<>("dateCol"));
-        timeCol.setCellValueFactory(new PropertyValueFactory<>("timeCol"));
-        treatCol.setCellValueFactory(new PropertyValueFactory<>("treatCol"));
-        tableView.getColumns().addAll(dateCol, timeCol, treatCol);
+
+        tableView.getColumns().addAll();
 
         pane.getSelectionModel().select(customerTab);
         customerTab.setContent(anchorPane);
@@ -84,7 +76,7 @@ public class CustomerGUI extends Application {
         textField.setPromptText("BSN");
         borderPane.setCenter(hBox1);
         hBox1.getChildren().addAll(gridPane, tableView);
-        gridPane.addColumn(0, BSN, NAME, ADRESS, ZIPCODE, CITY, DATEOFBIRTH, DIAGNOSECODE1, DIAGNOSECODE2, DIAGNOSECODEN, PHONE, EMAIL);
+        gridPane.addColumn(0, BSN, NAME, ADRESS, ZIPCODE, CITY, DATEOFBIRTH, PHONE, EMAIL);
         gridPane.addColumn(1, bsnLabel, nameLabel, adressLabel, zipcodeLabel, cityLabel, dateOfBirthLabel, diagnosecode1Label, diagnosecode2Label, diagnosecodeNLabel, phoneLabel, emailLabel);
         bsnLabel.setMinWidth(100);
         nameLabel.setMinWidth(100);
@@ -138,24 +130,18 @@ public class CustomerGUI extends Application {
     }
     public void search(){
         int bsn = Integer.parseInt(textField.getText());
-        CustomerManager manager = new CustomerManager();
-        manager.findCustomer(bsn);
-        CustomerTable table = manager.findCustomerTable(bsn);
-        final ObservableList<CustomerTable> data = FXCollections.observableArrayList(
-                new CustomerTable(LocalDate.now(), LocalTime.now(), "dwdq")
-        );
-        tableView.setItems(data);
-        Customer customers = manager.findCustomer(Integer.parseInt(textField.getText()));
-        bsnLabel.setText(Integer.toString(customers.getBsn()));
-        nameLabel.setText(customers.getName());
-        adressLabel.setText(customers.getAdress());
-        zipcodeLabel.setText(customers.getZipcode());
-        cityLabel.setText(customers.getCity());
-        dateOfBirthLabel.setText(customers.getDateOfBirth().toString());
-        diagnosecode1Label.setText(Integer.toString(customers.getDiagnoseCode1()));
-        diagnosecode2Label.setText(Integer.toString(customers.getDiagnoseCode2()));
-        diagnosecodeNLabel.setText(Integer.toString(customers.getDiagnoseCodeN()));
-        phoneLabel.setText(customers.getPhone());
-        emailLabel.setText(customers.getEmail());
+        Patient tempPatient = manager.searchWithBSN(bsn);
+
+        if (tempPatient != null) {
+            bsnLabel.setText(String.valueOf(tempPatient.getBsn()));
+            nameLabel.setText(tempPatient.getName());
+            adressLabel.setText(tempPatient.getAdress());
+            zipcodeLabel.setText(tempPatient.getZipCode());
+            dateOfBirthLabel.setText(String.valueOf(tempPatient.getDateOfBirth()));
+            phoneLabel.setText(tempPatient.getPhone());
+            emailLabel.setText(tempPatient.getEmail());
+        }else {
+            AlertBox.display("Foutmelding", "Geen patient gevonden met BSN: " + bsn);
+        }
     }
 }

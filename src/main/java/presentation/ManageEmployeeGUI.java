@@ -35,10 +35,6 @@ public class ManageEmployeeGUI extends Application {
     private Tab customerTab;
     private Tab manageEmployeeTab;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     @Override
     public void start(Stage stage) throws Exception {
         table = new TableView<>();

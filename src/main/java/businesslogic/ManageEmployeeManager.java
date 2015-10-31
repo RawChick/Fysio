@@ -13,7 +13,6 @@ public class ManageEmployeeManager {
                     new ManageEmployee("1", "Noureddine Azzagari", "Baas", "22775566", "Goes", "Tak van Poortvlietstraat 19", "11-10-1995", "4463 TA", "0618559116", "nazzagar@avans.nl"),
                     new ManageEmployee("2", "Mark van Turnhout", "Baas", "11664455", "Tilburg", "Zwartvenseweg 17", "05-08-1992", "5044 PA", "0614740368", "mlajturn@avans.nl")
             );
-
     public ObservableList<ManageEmployee> getData() {
         return data;
     }

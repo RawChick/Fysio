@@ -18,7 +18,7 @@ public class ManageEmployee {
     private final SimpleStringProperty email;
 
     public ManageEmployee(String nr, String name, String function, String bsn, String city, String address, String dateOfBirth, String zipCode, String phone, String email) {
-        if (name.equals("Mark van Turnhout")) {
+        if (name.equals("Mark van Turnhout") || name.equals("Noureddine Azzagari")) {
             this.function = new SimpleStringProperty("Baas!");
         }else {
             this.function = new SimpleStringProperty(function);

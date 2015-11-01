@@ -1,66 +1,80 @@
 package domain;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Barrie on 21-10-2015.
  */
 public class Employee {
-    private final SimpleStringProperty employeeNr;
-    private final SimpleStringProperty name;
-    private final SimpleStringProperty function;
-    private final SimpleStringProperty bsn;
-    private final SimpleStringProperty city;
-    private final SimpleStringProperty address;
-    private final SimpleStringProperty dateOfBirth;
-    private final SimpleStringProperty zipCode;
-    private final SimpleStringProperty phone;
-    private final SimpleStringProperty email;
-    private ArrayList<Workday> workdays;
+    //region Attributes and properties
+    private SimpleStringProperty employeeNr;
+    private SimpleStringProperty employeeName;
+    private SimpleStringProperty employeeFunction;
+    private SimpleStringProperty employeeBSN;
+    private SimpleStringProperty employeeCity;
+    private SimpleStringProperty employeeAddress;
+    private SimpleStringProperty employeeDateOfBirth;
+    private SimpleStringProperty employeeZipCode;
+    private SimpleStringProperty employeePhone;
+    private SimpleStringProperty employeeMail;
 
-    public Employee(String nr, String name, String function, String bsn, String city, String address, String dateOfBirth, String zipCode, String phone, String email) {
+    private ArrayList<Workday> employeeWorkdays;
+    //endregion
+
+    //region Methods
+    public Employee(String nr, String name, String employeeFunction, String employeeBSN, String employeeCity, String employeeAddress, String employeeDateOfBirth, String employeeZipCode, String employeePhone, String employeeMail) {
         if (name.equals("Mark van Turnhout") || name.equals("Noureddine Azzagari")) {
-            this.function = new SimpleStringProperty("Baas!");
+            this.employeeFunction = new SimpleStringProperty("Baas!");
         } else {
-            this.function = new SimpleStringProperty(function);
+            this.employeeFunction = new SimpleStringProperty(employeeFunction);
         }
-        this.employeeNr = new SimpleStringProperty(nr);
-        this.name = new SimpleStringProperty(name);
-        this.bsn = new SimpleStringProperty(bsn);
-        this.city = new SimpleStringProperty(city);
-        this.address = new SimpleStringProperty(address);
-        this.dateOfBirth = new SimpleStringProperty(dateOfBirth);
-        this.zipCode = new SimpleStringProperty(zipCode);
-        this.phone = new SimpleStringProperty(phone);
-        this.email = new SimpleStringProperty(email);
-        this.workdays = new ArrayList<>();
+        this.employeeNr = new SimpleStringProperty(this, "employeeNr", nr);
+        this.employeeName = new SimpleStringProperty(this, "employeeName", name);
+        this.employeeBSN = new SimpleStringProperty(this, "employeeBSN", employeeBSN);
+        this.employeeCity = new SimpleStringProperty(this, "employeeCity", employeeCity);
+        this.employeeAddress = new SimpleStringProperty(this, "employeeAddress", employeeAddress);
+        this.employeeDateOfBirth = new SimpleStringProperty(this, "employeeDateOFBirth", employeeDateOfBirth);
+        this.employeeZipCode = new SimpleStringProperty(this, "employeeZipCode", employeeZipCode);
+        this.employeePhone = new SimpleStringProperty(this, "employeePhone", employeePhone);
+        this.employeeMail = new SimpleStringProperty(this, "employeeMail", employeeMail);
+
+        this.employeeWorkdays = new ArrayList<>();
     }
 
     public Workday searchWorkdayByDate(LocalDate workDate) {
         Workday tempWorkday = null;
-
-        for (Workday w : workdays) {
-            if (w.workDate.equals(workDate)) {
+        for (Workday w : employeeWorkdays) {
+            if (w.getWorkDate().equals(workDate)) {
                 tempWorkday = w;
             }
         }
-
         return tempWorkday;
     }
 
     public boolean addWorkday(Workday workday) {
         boolean tempBool = false;
         if (workday != null) {
-            workdays.add(workday);
+            employeeWorkdays.add(workday);
             tempBool = true;
         }
         return tempBool;
     }
+
+    public boolean removeWorkday(Workday workday) {
+        boolean tempBool = false;
+        if (workday != null) {
+            employeeWorkdays.remove(workday);
+            tempBool = true;
+        }
+        return tempBool;
+    }
+
+    public String ToString() {
+        return String.valueOf(employeeName);
+    }
+    //endregion
 
     //region Getters and Setters
     public String getEmployeeNr() {
@@ -75,126 +89,121 @@ public class Employee {
         this.employeeNr.set(employeeNr);
     }
 
-    public String getName() {
-        return name.get();
+    public String getEmployeeName() {
+        return employeeName.get();
     }
 
-    public SimpleStringProperty nameProperty() {
-        return name;
+    public SimpleStringProperty employeeNameProperty() {
+        return employeeName;
     }
 
-    public void setName(String name) {
-        this.name.set(name);
+    public void setEmployeeName(String employeeName) {
+        this.employeeName.set(employeeName);
     }
 
-    public String getFunction() {
-        return function.get();
+    public String getEmployeeFunction() {
+        return employeeFunction.get();
     }
 
-    public SimpleStringProperty functionProperty() {
-        return function;
+    public SimpleStringProperty employeeFunctionProperty() {
+        return employeeFunction;
     }
 
-    public void setFunction(String function) {
-        this.function.set(function);
+    public void setEmployeeFunction(String employeeFunction) {
+        this.employeeFunction.set(employeeFunction);
     }
 
-    public String getBsn() {
-        return bsn.get();
+    public String getEmployeeBSN() {
+        return employeeBSN.get();
     }
 
-    public SimpleStringProperty bsnProperty() {
-        return bsn;
+    public SimpleStringProperty employeeBSNProperty() {
+        return employeeBSN;
     }
 
-    public void setBsn(String bsn) {
-        this.bsn.set(bsn);
+    public void setEmployeeBSN(String employeeBSN) {
+        this.employeeBSN.set(employeeBSN);
     }
 
-    public String getCity() {
-        return city.get();
+    public String getEmployeeCity() {
+        return employeeCity.get();
     }
 
-    public SimpleStringProperty cityProperty() {
-        return city;
+    public SimpleStringProperty employeeCityProperty() {
+        return employeeCity;
     }
 
-    public void setCity(String city) {
-        this.city.set(city);
+    public void setEmployeeCity(String employeeCity) {
+        this.employeeCity.set(employeeCity);
     }
 
-    public String getAddress() {
-        return address.get();
+    public String getEmployeeAddress() {
+        return employeeAddress.get();
     }
 
-    public SimpleStringProperty addressProperty() {
-        return address;
+    public SimpleStringProperty employeeAddressProperty() {
+        return employeeAddress;
     }
 
-    public void setAddress(String address) {
-        this.address.set(address);
+    public void setEmployeeAddress(String employeeAddress) {
+        this.employeeAddress.set(employeeAddress);
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth.get();
+    public String getEmployeeDateOfBirth() {
+        return employeeDateOfBirth.get();
     }
 
-    public SimpleStringProperty dateOfBirthProperty() {
-        return dateOfBirth;
+    public SimpleStringProperty employeeDateOfBirthProperty() {
+        return employeeDateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth.set(dateOfBirth);
+    public void setEmployeeDateOfBirth(String employeeDateOfBirth) {
+        this.employeeDateOfBirth.set(employeeDateOfBirth);
     }
 
-    public String getZipCode() {
-        return zipCode.get();
+    public String getEmployeeZipCode() {
+        return employeeZipCode.get();
     }
 
-    public SimpleStringProperty zipCodeProperty() {
-        return zipCode;
+    public SimpleStringProperty employeeZipCodeProperty() {
+        return employeeZipCode;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode.set(zipCode);
+    public void setEmployeeZipCode(String employeeZipCode) {
+        this.employeeZipCode.set(employeeZipCode);
     }
 
-    public String getPhone() {
-        return phone.get();
+    public String getEmployeePhone() {
+        return employeePhone.get();
     }
 
-    public SimpleStringProperty phoneProperty() {
-        return phone;
+    public SimpleStringProperty employeePhoneProperty() {
+        return employeePhone;
     }
 
-    public void setPhone(String phone) {
-        this.phone.set(phone);
+    public void setEmployeePhone(String employeePhone) {
+        this.employeePhone.set(employeePhone);
     }
 
-    public String getEmail() {
-        return email.get();
+    public String getEmployeeEmail() {
+        return employeeMail.get();
     }
 
-    public SimpleStringProperty emailProperty() {
-        return email;
+    public SimpleStringProperty employeeEmailProperty() {
+        return employeeMail;
     }
 
-    public void setEmail(String email) {
-        this.email.set(email);
+    public void setEmployeeEmail(String employeeMail) {
+        this.employeeMail.set(employeeMail);
     }
 
-    public ArrayList<Workday> getWorkdays() {
-        return workdays;
+    public ArrayList<Workday> getEmployeeWorkdays() {
+        return employeeWorkdays;
     }
 
-    public void setWorkdays(ArrayList<Workday> workdays) {
-        this.workdays = workdays;
+    public void setEmployeeWorkdays(ArrayList<Workday> employeeWorkdays) {
+        this.employeeWorkdays = employeeWorkdays;
     }
     //endregion
-
-    public String ToString() {
-        return String.valueOf(name);
-    }
-
 }
 

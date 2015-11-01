@@ -1,13 +1,14 @@
 package domain;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@XmlRootElement(name = "planning")
 public class Planning {
-
 	private int PlanningNr;
 	private String bsn;
 	private String name;

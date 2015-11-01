@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class EmployeeGUI extends Application {
+    //region Attributes and properties
     private TableView<Appointment> table;
     private EmployeeManager employeeManager;
     private AppointmentManager appointmentManager;
@@ -40,7 +41,6 @@ public class EmployeeGUI extends Application {
     ComboBox<String> cb_Employee;
     DatePicker dp_AppointmentDate;
     Label lbl_EmployeeNr;
-    Label lbl_EmployeeName;
     Label lbl_EmployeePhone;
     Label lbl_workDays;
     Label lbl_EmployeeDate;
@@ -48,19 +48,17 @@ public class EmployeeGUI extends Application {
     Label lbl_EmployeeStopTime;
     Label lbl_EmployeeEmail;
 
-
     String DATE_PATTERN = "dd:MM:yyyy";
     String TIME_PATTERN = "HH:mm";
     DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DATE_PATTERN);
     DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern(TIME_PATTERN);
+    //endregion
 
     @Override
     public void start(Stage stage) throws Exception {
         employeeManager = new EmployeeManager();
         appointmentManager = new AppointmentManager();
         table = new TableView<>();
-
-        stage.setTitle("Fysio App");
 
         table.setEditable(true);
         Callback<TableColumn, TableCell> cellFactory =
@@ -114,15 +112,11 @@ public class EmployeeGUI extends Application {
                 new PropertyValueFactory<Appointment, Integer>("appointmentNumber"));
         TableColumn fysioCol = new TableColumn("Patient");
         fysioCol.setCellValueFactory(
-                new PropertyValueFactory<Appointment, String>("patientName"));
+                new PropertyValueFactory<Appointment, String>("appointmentPatientName"));
         //endregion
 
         //region Creating buttons
-        dp_AppointmentDate = new DatePicker();
-        dp_AppointmentDate.setPromptText(dateFormat.format(LocalDate.now()));
-        cb_Employee = new ComboBox<>(employeeManager.getEmployeeNumbers());
         lbl_EmployeeNr = new Label("Medewerkernummer");
-        lbl_EmployeeName = new Label("Naam");
         lbl_EmployeePhone = new Label("Telefoonnummer");
         lbl_workDays = new Label("Werktijden");
         lbl_EmployeeDate = new Label();
@@ -131,19 +125,28 @@ public class EmployeeGUI extends Application {
         lbl_EmployeeEmail = new Label("Email");
         Line line = new Line(-100, 0, 50, 0);
 
-        Button btn_Search = new Button("Zoek");
-        btn_Search.setOnAction(e -> searchForEmployee());
+        cb_Employee = new ComboBox<>(employeeManager.getEmployeeNames());
+        cb_Employee.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            Employee tempEmployee = employeeManager.searchEmployeeWithName(newValue);
+            lbl_EmployeeNr.setText(tempEmployee.getEmployeeNr());
+            lbl_EmployeePhone.setText(tempEmployee.getEmployeePhone());
+            lbl_EmployeeEmail.setText(tempEmployee.getEmployeeEmail());
+            searchAppointments();
+        });
+
+        dp_AppointmentDate = new DatePicker();
+        dp_AppointmentDate.setPromptText("Kies datum");
+        dp_AppointmentDate.valueProperty().addListener((observable, oldValue, newValue) -> searchAppointments());
         //endregion
 
         table.getColumns().addAll(numberCol, fysioCol);
         hBox.getChildren().addAll(cb_Employee, dp_AppointmentDate);
-        vBox.getChildren().addAll(lbl_EmployeeNr, lbl_EmployeeName, lbl_EmployeePhone, lbl_EmployeeEmail, line, lbl_workDays, lbl_EmployeeDate, lbl_EmployeeStartTime, lbl_EmployeeStopTime);
+        vBox.getChildren().addAll(lbl_EmployeeNr, lbl_EmployeePhone, lbl_EmployeeEmail, line, lbl_workDays, lbl_EmployeeDate, lbl_EmployeeStartTime, lbl_EmployeeStopTime);
         vBox.setSpacing(2);
 
         borderPane.setTop(hBox);
         borderPane.setLeft(vBox);
         borderPane.setCenter(table);
-        borderPane.setBottom(btn_Search);
 
         pane.getTabs().addAll(appointmentTab, employeeTab, customerTab, manageEmployeeTab);
         employeeTab.setContent(borderPane);
@@ -155,10 +158,10 @@ public class EmployeeGUI extends Application {
         stage.show();
     }
 
-
-    private void searchForEmployee() {
+    //region Methods
+    private void searchAppointments() {
         LocalDate localdate = dp_AppointmentDate.getValue();
-        String employeeNr = cb_Employee.getValue();
+        String employeeNr = lbl_EmployeeNr.getText();
         Employee tempEmployee = employeeManager.searchEmployeeWithNumber(employeeNr);
 
         if (tempEmployee == null) {
@@ -168,24 +171,23 @@ public class EmployeeGUI extends Application {
         } else {
             Workday tempWorkday = employeeManager.searchWorkdayWithDate(employeeNr, localdate);
             if (tempWorkday == null) {
-                AlertBox.display("Foutmelding", "Medewerker: " + tempEmployee.getName() + " was niet werkzaam op: " + dateFormat.format(localdate));
-                lbl_EmployeeName.setText("");
+                AlertBox.display("Foutmelding", "Medewerker: " + tempEmployee.getEmployeeName() + " was niet werkzaam op: " + dateFormat.format(localdate));
                 lbl_EmployeePhone.setText("");
                 lbl_EmployeeEmail.setText("");
                 lbl_EmployeeDate.setText("");
                 lbl_EmployeeStartTime.setText("");
                 lbl_EmployeeStopTime.setText("");
             } else {
-                lbl_EmployeeName.setText(tempEmployee.getName());
-                lbl_EmployeePhone.setText((tempEmployee.getPhone()));
-                lbl_EmployeeEmail.setText(tempEmployee.getEmail());
+                lbl_EmployeePhone.setText((tempEmployee.getEmployeePhone()));
+                lbl_EmployeeEmail.setText(tempEmployee.getEmployeeEmail());
                 lbl_workDays.setText("Werktijden");
                 lbl_EmployeeDate.setText(dateFormat.format(tempWorkday.getWorkDate()));
                 lbl_EmployeeStartTime.setText(timeFormat.format(tempWorkday.getStartTime()));
                 lbl_EmployeeStopTime.setText(timeFormat.format(tempWorkday.getStopTime()));
 
-                table.setItems(appointmentManager.searchWithWorkDateAndEmployeeName(localdate, tempEmployee.getName()));
+                table.setItems(appointmentManager.searchWithWorkDateAndEmployeeName(localdate, tempEmployee.getEmployeeName()));
             }
         }
     }
+    //endregion
 }

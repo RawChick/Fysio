@@ -1,63 +1,92 @@
 package domain;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Treatment {
+	//region Attributes and properties
+	private SimpleIntegerProperty treatmentCode;
+	private SimpleStringProperty treatmentName;
+	private SimpleIntegerProperty treatmentSessions;
+	private SimpleDoubleProperty treatmentSessionCost;
+	private SimpleDoubleProperty treatmentSessionDuration;
+	//endregion
 
-	private int treatmentCode;
-	private String treatmentName;
-	private int amountSessions;
-	private double sessionCost;
-	private double sessionDuration;
+	//region Methods
+	public Treatment (int code, String name, int amountSessions, double sessionCost, double sessionDuration) {
+		this.treatmentCode = new SimpleIntegerProperty(this, "treatmentCode", code);
+		this.treatmentName = new SimpleStringProperty(this, "treatmentName", name);
+		this.treatmentSessions = new SimpleIntegerProperty(this, "treatmentSessions", amountSessions);
+		this.treatmentSessionCost = new SimpleDoubleProperty(this, "treatmentSessionCost", sessionCost);
+		this.treatmentSessionDuration = new SimpleDoubleProperty(this, "treatmentSessionDuration", sessionDuration);
+	}
+	//endregion
 
-	public Treatment (int treatmentCode, String treatmentName, int amountSessions, double sessionCost, double sessionDuration) {
-		setTreatmentCode(treatmentCode);
-		setTreatmentName(treatmentName);
-		setAmountSessions(amountSessions);
-		setSessionCost(sessionCost);
-		setSessionDuration(sessionDuration);
+	//region Getters and setters
+	public int getTreatmentCode() {
+		return treatmentCode.get();
 	}
 
-	public int getTreatmentCode() {
+	public SimpleIntegerProperty treatmentCodeProperty() {
 		return treatmentCode;
 	}
 
-	private void setTreatmentCode(int treatmentCode) {
-		this.treatmentCode = treatmentCode;
+	public void setTreatmentCode(int treatmentCode) {
+		this.treatmentCode.set(treatmentCode);
 	}
 
 	public String getTreatmentName() {
+		return treatmentName.get();
+	}
+
+	public SimpleStringProperty treatmentNameProperty() {
 		return treatmentName;
 	}
 
-	private void setTreatmentName(String treatmentName) {
-		this.treatmentName = treatmentName;
+	public void setTreatmentName(String treatmentName) {
+		this.treatmentName.set(treatmentName);
 	}
 
-	public int getAmountSessions() {
-		return amountSessions;
+	public int getTreatmentSessions() {
+		return treatmentSessions.get();
 	}
 
-	private void setAmountSessions(int amountSessions) {
-		this.amountSessions = amountSessions;
+	public SimpleIntegerProperty treatmentSessionsProperty() {
+		return treatmentSessions;
 	}
 
-	public double getSessionDuration() {
-		return sessionDuration;
+	public void setTreatmentSessions(int treatmentSessions) {
+		this.treatmentSessions.set(treatmentSessions);
 	}
 
-	private void setSessionDuration(double sessionDuration) {
-		this.sessionDuration = sessionDuration;
+	public double getTreatmentSessionCost() {
+		return treatmentSessionCost.get();
 	}
 
-	public double getSessionCost() {
-		return sessionCost;
+	public SimpleDoubleProperty treatmentSessionCostProperty() {
+		return treatmentSessionCost;
 	}
 
-	private void setSessionCost(double sessionCost) {
-		this.sessionCost = sessionCost;
+	public void setTreatmentSessionCost(double treatmentSessionCost) {
+		this.treatmentSessionCost.set(treatmentSessionCost);
 	}
+
+	public double getTreatmentSessionDuration() {
+		return treatmentSessionDuration.get();
+	}
+
+	public SimpleDoubleProperty treatmentSessionDurationProperty() {
+		return treatmentSessionDuration;
+	}
+
+	public void setTreatmentSessionDuration(double treatmentSessionDuration) {
+		this.treatmentSessionDuration.set(treatmentSessionDuration);
+	}
+	//endregion
 }

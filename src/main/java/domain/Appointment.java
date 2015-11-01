@@ -1,62 +1,72 @@
 package domain;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import jdk.internal.org.objectweb.asm.tree.analysis.Value;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Appointment {
-
-    private int appointmentNumber;
+    //region Attributes and properties
+    private SimpleIntegerProperty appointmentNumber;
     private LocalDate appointmentDate;
     private LocalTime appointmentStartTime;
     private LocalTime appointmentStopTime;
-    private Employee fysio;
-    private Patient patient;
+    private Employee appointmentFysio;
+    private Patient appointmentPatient;
 
-    private String fysioName;
-    private String patientName;
+    private String appointmentFysioName;
+    private String appointmentPatientName;
+    private String appointmentStartTimeString;
+    private String appointmentStopTimeString;
+    //endregion
 
+    //region Methods
     public Appointment(int appointmentNumber, LocalDate appointmentDate, LocalTime startTime, LocalTime stopTime, Employee fysio, Patient patient) {
-        setAppointmentNumber(appointmentNumber);
-        setAppointmentDate(appointmentDate);
-        setAppointmentStartTime(startTime);
-        setAppointmentStopTime(stopTime);
-        setFysio(fysio);
-        setPatient(patient);
-        setFysioName(fysio.getName());
-        setPatientName(patient.getName());
+        this.appointmentNumber = new SimpleIntegerProperty(this, "appointmentNumber", appointmentNumber);
+        this.appointmentDate = appointmentDate;
+        this.appointmentStartTime = startTime;
+        this.appointmentStopTime = stopTime;
+        this.appointmentFysio = fysio;
+        this.appointmentPatient = patient;
+
+        setAppointmentFysioName(fysio.getEmployeeName());
+        setAppointmentPatientName(patient.getPatientName());
+
+        String TIME_PATTERN = "HH:mm";
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern(TIME_PATTERN);
+        setAppointmentStartTimeString(timeFormat.format(startTime));
+        setAppointmentStopTimeString(timeFormat.format(stopTime));
     }
 
-    public String getFysioName() {
-        return fysioName;
+    public String ToString() {
+        return appointmentNumber + " op: " + appointmentDate + " heeft Fysiotherapeut: " +
+                appointmentFysio.getEmployeeName() + " van: " + appointmentStartTime + " tot: " + appointmentStopTime + " patient: " + appointmentPatient.getPatientName() + " behandeld";
+    }
+    //endregion
+
+    //region Getters and setters
+    public Integer getAppointmentNumber() {
+        return appointmentNumber.get();
     }
 
-    private void setFysioName(String fysioName) {
-        this.fysioName = fysioName;
-    }
-
-    public String getPatientName() {
-        return patientName;
-    }
-
-    private void setPatientName(String patientName) {
-        this.patientName = patientName;
-    }
-
-    public int getAppointmentNumber() {
+    public IntegerProperty appointmentNumberProperty() {
         return appointmentNumber;
     }
 
-    private void setAppointmentNumber(int appointmentNumber) {
-        this.appointmentNumber = appointmentNumber;
+    public void setAppointmentNumber(int appointmentNumber) {
+        this.appointmentNumber.set(appointmentNumber);
     }
 
     public LocalDate getAppointmentDate() {
         return appointmentDate;
     }
 
-    private void setAppointmentDate(LocalDate appointmentDate) {
+    public void setAppointmentDate(LocalDate appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
 
@@ -64,7 +74,7 @@ public class Appointment {
         return appointmentStartTime;
     }
 
-    private void setAppointmentStartTime(LocalTime appointmentStartTime) {
+    public void setAppointmentStartTime(LocalTime appointmentStartTime) {
         this.appointmentStartTime = appointmentStartTime;
     }
 
@@ -72,23 +82,57 @@ public class Appointment {
         return appointmentStopTime;
     }
 
-    private void setAppointmentStopTime(LocalTime appointmentStopTime) {
+    public void setAppointmentStopTime(LocalTime appointmentStopTime) {
         this.appointmentStopTime = appointmentStopTime;
     }
 
-    public Employee getFysio() {
-        return fysio;
+    public Employee getAppointmentFysio() {
+        return appointmentFysio;
     }
 
-    private void setFysio(Employee fysio) {
-        this.fysio = fysio;
+    public void setAppointmentFysio(Employee appointmentFysio) {
+        this.appointmentFysio = appointmentFysio;
     }
 
-    public Patient getPatient() {
-        return patient;
+    public Patient getAppointmentPatient() {
+        return appointmentPatient;
     }
 
-    private void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setAppointmentPatient(Patient appointmentPatient) {
+        this.appointmentPatient = appointmentPatient;
     }
+
+    public String getAppointmentFysioName() {
+        return appointmentFysioName;
+    }
+
+    public void setAppointmentFysioName(String appointmentFysioName) {
+        this.appointmentFysioName = appointmentFysioName;
+    }
+
+    public String getAppointmentPatientName() {
+        return appointmentPatientName;
+    }
+
+    public void setAppointmentPatientName(String appointmentPatientName) {
+        this.appointmentPatientName = appointmentPatientName;
+    }
+
+    public String getAppointmentStartTimeString() {
+        return appointmentStartTimeString;
+    }
+
+    public void setAppointmentStartTimeString(String appointmentStartTimeString) {
+        this.appointmentStartTimeString = appointmentStartTimeString;
+    }
+
+    public String getAppointmentStopTimeString() {
+        return appointmentStopTimeString;
+    }
+
+    public void setAppointmentStopTimeString(String appointmentStopTimeString) {
+        this.appointmentStopTimeString = appointmentStopTimeString;
+    }
+
+    //endregion
 }

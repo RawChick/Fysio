@@ -55,7 +55,7 @@ public class ManageEmployeeGUI extends Application {
         pane.getSelectionModel().select(manageEmployeeTab);
 
         pane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            switch(newValue.getText()) {
+            switch (newValue.getText()) {
                 case "Afspraak":
                     AppointmentGUI guiAppointment = new AppointmentGUI();
                     try {
@@ -92,7 +92,7 @@ public class ManageEmployeeGUI extends Application {
         employeeNrCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("employeeNr"));
         employeeNrCol.setCellFactory(cellFactory);
-        
+
         employeeNrCol.setOnEditCommit(
                 new EventHandler<CellEditEvent<Employee, String>>() {
                     @Override
@@ -125,7 +125,7 @@ public class ManageEmployeeGUI extends Application {
         TableColumn nameCol = new TableColumn("Naam");
         nameCol.setMinWidth(100);
         nameCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("name"));
+                new PropertyValueFactory<Employee, String>("employeeName"));
         nameCol.setCellFactory(cellFactory);
         nameCol.setOnEditCommit(
                 new EventHandler<CellEditEvent<Employee, String>>() {
@@ -133,13 +133,13 @@ public class ManageEmployeeGUI extends Application {
                     public void handle(CellEditEvent<Employee, String> t) {
                         if (validate.validateName(t.getNewValue())) {
                             t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow()).setName(t.getNewValue());
+                                    t.getTablePosition().getRow()).setEmployeeName(t.getNewValue());
                             table.getColumns().get(0).setVisible(false);
                             table.getColumns().get(0).setVisible(true);
                         } else {
                             AlertBox.display("Foutmelding", t.getNewValue() + " is geen geldige naam");
                             t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow()).setName(t.getOldValue());
+                                    t.getTablePosition().getRow()).setEmployeeName(t.getOldValue());
                             table.getColumns().get(0).setVisible(false);
                             table.getColumns().get(0).setVisible(true);
                         }
@@ -150,7 +150,7 @@ public class ManageEmployeeGUI extends Application {
         TableColumn functionCol = new TableColumn("Function");
         functionCol.setMinWidth(200);
         functionCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("function"));
+                new PropertyValueFactory<Employee, String>("employeeFunction"));
         functionCol.setCellFactory(cellFactory);
         functionCol.setOnEditCommit(
                 new EventHandler<CellEditEvent<Employee, String>>() {
@@ -158,13 +158,13 @@ public class ManageEmployeeGUI extends Application {
                     public void handle(CellEditEvent<Employee, String> t) {
                         if (validate.validateName(t.getNewValue())) {
                             t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow()).setFunction(t.getNewValue());
+                                    t.getTablePosition().getRow()).setEmployeeFunction(t.getNewValue());
                             table.getColumns().get(0).setVisible(false);
                             table.getColumns().get(0).setVisible(true);
                         } else {
                             AlertBox.display("Foutmelding", t.getNewValue() + " is geen geldige functie");
                             t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow()).setFunction(t.getOldValue());
+                                    t.getTablePosition().getRow()).setEmployeeFunction(t.getOldValue());
                             table.getColumns().get(0).setVisible(false);
                             table.getColumns().get(0).setVisible(true);
                         }
@@ -175,7 +175,7 @@ public class ManageEmployeeGUI extends Application {
         TableColumn bsnCol = new TableColumn("Bsn");
         bsnCol.setMinWidth(200);
         bsnCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("bsn"));
+                new PropertyValueFactory<Employee, String>("employeeBSN"));
         bsnCol.setCellFactory(cellFactory);
         bsnCol.setOnEditCommit(
                 new EventHandler<CellEditEvent<Employee, String>>() {
@@ -183,13 +183,13 @@ public class ManageEmployeeGUI extends Application {
                     public void handle(CellEditEvent<Employee, String> t) {
                         if (validate.validateBSN(t.getNewValue())) {
                             t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow()).setBsn(t.getNewValue());
+                                    t.getTablePosition().getRow()).setEmployeeBSN(t.getNewValue());
                             table.getColumns().get(0).setVisible(false);
                             table.getColumns().get(0).setVisible(true);
                         } else {
                             AlertBox.display("Foutmelding", t.getNewValue() + " is geen geldig burgerservicenummer");
                             t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow()).setBsn(t.getOldValue());
+                                    t.getTablePosition().getRow()).setEmployeeBSN(t.getOldValue());
                             table.getColumns().get(0).setVisible(false);
                             table.getColumns().get(0).setVisible(true);
                         }
@@ -200,7 +200,7 @@ public class ManageEmployeeGUI extends Application {
         TableColumn cityCol = new TableColumn("Stad");
         cityCol.setMinWidth(200);
         cityCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("city"));
+                new PropertyValueFactory<Employee, String>("employeeCity"));
         cityCol.setCellFactory(cellFactory);
         cityCol.setOnEditCommit(
                 new EventHandler<CellEditEvent<Employee, String>>() {
@@ -208,13 +208,13 @@ public class ManageEmployeeGUI extends Application {
                     public void handle(CellEditEvent<Employee, String> t) {
                         if (validate.validateName(t.getNewValue())) {
                             t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow()).setCity(t.getNewValue());
+                                    t.getTablePosition().getRow()).setEmployeeCity(t.getNewValue());
                             table.getColumns().get(0).setVisible(false);
                             table.getColumns().get(0).setVisible(true);
                         } else {
                             AlertBox.display("Foutmelding", t.getNewValue() + " is geen geldige stad");
                             t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow()).setCity(t.getOldValue());
+                                    t.getTablePosition().getRow()).setEmployeeCity(t.getOldValue());
                             table.getColumns().get(0).setVisible(false);
                             table.getColumns().get(0).setVisible(true);
                         }
@@ -225,14 +225,14 @@ public class ManageEmployeeGUI extends Application {
         TableColumn addressCol = new TableColumn("Adres");
         addressCol.setMinWidth(200);
         addressCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("address"));
+                new PropertyValueFactory<Employee, String>("employeeAddress"));
         addressCol.setCellFactory(cellFactory);
         addressCol.setOnEditCommit(
                 new EventHandler<CellEditEvent<Employee, String>>() {
                     @Override
                     public void handle(CellEditEvent<Employee, String> t) {
                         t.getTableView().getItems().get(
-                                t.getTablePosition().getRow()).setAddress(t.getNewValue());
+                                t.getTablePosition().getRow()).setEmployeeAddress(t.getNewValue());
                         table.getColumns().get(0).setVisible(false);
                         table.getColumns().get(0).setVisible(true);
                     }
@@ -242,7 +242,7 @@ public class ManageEmployeeGUI extends Application {
         TableColumn dateOfBirthCol = new TableColumn("Geboortedatum");
         dateOfBirthCol.setMinWidth(200);
         dateOfBirthCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("dateOfBirth"));
+                new PropertyValueFactory<Employee, String>("employeeDateOfBirth"));
         dateOfBirthCol.setCellFactory(cellFactory);
         dateOfBirthCol.setOnEditCommit(
                 new EventHandler<CellEditEvent<Employee, String>>() {
@@ -250,13 +250,13 @@ public class ManageEmployeeGUI extends Application {
                     public void handle(CellEditEvent<Employee, String> t) {
                         if (validate.validateDateOfBirth(t.getNewValue())) {
                             t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow()).setDateOfBirth(t.getNewValue());
+                                    t.getTablePosition().getRow()).setEmployeeDateOfBirth(t.getNewValue());
                             table.getColumns().get(0).setVisible(false);
                             table.getColumns().get(0).setVisible(true);
                         } else {
                             AlertBox.display("Foutmelding", t.getNewValue() + " is geen geldige geboortedatum (Let op: U mag geen - gebruiken!");
                             t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow()).setDateOfBirth(t.getOldValue());
+                                    t.getTablePosition().getRow()).setEmployeeDateOfBirth(t.getOldValue());
                             table.getColumns().get(0).setVisible(false);
                             table.getColumns().get(0).setVisible(true);
                         }
@@ -267,7 +267,7 @@ public class ManageEmployeeGUI extends Application {
         TableColumn zipCodeCol = new TableColumn("Postcode");
         zipCodeCol.setMinWidth(200);
         zipCodeCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("zipCode"));
+                new PropertyValueFactory<Employee, String>("employeeZipCode"));
         zipCodeCol.setCellFactory(cellFactory);
         zipCodeCol.setOnEditCommit(
                 new EventHandler<CellEditEvent<Employee, String>>() {
@@ -275,13 +275,13 @@ public class ManageEmployeeGUI extends Application {
                     public void handle(CellEditEvent<Employee, String> t) {
                         if (validate.validateZipCode(t.getNewValue())) {
                             t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow()).setZipCode(t.getNewValue());
+                                    t.getTablePosition().getRow()).setEmployeeZipCode(t.getNewValue());
                             table.getColumns().get(0).setVisible(false);
                             table.getColumns().get(0).setVisible(true);
                         } else {
                             AlertBox.display("Foutmelding", t.getNewValue() + " is geen geldige postcode");
                             t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow()).setZipCode(t.getOldValue());
+                                    t.getTablePosition().getRow()).setEmployeeZipCode(t.getOldValue());
                             table.getColumns().get(0).setVisible(false);
                             table.getColumns().get(0).setVisible(true);
                         }
@@ -292,7 +292,7 @@ public class ManageEmployeeGUI extends Application {
         TableColumn phoneCol = new TableColumn("Telefoonnummer");
         phoneCol.setMinWidth(200);
         phoneCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("phone"));
+                new PropertyValueFactory<Employee, String>("employeePhone"));
         phoneCol.setCellFactory(cellFactory);
         phoneCol.setOnEditCommit(
                 new EventHandler<CellEditEvent<Employee, String>>() {
@@ -300,13 +300,13 @@ public class ManageEmployeeGUI extends Application {
                     public void handle(CellEditEvent<Employee, String> t) {
                         if (validate.validateNumber(t.getNewValue())) {
                             t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow()).setPhone(t.getNewValue());
+                                    t.getTablePosition().getRow()).setEmployeePhone(t.getNewValue());
                             table.getColumns().get(0).setVisible(false);
                             table.getColumns().get(0).setVisible(true);
                         } else {
                             AlertBox.display("Foutmelding", t.getNewValue() + " is geen geldig telefoonnummer \n(Let op: U mag geen - gebruiken!");
                             t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow()).setPhone(t.getOldValue());
+                                    t.getTablePosition().getRow()).setEmployeePhone(t.getOldValue());
                             table.getColumns().get(0).setVisible(false);
                             table.getColumns().get(0).setVisible(true);
                         }
@@ -317,14 +317,14 @@ public class ManageEmployeeGUI extends Application {
         TableColumn emailCol = new TableColumn("Email");
         emailCol.setMinWidth(200);
         emailCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("email"));
+                new PropertyValueFactory<Employee, String>("employeeEmail"));
         emailCol.setCellFactory(cellFactory);
         emailCol.setOnEditCommit(
                 new EventHandler<CellEditEvent<Employee, String>>() {
                     @Override
                     public void handle(CellEditEvent<Employee, String> t) {
                         t.getTableView().getItems().get(
-                                t.getTablePosition().getRow()).setEmail(t.getNewValue());
+                                t.getTablePosition().getRow()).setEmployeeEmail(t.getNewValue());
                         table.getColumns().get(0).setVisible(false);
                         table.getColumns().get(0).setVisible(true);
                     }
@@ -379,14 +379,12 @@ public class ManageEmployeeGUI extends Application {
         deleteButton.setOnAction(e -> {
                     Employee tempEmployee = table.getSelectionModel().getSelectedItem();
 
-                    if (ConfirmBox.display("Bevestiging", "Weet u zeker dat u " + tempEmployee.getName() + " wilt verwijderen?")) {
-                        if (tempEmployee.getName().equals("Mark van Turnhout")) {
-                            AlertBox.display("Melding", "Nee joh, kom op, je kunt " + tempEmployee.getName() + " toch niet verwijderen, zijn geen geintjes dit!");
-                        } else {
+                    if (ConfirmBox.display("Bevestiging", "Weet u zeker dat u " + tempEmployee.getEmployeeName() + " wilt verwijderen?")) {
+                        {
                             if (manager.deleteEmployee(tempEmployee)) {
-                                AlertBox.display("Bevestiging", "Medewerker " + tempEmployee.getName() + " verwijderd");
+                                AlertBox.display("Bevestiging", "Medewerker " + tempEmployee.getEmployeeName() + " verwijderd");
                             } else {
-                                AlertBox.display("Error", "Medewerker " + tempEmployee.getName() + " niet verwijderd");
+                                AlertBox.display("Error", "Medewerker " + tempEmployee.getEmployeeName() + " niet verwijderd");
                             }
                         }
                     }
@@ -458,13 +456,13 @@ public class ManageEmployeeGUI extends Application {
                                 addEmail.getText());
 
                         if (manager.addEmployee(newEmployee)) {
-                            if (newEmployee.getName().equals("Mark van Turnhout")) {
-                                AlertBox.display("Melding", "Potverdorie, wat is die " + newEmployee.getName() + " toch ook een knapperd he?!\n En niet te vergeten hilarisch natuurlijk....!");
+                            if (newEmployee.getEmployeeName().equals("Mark van Turnhout")) {
+                                AlertBox.display("Melding", "Potverdorie, wat is die " + newEmployee.getEmployeeName() + " toch ook een knapperd he?!\n En niet te vergeten hilarisch natuurlijk....!");
                             } else {
-                                AlertBox.display("Bevestiging", "Medewerker " + newEmployee.getName() + " toegevoegd");
+                                AlertBox.display("Bevestiging", "Medewerker " + newEmployee.getEmployeeName() + " toegevoegd");
                             }
                         } else {
-                            AlertBox.display("Error", "Medewerker " + newEmployee.getName() + " niet toegevoegd");
+                            AlertBox.display("Error", "Medewerker " + newEmployee.getEmployeeName() + " niet toegevoegd");
                         }
                         addEmployeeNr.clear();
                         addName.clear();

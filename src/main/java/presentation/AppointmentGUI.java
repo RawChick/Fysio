@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class AppointmentGUI extends Application {
+    //region Attributes and properties
     private TableView<Appointment> table;
     private AppointmentManager appointmentManager;
 
@@ -27,7 +28,7 @@ public class AppointmentGUI extends Application {
     private Tab patientTab;
     private Tab manageEmployeeTab;
     private BorderPane borderPane = new BorderPane();
-
+    //endregion
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -86,15 +87,18 @@ public class AppointmentGUI extends Application {
         TableColumn numberCol = new TableColumn("Nummer");
         numberCol.setCellValueFactory(
                 new PropertyValueFactory<Appointment, Integer>("appointmentNumber"));
-        TableColumn datumCol = new TableColumn("Datum");
-        datumCol.setCellValueFactory(
-                new PropertyValueFactory<Appointment, LocalDate>("appointmentDate"));
+        TableColumn startTimeCol = new TableColumn("Van");
+        startTimeCol.setCellValueFactory(
+                new PropertyValueFactory<Appointment, LocalDate>("appointmentStartTimeString"));
+        TableColumn stopTimeCol = new TableColumn("Tot");
+        stopTimeCol.setCellValueFactory(
+                new PropertyValueFactory<Appointment, LocalDate>("appointmentStopTimeString"));
         TableColumn fysioCol = new TableColumn("Fysio");
         fysioCol.setCellValueFactory(
-                new PropertyValueFactory<Appointment, String>("fysioName"));
+                new PropertyValueFactory<Appointment, String>("appointmentFysioName"));
         TableColumn patientCol = new TableColumn("Patient");
         patientCol.setCellValueFactory(
-                new PropertyValueFactory<Appointment, String>("patientName"));
+                new PropertyValueFactory<Appointment, String>("appointmentPatientName"));
         //endregion
 
         //region Refreshing of the list
@@ -104,16 +108,7 @@ public class AppointmentGUI extends Application {
         table.setItems(sortedData);
         //endregion
 
-        //region Creating buttons
-        Button btn_NewAppointment = new Button("Nieuwe Afspraak");
-        btn_NewAppointment.setOnAction(e -> {});
-
-        Button btn_ChangeAppointment = new Button("Afspraak wijzigen");
-        btn_ChangeAppointment.setOnAction(e -> {});
-
-        Button btn_RemoveAppointment = new Button("Afspraak verwijderen");
-        btn_RemoveAppointment.setOnAction(e -> {});
-
+        //region Creating datepicker
         DatePicker dp_AppointmentDate = new DatePicker();
         dp_AppointmentDate.valueProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(appointment -> {
@@ -128,18 +123,13 @@ public class AppointmentGUI extends Application {
                 return false;
             });
         });
-        String DATE_PATTERN = "dd:MM:yyyy";
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DATE_PATTERN);
-        dp_AppointmentDate.setPromptText(dateFormat.format(LocalDate.now()));
+        dp_AppointmentDate.setPromptText("Kies datum");
         //endregion
 
-        table.getColumns().addAll(numberCol, datumCol, fysioCol, patientCol);
-        hBox.getChildren().addAll(dp_AppointmentDate, table, btn_NewAppointment, btn_ChangeAppointment, btn_RemoveAppointment);
-        hBox.setSpacing(3);
+        table.getColumns().addAll(numberCol, startTimeCol, stopTimeCol, fysioCol, patientCol);
 
         borderPane.setTop(dp_AppointmentDate);
         borderPane.setCenter(table);
-        borderPane.setBottom(hBox);
 
         pane.getTabs().addAll(appointmentTab, employeeTab, patientTab, manageEmployeeTab);
         appointmentTab.setContent(borderPane);

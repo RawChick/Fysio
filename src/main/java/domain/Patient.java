@@ -1,5 +1,8 @@
 package domain;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
@@ -8,97 +11,131 @@ import java.util.List;
 
 @XmlRootElement(name = "client")
 public class Patient {
+    //region Attributes and properties
+    private SimpleIntegerProperty patientBSN;
+    private SimpleStringProperty patientName;
+    private SimpleStringProperty patientCity;
+    private SimpleStringProperty patientAddress;
+    private LocalDate patientDateOfBirth;
+    private SimpleStringProperty patientZipCode;
+    private SimpleStringProperty patientPhone;
+    private SimpleStringProperty patientEmail;
 
-	private int bsn;
-	private String name;
-	private String adress;
-	private String city;
-	private LocalDate dateOfBirth;
-    private String zipCode;
-	private String phone;
-	private String email;
-    private List<Treatment> treatments;
+    private ArrayList<Treatment> patientTreatments;
+    //endregion
 
-    public Patient(int bsn, String name, String adress, String city, LocalDate dateOfBirth, String zipCode, String phone, String email) {
-        setBsn(bsn);
-        setName(name);
-        setAdress(adress);
-        setCity(city);
-        setDateOfBirth(dateOfBirth);
-        setZipCode(zipCode);
-        setPhone(phone);
-        setEmail(email);
+    //region Methods
+    public Patient(int bsn, String name,String city, String address,  LocalDate dateOfBirth, String zipCode, String phone, String email) {
+        this.patientBSN = new SimpleIntegerProperty(this, "patientBSN", bsn);
+        this.patientName = new SimpleStringProperty(this, "patientName", name);
+        this.patientCity = new SimpleStringProperty(this, "patientCity", city);
+        this.patientAddress = new SimpleStringProperty(this, "patientAddress", address);
+        this.patientDateOfBirth = dateOfBirth;
+        this.patientZipCode = new SimpleStringProperty(this, "patientZipCode", zipCode);
+        this.patientPhone = new SimpleStringProperty(this, "patientPhone", phone);
+        this.patientEmail = new SimpleStringProperty(this, "patientEmail", email);
+    }
+    //endregion
+
+    //region Getters and setters
+    public int getPatientBSN() {
+        return patientBSN.get();
     }
 
-    public int getBsn() {
-        return bsn;
+    public SimpleIntegerProperty patientBSNProperty() {
+        return patientBSN;
     }
 
-    private void setBsn(int bsn) {
-        this.bsn = bsn;
+    public void setPatientBSN(int patientBSN) {
+        this.patientBSN.set(patientBSN);
     }
 
-    public String getName() {
-        return name;
+    public String getPatientName() {
+        return patientName.get();
     }
 
-    private void setName(String name) {
-        this.name = name;
+    public SimpleStringProperty patientNameProperty() {
+        return patientName;
     }
 
-    public String getAdress() {
-        return adress;
+    public void setPatientName(String patientName) {
+        this.patientName.set(patientName);
     }
 
-    private void setAdress(String adress) {
-        this.adress = adress;
+    public String getPatientCity() {
+        return patientCity.get();
     }
 
-    public String getCity() {
-        return city;
+    public SimpleStringProperty patientCityProperty() {
+        return patientCity;
     }
 
-    private void setCity(String city) {
-        this.city = city;
+    public void setPatientCity(String patientCity) {
+        this.patientCity.set(patientCity);
     }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
+    public String getPatientAddress() {
+        return patientAddress.get();
     }
 
-    private void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public SimpleStringProperty patientAddressProperty() {
+        return patientAddress;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public void setPatientAddress(String patientAddress) {
+        this.patientAddress.set(patientAddress);
     }
 
-    private void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public LocalDate getPatientDateOfBirth() {
+        return patientDateOfBirth;
     }
 
-    public String getPhone() {
-        return phone;
+    public void setPatientDateOfBirth(LocalDate patientDateOfBirth) {
+        this.patientDateOfBirth = patientDateOfBirth;
     }
 
-    private void setPhone(String phone) {
-        this.phone = phone;
+    public String getPatientZipCode() {
+        return patientZipCode.get();
     }
 
-    public String getEmail() {
-        return email;
+    public SimpleStringProperty patientZipCodeProperty() {
+        return patientZipCode;
     }
 
-    private void setEmail(String email) {
-        this.email = email;
+    public void setPatientZipCode(String patientZipCode) {
+        this.patientZipCode.set(patientZipCode);
     }
 
-    public List<Treatment> getTreatments() {
-        return treatments;
+    public String getPatientPhone() {
+        return patientPhone.get();
     }
 
-    private void setTreatments(List<Treatment> treatments) {
-        this.treatments = treatments;
+    public SimpleStringProperty patientPhoneProperty() {
+        return patientPhone;
     }
+
+    public void setPatientPhone(String patientPhone) {
+        this.patientPhone.set(patientPhone);
+    }
+
+    public String getPatientEmail() {
+        return patientEmail.get();
+    }
+
+    public SimpleStringProperty patientEmailProperty() {
+        return patientEmail;
+    }
+
+    public void setPatientEmail(String patientEmail) {
+        this.patientEmail.set(patientEmail);
+    }
+
+    public ArrayList<Treatment> getPatientTreatments() {
+        return patientTreatments;
+    }
+
+    public void setPatientTreatments(ArrayList<Treatment> patientTreatments) {
+        this.patientTreatments = patientTreatments;
+    }
+    //endregion
 }

@@ -9,9 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -24,8 +23,9 @@ public class ManageEmployeeGUI extends Application {
     private EmployeeManager manager;
     private ValidateInput validate;
 
-    private final HBox hBox = new HBox();
-    private final VBox vBox = new VBox();
+    private VBox vBox = new VBox();
+    private BorderPane borderPane = new BorderPane();
+
     private TabPane pane;
     private Tab appointmentTab;
     private Tab employeeTab;
@@ -42,7 +42,7 @@ public class ManageEmployeeGUI extends Application {
 
         table.setEditable(true);
         Callback<TableColumn, TableCell> cellFactory =
-                p -> new EditingCell();
+                p -> new EditingCellManageEmployee();
 
 
         //region Creating tabs
@@ -110,7 +110,6 @@ public class ManageEmployeeGUI extends Application {
                                 table.getColumns().get(0).setVisible(false);
                                 table.getColumns().get(0).setVisible(true);
                             }
-
                         } else {
                             AlertBox.display("Foutmelding", t.getNewValue() + " is geen geldig werknemersnummer");
                             t.getTableView().getItems().get(
@@ -483,16 +482,20 @@ public class ManageEmployeeGUI extends Application {
         table.getColumns()
                 .addAll(employeeNrCol, nameCol, functionCol, bsnCol, cityCol, addressCol, dateOfBirthCol, zipCodeCol, phoneCol, emailCol);
 
-        hBox.getChildren()
+        vBox.getChildren()
                 .addAll(addEmployeeNr, addName, addFunction, addBsn, addCity, addAddress, addDateOfBirth, addZipCode, addPhone, addEmail, addButton, deleteButton);
-        hBox.setSpacing(3);
-
         vBox.setSpacing(5);
-        vBox.setPadding(new Insets(10, 10, 10, 10));
-        vBox.getChildren().addAll(table, hBox);
+
+        borderPane.setLeft(vBox);
+        borderPane.setCenter(table);
+        borderPane.setPrefSize(1200, 600);
+        borderPane.setPadding(new Insets(10, 20, 10, 20));
+        borderPane.setMargin(vBox, new Insets(12,12,12,12));
+        borderPane.setMargin(table, new Insets(12,12,12,12));
 
         pane.getTabs().addAll(appointmentTab, employeeTab, customerTab, manageEmployeeTab);
-        manageEmployeeTab.setContent(vBox);
+        manageEmployeeTab.setContent(borderPane);
+        pane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         Scene scene = new Scene(pane);
         scene.getStylesheets().addAll(AppointmentGUI.class.getResource("/Light.css").toExternalForm());

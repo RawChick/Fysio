@@ -8,6 +8,19 @@ import java.util.regex.Pattern;
  */
 public class ValidateInput {
 
+    public boolean validateTime(String time) {
+        boolean tempBool = false;
+
+        //Regex 2 digits : 2 digits
+        String TIME_PATTERN = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
+
+        if(time.matches(TIME_PATTERN)) {
+            tempBool = true;
+        }
+
+        return tempBool;
+    }
+
     public boolean validateNumber(String number) {
 
         boolean statusemployeenr = false;
@@ -56,7 +69,7 @@ public class ValidateInput {
         boolean statuscity = false;
 
         //Regex for city's
-        //String CITY_PATTERN = "/^(([2][e][[:space:]]|['][ts][-[:space:]]))?[ëéÉËa-zA-Z]{2,}((\\s|[-](\\s)?)[ëéÉËa-zA-Z]{2,})*$/i";
+        //String CITY_PATTERN = "/^(([2][e][[:space:]]|['][ts][-[:space:]]))?[ï¿½ï¿½ï¿½ï¿½a-zA-Z]{2,}((\\s|[-](\\s)?)[ï¿½ï¿½ï¿½ï¿½a-zA-Z]{2,})*$/i";
         String CITY_PATTERN = "^\\D+$";
 
         if (name.matches(CITY_PATTERN)) {

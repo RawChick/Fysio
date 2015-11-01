@@ -1,18 +1,14 @@
 package presentation;
 
-import domain.Employee;
+import domain.Appointment;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 
-
 /**
- * Created by Barrie on 21-10-2015.
+ * Created by Barrie on 1-11-2015.
  */
-public class EditingCell extends TableCell<Employee, String> {
+public class EditingCellAppointment extends TableCell<Appointment, String> {
     private TextField textField;
-
-    public EditingCell() {
-    }
 
     @Override
     public void startEdit() {
@@ -68,4 +64,3 @@ public class EditingCell extends TableCell<Employee, String> {
         return getItem() == null ? "" : getItem().toString();
     }
 }
-

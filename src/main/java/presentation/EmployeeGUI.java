@@ -6,10 +6,7 @@ import domain.Appointment;
 import domain.Employee;
 import domain.Workday;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,7 +14,6 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 
 import java.time.LocalDate;
@@ -62,7 +58,7 @@ public class EmployeeGUI extends Application {
 
         table.setEditable(true);
         Callback<TableColumn, TableCell> cellFactory =
-                p -> new EditingCell();
+                p -> new EditingCellManageEmployee();
 
         //region Creating tabs
         pane = new TabPane();
@@ -141,12 +137,18 @@ public class EmployeeGUI extends Application {
 
         table.getColumns().addAll(numberCol, fysioCol);
         hBox.getChildren().addAll(cb_Employee, dp_AppointmentDate);
+        hBox.setSpacing(10);
         vBox.getChildren().addAll(lbl_EmployeeNr, lbl_EmployeePhone, lbl_EmployeeEmail, line, lbl_workDays, lbl_EmployeeDate, lbl_EmployeeStartTime, lbl_EmployeeStopTime);
-        vBox.setSpacing(2);
+        vBox.setSpacing(5);
 
         borderPane.setTop(hBox);
         borderPane.setLeft(vBox);
         borderPane.setCenter(table);
+        borderPane.setPrefSize(1200,600);
+        borderPane.setPadding(new Insets(10, 20, 10, 20));
+        borderPane.setMargin(hBox, new Insets(12,12,12,12));
+        borderPane.setMargin(vBox, new Insets(12,12,12,12));
+        borderPane.setMargin(table, new Insets(12,12,12,12));
 
         pane.getTabs().addAll(appointmentTab, employeeTab, customerTab, manageEmployeeTab);
         employeeTab.setContent(borderPane);

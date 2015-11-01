@@ -21,7 +21,8 @@ public class PatientGUI extends Application {
     private PatientManager patientManager;
     private AppointmentManager appointmentManager;
 
-    private HBox hBox = new HBox(20);
+    private HBox hBox = new HBox();
+    private VBox vBox = new VBox();
     private BorderPane borderPane = new BorderPane();
     private GridPane gridPane = new GridPane();
 
@@ -60,7 +61,7 @@ public class PatientGUI extends Application {
 
         table.setEditable(true);
         Callback<TableColumn, TableCell> cellFactory =
-                p -> new EditingCell();
+                p -> new EditingCellManageEmployee();
 
         //region Creating tabs
         pane = new TabPane();
@@ -159,12 +160,18 @@ public class PatientGUI extends Application {
 
         table.getColumns().addAll(numberCol, datumCol, startTimeCol, stopTimeCol, fysioCol);
         hBox.getChildren().addAll(patientBSN, searchButton);
+        hBox.setSpacing(10);
         gridPane.addColumn(0, BSN, NAME, ADDRESS, ZIPCODE, CITY, DATEOFBIRTH, PHONE, EMAIL);
         gridPane.addColumn(1, bsnLabel, nameLabel, adressLabel, zipcodeLabel, cityLabel, dateOfBirthLabel, phoneLabel, emailLabel);
+        vBox.getChildren().addAll(hBox, gridPane);
 
-        borderPane.setTop(hBox);
+
+        borderPane.setLeft(vBox);
         borderPane.setCenter(table);
-        borderPane.setLeft(gridPane);
+        borderPane.setPrefSize(1200,600);
+        borderPane.setPadding(new Insets(10, 20, 10, 20));
+        borderPane.setMargin(vBox, new Insets(12,12,12,12));
+        borderPane.setMargin(gridPane, new Insets(12,12,12,12));
 
         pane.getTabs().addAll(appointmentTab, employeeTab, customerTab, manageEmployeeTab);
         customerTab.setContent(borderPane);

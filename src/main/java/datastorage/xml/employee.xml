@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<employees>
+    <employee city="Tilburg" country="Nederland" houseNumber="Zwartvenseweg" street="17" postalCode="5044 PA">
+        <address>17 Zwartvenseweg Tilburg</address>
+        <ssn>1231231</ssn>
+        <dateOfBirth>5-8-1992</dateOfBirth>
+        <mail>mlajturn@avans.nl</mail>
+        <function>Fysio</function>
+        <name>Mark</name>
+        <employeeId>2</employeeId>
+        <phone>061234567</phone>
+    </employee>
+</employees>

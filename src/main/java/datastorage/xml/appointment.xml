@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<appointments>
+    <appointment>
+        <appointmentDate/>
+        <appointmentFysio city="Tilburg" country="Nederland" houseNumber="Zwartvenseweg" street="17" postalCode="5044 PA">
+            <address>17 Zwartvenseweg Tilburg</address>
+            <ssn>1231231</ssn>
+            <dateOfBirth>5-8-1992</dateOfBirth>
+            <mail>mlajturn@avans.nl</mail>
+            <function>Fysio</function>
+            <name>Mark</name>
+            <employeeId>2</employeeId>
+            <phone>061234567</phone>
+        </appointmentFysio>
+        <appointmentFysioName>Mark</appointmentFysioName>
+        <appointmentNr>1</appointmentNr>
+        <appointmentPatient city="Tilburg" country="Nederland" houseNumber="17" street="Zwartvenseweg" postalCode="5044 PA">
+            <address>Zwartvenseweg 17 Tilburg</address>
+            <ssn>2</ssn>
+            <dateOfBirth/>
+            <email>mlajturn@avans.nl</email>
+            <firstName>Mark</firstName>
+            <patientFullName>Mark van Turnhout</patientFullName>
+            <lastName>van Turnhout</lastName>
+            <phone>0614740368</phone>
+        </appointmentPatient>
+        <appointmentPatientName>Mark van Turnhout</appointmentPatientName>
+        <startTime/>
+        <appointmentStartTimeString>00:51</appointmentStartTimeString>
+        <stopTime/>
+        <appointmentStopTimeString>00:51</appointmentStopTimeString>
+    </appointment>
+    <appointment>
+        <appointmentDate/>
+        <appointmentFysio city="Tilburg" country="Nederland" houseNumber="Zwartvenseweg" street="17" postalCode="5044 PA">
+            <address>17 Zwartvenseweg Tilburg</address>
+            <ssn>1231231</ssn>
+            <dateOfBirth>5-8-1992</dateOfBirth>
+            <mail>mlajturn@avans.nl</mail>
+            <function>Fysio</function>
+            <name>Mark</name>
+            <employeeId>2</employeeId>
+            <phone>061234567</phone>
+        </appointmentFysio>
+        <appointmentFysioName>Mark</appointmentFysioName>
+        <appointmentNr>1</appointmentNr>
+        <appointmentPatient city="Tilburg" country="Nederland" houseNumber="17" street="Zwartvenseweg" postalCode="5044 PA">
+            <address>Zwartvenseweg 17 Tilburg</address>
+            <ssn>2</ssn>
+            <dateOfBirth/>
+            <email>mlajturn@avans.nl</email>
+            <firstName>Mark</firstName>
+            <patientFullName>Mark van Turnhout</patientFullName>
+            <lastName>van Turnhout</lastName>
+            <phone>0614740368</phone>
+        </appointmentPatient>
+        <appointmentPatientName>Mark van Turnhout</appointmentPatientName>
+        <startTime/>
+        <appointmentStartTimeString>00:51</appointmentStartTimeString>
+        <stopTime/>
+        <appointmentStopTimeString>00:51</appointmentStopTimeString>
+    </appointment>
+</appointments>

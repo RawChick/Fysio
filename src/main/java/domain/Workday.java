@@ -16,6 +16,10 @@ public class Workday {
     private LocalTime stopTime;
     //endregion
 
+    public Workday(){
+
+    }
+
     //region Methods
     public Workday(LocalDate workDate, LocalTime startTime, LocalTime stopTime) {
         this.workDate = workDate;

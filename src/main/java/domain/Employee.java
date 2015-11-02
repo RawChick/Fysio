@@ -31,6 +31,10 @@ public class Employee {
     private ArrayList<Workday> employeeWorkdays;
     //endregion
 
+    public Employee(){
+
+    }
+
     //region Methods
     public Employee(String nr, String name, String employeeFunction, String employeeBSN, String employeeCity, String employeeCountry, String employeeStreet, String employeeHouseNumber, String employeeDateOfBirth, String employeeZipCode, String employeePhone, String employeeMail) {
         if (name.equals("Mark van Turnhout") || name.equals("Noureddine Azzagari")) {

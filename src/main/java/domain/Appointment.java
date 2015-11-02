@@ -29,6 +29,11 @@ public class Appointment {
     private String appointmentStopTimeString;
     //endregion
 
+    public Appointment(){
+
+    }
+
+
     //region Methods
     public Appointment(int appointmentNumber, LocalDate appointmentDate, LocalTime startTime, LocalTime stopTime, Employee fysio, Patient patient) {
         this.appointmentNumber = new SimpleIntegerProperty(this, "appointmentNumber", appointmentNumber);

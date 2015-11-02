@@ -46,7 +46,6 @@ public class Treatment {
 	public SimpleIntegerProperty treatmentCodeProperty() {
 		return treatmentCode;
 	}
-
 	public void setTreatmentCode(int treatmentCode) {
 		this.treatmentCode.set(treatmentCode);
 	}

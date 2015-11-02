@@ -1,10 +1,18 @@
 package businesslogic;
 
 import domain.Appointment;
+import domain.Appointments;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import static javax.xml.bind.JAXBContext.newInstance;
 
 
 /**
@@ -17,6 +25,9 @@ public class AppointmentManager {
     private PatientManager patientManager;
     //endregion
 
+    Appointments appointments = new Appointments();
+    File file = new File("C:\\Users\\rvroe\\workspace\\fysio-2015-10-26\\fysio\\src\\main\\java\\datastorage\\xml\\appointment.xml");
+
     //region Methods
     public AppointmentManager() {
         employeeManager = new EmployeeManager();
@@ -26,7 +37,30 @@ public class AppointmentManager {
                 new Appointment(1, LocalDate.now(), LocalTime.now(), LocalTime.now(), employeeManager.searchEmployeeWithNumber("2"), patientManager.searchWithBSN(2)),
                 new Appointment(1, LocalDate.of(2015, 11, 1), LocalTime.now(), LocalTime.now(), employeeManager.searchEmployeeWithNumber("2"), patientManager.searchWithBSN(2))
         );
+
+        Appointment appointment1 = new Appointment(1, LocalDate.now(), LocalTime.now(), LocalTime.now(), employeeManager.searchEmployeeWithNumber("2"), patientManager.searchWithBSN(2));
+        Appointment appointment2 = new Appointment(1, LocalDate.of(2015, 11, 1), LocalTime.now(), LocalTime.now(), employeeManager.searchEmployeeWithNumber("2"), patientManager.searchWithBSN(2));
+
+        try {
+
+            appointments.add(appointment1);
+            appointments.add(appointment2);
+
+            JAXBContext jaxbContext = newInstance(Appointments.class);
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+            jaxbMarshaller.marshal(appointments, file);
+            jaxbMarshaller.marshal(appointments, System.out);
+
+
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     /**
      *

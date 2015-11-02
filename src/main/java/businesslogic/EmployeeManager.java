@@ -2,12 +2,19 @@ package businesslogic;
 
 import com.sun.xml.internal.ws.api.pipe.FiberContextSwitchInterceptor;
 import domain.Employee;
+import domain.Employees;
 import domain.Workday;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import static javax.xml.bind.JAXBContext.newInstance;
 
 /**
  * Created by Barrie on 22-10-2015.
@@ -24,9 +31,33 @@ public class EmployeeManager {
                         ("2", "Mark", "Fysio", "1231231", "Tilburg", "Nederland", "17", "Zwartvenseweg", "5-8-1992", "5044 PA", "061234567" ,"mlajturn@avans.nl"))
         );
 
+        Employee employee = new Employee
+                ("2", "Mark", "Fysio", "1231231", "Tilburg", "Nederland", "17", "Zwartvenseweg", "5-8-1992", "5044 PA", "061234567" ,"mlajturn@avans.nl");
+
         Workday tempWorkday = new Workday(LocalDate.now(), LocalTime.now(), (LocalTime.now()));
         Boolean testWorkday = addWorkday("1", tempWorkday);
 
+        Employees employees = new Employees();
+        File file = new File("C:\\Users\\rvroe\\workspace\\fysio-2015-10-26\\fysio\\src\\main\\java\\datastorage\\xml\\employee.xml");
+
+
+            try {
+
+                employees.add(employee);
+
+
+                JAXBContext jaxbContext = newInstance(Employees.class);
+                Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+                jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+                jaxbMarshaller.marshal(employees, file);
+                jaxbMarshaller.marshal(employees, System.out);
+
+
+            } catch (JAXBException e) {
+                e.printStackTrace();
+            }
     }
 
     /**

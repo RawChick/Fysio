@@ -1,0 +1,36 @@
+package businesslogic;
+
+import domain.Treatments;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
+
+
+/**
+ * Created by rvroe on 2-11-2015.
+ */
+public class unmarshall {
+
+
+
+    public unmarshall()
+
+    {
+
+        try {
+            File file = new File( "C:\\Users\\rvroe\\workspace\\fysio-2015-10-26\\fysio\\src\\main\\java\\datastorage\\xml\\treatment.xml" );
+            JAXBContext jaxbContext = JAXBContext.newInstance(Treatments.class);
+
+            /**
+             * the only difference with the marshaling operation is here
+             */
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            Treatments countres = (Treatments)jaxbUnmarshaller.unmarshal(file);
+            System.out.println( countres );
+
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+    }
+}

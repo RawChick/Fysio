@@ -2,6 +2,7 @@ package domain;
 
 import javafx.beans.property.SimpleStringProperty;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
@@ -138,58 +139,6 @@ public class Employee {
         this.employeeBSN.set(employeeBSN);
     }
 
-    @XmlElement(name = "city")
-    public String getEmployeeCity() {
-        return employeeCity.get();
-    }
-
-    public SimpleStringProperty employeeCityProperty() {
-        return employeeCity;
-    }
-
-    public void setEmployeeCity(String employeeCity) {
-        this.employeeCity.set(employeeCity);
-    }
-
-    @XmlElement(name = "houseNumber")
-    public String getEmployeeHouseNumber() {
-        return employeeHouseNumber.get();
-    }
-
-    public SimpleStringProperty getEmployeeHouseNumberProperty() {
-        return employeeHouseNumber;
-    }
-
-    public void setEmployeeHouseNumber(String employeeHouseNumber) {
-        this.employeeHouseNumber.set(employeeHouseNumber);
-    }
-
-    @XmlElement(name = "country")
-    public String getEmployeeCountry() {
-        return employeeCountry.get();
-    }
-
-    public SimpleStringProperty employeeCountryProperty() {
-        return employeeCountry;
-    }
-
-    public void setEmployeeCountry(String employeeCountry) {
-        this.employeeCountry.set(employeeCountry);
-    }
-
-    @XmlElement(name = "street")
-    public String getEmployeeStreet() {
-        return employeeStreet.get();
-    }
-
-    public SimpleStringProperty employeeStreetProperty() {
-        return employeeStreet;
-    }
-
-    public void setEmployeeStreet(String employeeStreet) {
-        this.employeeStreet.set(employeeStreet);
-    }
-
     @XmlElement(name = "address")
     public String getEmployeeAddress() {
         return employeeAddress.get();
@@ -203,6 +152,72 @@ public class Employee {
         this.employeeAddress.set(employeeAddress);
     }
 
+
+    @XmlAttribute(name = "city")
+    public String getEmployeeCity() {
+        return employeeCity.get();
+    }
+
+    public SimpleStringProperty employeeCityProperty() {
+        return employeeCity;
+    }
+
+    public void setEmployeeCity(String employeeCity) {
+        this.employeeCity.set(employeeCity);
+    }
+
+    @XmlAttribute(name = "houseNumber")
+    public String getEmployeeHouseNumber() {
+        return employeeHouseNumber.get();
+    }
+
+    public SimpleStringProperty getEmployeeHouseNumberProperty() {
+        return employeeHouseNumber;
+    }
+
+    public void setEmployeeHouseNumber(String employeeHouseNumber) {
+        this.employeeHouseNumber.set(employeeHouseNumber);
+    }
+
+    @XmlAttribute(name = "country")
+    public String getEmployeeCountry() {
+        return employeeCountry.get();
+    }
+
+    public SimpleStringProperty employeeCountryProperty() {
+        return employeeCountry;
+    }
+
+    public void setEmployeeCountry(String employeeCountry) {
+        this.employeeCountry.set(employeeCountry);
+    }
+
+    @XmlAttribute(name = "street")
+    public String getEmployeeStreet() {
+        return employeeStreet.get();
+    }
+
+    public SimpleStringProperty employeeStreetProperty() {
+        return employeeStreet;
+    }
+
+    public void setEmployeeStreet(String employeeStreet) {
+        this.employeeStreet.set(employeeStreet);
+    }
+
+    @XmlAttribute(name = "postalCode")
+    public String getEmployeeZipCode() {
+        return employeeZipCode.get();
+    }
+
+    public SimpleStringProperty employeeZipCodeProperty() {
+        return employeeZipCode;
+    }
+
+    public void setEmployeeZipCode(String employeeZipCode) {
+        this.employeeZipCode.set(employeeZipCode);
+    }
+
     @XmlElement(name = "dateOfBirth")
     public String getEmployeeDateOfBirth() {
         return employeeDateOfBirth.get();
@@ -214,18 +229,6 @@ public class Employee {
 
     public void setEmployeeDateOfBirth(String employeeDateOfBirth) {
         this.employeeDateOfBirth.set(employeeDateOfBirth);
-    }
-    @XmlElement(name = "postalCode")
-    public String getEmployeeZipCode() {
-        return employeeZipCode.get();
-    }
-
-    public SimpleStringProperty employeeZipCodeProperty() {
-        return employeeZipCode;
-    }
-
-    public void setEmployeeZipCode(String employeeZipCode) {
-        this.employeeZipCode.set(employeeZipCode);
     }
 
     @XmlElement(name = "phone")

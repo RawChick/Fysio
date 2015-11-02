@@ -8,6 +8,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @XmlRootElement(name = "treatment")
 public class Treatment {
 	//region Attributes and properties
@@ -16,7 +19,12 @@ public class Treatment {
 	private SimpleIntegerProperty treatmentSessions;
 	private SimpleDoubleProperty treatmentSessionCost;
 	private SimpleDoubleProperty treatmentSessionDuration;
+
 	//endregion
+
+	public Treatment() {
+
+	}
 
 	//region Methods
 	public Treatment (int code, String name, int amountSessions, double sessionCost, double sessionDuration) {
@@ -29,6 +37,7 @@ public class Treatment {
 	//endregion
 
 	//region Getters and setters
+
 	@XmlElement(name = "code")
 	public int getTreatmentCode() {
 		return treatmentCode.get();

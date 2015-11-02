@@ -3,13 +3,13 @@ package domain;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@XmlRootElement(name = "client")
 public class Patient {
     //region Attributes and properties
     private SimpleIntegerProperty patientBSN;
@@ -25,7 +25,6 @@ public class Patient {
     private SimpleStringProperty patientZipCode;
     private SimpleStringProperty patientPhone;
     private SimpleStringProperty patientEmail;
-
     private ArrayList<Treatment> patientTreatments;
     //endregion
 
@@ -48,19 +47,6 @@ public class Patient {
     //endregion
 
     //region Getters and setters
-
-
-    public String getPatientAddress() {
-        return patientAddress.get();
-    }
-
-    public SimpleStringProperty patientAddressProperty() {
-        return patientAddress;
-    }
-
-    public void setPatientAddress(String patientAddress) {
-        this.patientAddress.set(patientAddress);
-    }
 
     public String getPatientFullName() {
         return patientFullName.get();
@@ -113,7 +99,20 @@ public class Patient {
         this.patientLastName.set(patientLastName);
     }
 
-    @XmlElement(name = "city")
+    @XmlElement(name = "address")
+    public String getPatientAddress() {
+        return patientAddress.get();
+    }
+
+    public SimpleStringProperty patientAddressProperty() {
+        return patientAddress;
+    }
+
+    public void setPatientAddress(String patientAddress) {
+        this.patientAddress.set(patientAddress);
+    }
+
+    @XmlAttribute(name = "city")
     public String getPatientCity() {
         return patientCity.get();
     }
@@ -126,7 +125,7 @@ public class Patient {
         this.patientCity.set(patientCity);
     }
 
-    @XmlElement(name = "houseNumber")
+    @XmlAttribute(name = "houseNumber")
     public String getPatientHouseNumber() {
         return patientHouseNumber.get();
     }
@@ -139,7 +138,7 @@ public class Patient {
         this.patientHouseNumber.set(patientHouseNumber);
     }
 
-    @XmlElement(name = "country")
+    @XmlAttribute(name = "country")
     public String getPatientCountry() {
         return patientCountry.get();
     }
@@ -152,7 +151,7 @@ public class Patient {
         this.patientCountry.set(patientCountry);
     }
 
-    @XmlElement(name = "street")
+    @XmlAttribute(name = "street")
     public String getPatientStreet() {
         return patientStreet.get();
     }
@@ -165,16 +164,7 @@ public class Patient {
         this.patientStreet.set(patientStreet);
     }
 
-    @XmlElement(name = "dateOfBirth")
-    public LocalDate getPatientDateOfBirth() {
-        return patientDateOfBirth;
-    }
-
-    public void setPatientDateOfBirth(LocalDate patientDateOfBirth) {
-        this.patientDateOfBirth = patientDateOfBirth;
-    }
-
-    @XmlElement(name = "postalCode")
+    @XmlAttribute(name = "postalCode")
     public String getPatientZipCode() {
         return patientZipCode.get();
     }
@@ -185,6 +175,15 @@ public class Patient {
 
     public void setPatientZipCode(String patientZipCode) {
         this.patientZipCode.set(patientZipCode);
+    }
+
+    @XmlElement(name = "dateOfBirth")
+    public LocalDate getPatientDateOfBirth() {
+        return patientDateOfBirth;
+    }
+
+    public void setPatientDateOfBirth(LocalDate patientDateOfBirth) {
+        this.patientDateOfBirth = patientDateOfBirth;
     }
 
     @XmlElement(name = "phone")

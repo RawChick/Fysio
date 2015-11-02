@@ -3,6 +3,7 @@ package presentation;
 import businesslogic.AppointmentManager;
 import businesslogic.EmployeeManager;
 import businesslogic.PatientManager;
+import businesslogic.TreatmentManager;
 import domain.*;
 import javafx.application.Application;
 import javafx.collections.transformation.FilteredList;
@@ -26,6 +27,7 @@ public class AppointmentGUI extends Application {
     private AppointmentManager appointmentManager;
     private EmployeeManager employeeManager;
     private PatientManager patientManager;
+    private TreatmentManager treatmentManager;
     private ValidateInput validate;
 
     private TabPane pane;
@@ -48,6 +50,7 @@ public class AppointmentGUI extends Application {
         appointmentManager = new AppointmentManager();
         employeeManager = new EmployeeManager();
         patientManager = new PatientManager();
+        treatmentManager = new TreatmentManager();
         table = new TableView<>();
         validate = new ValidateInput();
 

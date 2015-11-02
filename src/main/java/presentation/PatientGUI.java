@@ -36,14 +36,14 @@ public class PatientGUI extends Application {
     private TextField patientBSN;
     private Button searchButton;
 
-    private static Label BSN ;
-    private static Label NAME ;
+    private static Label BSN;
+    private static Label NAME;
     private static Label ADDRESS;
     private static Label ZIPCODE;
     private static Label CITY;
-    private static Label DATEOFBIRTH ;
-    private static Label PHONE ;
-    private static Label EMAIL ;
+    private static Label DATEOFBIRTH;
+    private static Label PHONE;
+    private static Label EMAIL;
     private Label bsnLabel;
     private Label nameLabel;
     private Label adressLabel;
@@ -171,10 +171,10 @@ public class PatientGUI extends Application {
 
         borderPane.setLeft(vBox);
         borderPane.setCenter(table);
-        borderPane.setPrefSize(1200,600);
+        borderPane.setPrefSize(1200, 600);
         borderPane.setPadding(new Insets(10, 20, 10, 20));
-        borderPane.setMargin(vBox, new Insets(12,12,12,12));
-        borderPane.setMargin(gridPane, new Insets(12,12,12,12));
+        borderPane.setMargin(vBox, new Insets(12, 12, 12, 12));
+        borderPane.setMargin(gridPane, new Insets(12, 12, 12, 12));
 
         pane.getTabs().addAll(appointmentTab, employeeTab, customerTab, manageEmployeeTab);
         customerTab.setContent(borderPane);
@@ -188,58 +188,63 @@ public class PatientGUI extends Application {
     }
 
     public void searchWithBSN() {
-        int bsn = Integer.parseInt(patientBSN.getText());
-        Patient tempPatient = patientManager.searchWithBSN(bsn);
 
-        if (tempPatient != null) {
-            bsnLabel.setText(String.valueOf(tempPatient.getPatientBSN()));
-            nameLabel.setText(tempPatient.getPatientName());
-            adressLabel.setText(tempPatient.getPatientAddress());
-            zipcodeLabel.setText(tempPatient.getPatientZipCode());
-            cityLabel.setText(tempPatient.getPatientCity());
-            dateOfBirthLabel.setText(String.valueOf(tempPatient.getPatientDateOfBirth()));
-            phoneLabel.setText(tempPatient.getPatientPhone());
-            emailLabel.setText(tempPatient.getPatientEmail());
-            ObservableList<Appointment> data = appointmentManager.searchWithPatientBSN(tempPatient.getPatientBSN());
-            table.setItems(data);
-
-            for (Appointment aData : data) {
-                int lenght = 0;
-                if (aData.getAppointmentNumber().toString().length() > lenght) {
-                    lenght = aData.getAppointmentNumber().toString().length();
-                    numberCol.setMinWidth(lenght*8.5);
-                }
-            }
-            for (Appointment aData : data) {
-                int lenght = 0;
-                if (aData.getAppointmentDate().toString().length() > lenght) {
-                    lenght = aData.getAppointmentDate().toString().length();
-                    datumCol.setMinWidth(lenght*8.5);
-                }
-            }
-            for (Appointment aData : data) {
-                int lenght = 0;
-                if (aData.getAppointmentStartTimeString().length() > lenght) {
-                    lenght = aData.getAppointmentStartTimeString().length();
-                    startTimeCol.setMinWidth(lenght*8.5);
-                }
-            }
-            for (Appointment aData : data) {
-                int lenght = 0;
-                if (aData.getAppointmentStopTimeString().length() > lenght) {
-                    lenght = aData.getAppointmentStopTimeString().length();
-                    stopTimeCol.setMinWidth(lenght*8.5);
-                }
-            }
-            for (Appointment aData : data) {
-                int lenght = 0;
-                if (aData.getAppointmentFysioName().length() > lenght) {
-                    lenght = aData.getAppointmentFysioName().length();
-                    fysioCol.setMinWidth(lenght*8.5);
-                }
-            }
+        if (patientBSN.getText().equals("")) {
+            AlertBox.display("Foutmelding", "Geen medewerkersnummer ingevoerd");
         } else {
-            AlertBox.display("Foutmelding", "Geen patient gevonden met BSN: " + bsn);
+            int bsn = Integer.parseInt(patientBSN.getText());
+            Patient tempPatient = patientManager.searchWithBSN(bsn);
+
+            if (tempPatient != null) {
+                bsnLabel.setText(String.valueOf(tempPatient.getPatientBSN()));
+                nameLabel.setText(tempPatient.getPatientFullName());
+                adressLabel.setText(tempPatient.getPatientAddress());
+                zipcodeLabel.setText(tempPatient.getPatientZipCode());
+                cityLabel.setText(tempPatient.getPatientCity());
+                dateOfBirthLabel.setText(String.valueOf(tempPatient.getPatientDateOfBirth()));
+                phoneLabel.setText(tempPatient.getPatientPhone());
+                emailLabel.setText(tempPatient.getPatientEmail());
+                ObservableList<Appointment> data = appointmentManager.searchWithPatientBSN(tempPatient.getPatientBSN());
+                table.setItems(data);
+
+                for (Appointment aData : data) {
+                    int lenght = 0;
+                    if (aData.getAppointmentNumber().toString().length() > lenght) {
+                        lenght = aData.getAppointmentNumber().toString().length();
+                        numberCol.setMinWidth(lenght * 8.5);
+                    }
+                }
+                for (Appointment aData : data) {
+                    int lenght = 0;
+                    if (aData.getAppointmentDate().toString().length() > lenght) {
+                        lenght = aData.getAppointmentDate().toString().length();
+                        datumCol.setMinWidth(lenght * 8.5);
+                    }
+                }
+                for (Appointment aData : data) {
+                    int lenght = 0;
+                    if (aData.getAppointmentStartTimeString().length() > lenght) {
+                        lenght = aData.getAppointmentStartTimeString().length();
+                        startTimeCol.setMinWidth(lenght * 8.5);
+                    }
+                }
+                for (Appointment aData : data) {
+                    int lenght = 0;
+                    if (aData.getAppointmentStopTimeString().length() > lenght) {
+                        lenght = aData.getAppointmentStopTimeString().length();
+                        stopTimeCol.setMinWidth(lenght * 8.5);
+                    }
+                }
+                for (Appointment aData : data) {
+                    int lenght = 0;
+                    if (aData.getAppointmentFysioName().length() > lenght) {
+                        lenght = aData.getAppointmentFysioName().length();
+                        fysioCol.setMinWidth(lenght * 8.5);
+                    }
+                }
+            } else {
+                AlertBox.display("Foutmelding", "Geen patient gevonden met BSN: " + bsn);
+            }
         }
     }
 }

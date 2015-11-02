@@ -15,7 +15,7 @@ public class PatientManager {
     //region Methods
     public PatientManager() {
         data = FXCollections.observableArrayList();
-        addPatient(new Patient(2, "Mark van Turnhout",  "Zwartvenseweg 17", "Tilburg", LocalDate.of(1992, 8, 5), "5044 PA", "0614740368", "mlajturn@avans.nl"));
+        addPatient(new Patient(2, "Mark", "van Turnhout",  "Tilburg", "Nederland", "Zwartvenseweg", "17", LocalDate.of(1992, 8, 5), "5044 PA", "0614740368", "mlajturn@avans.nl"));
     }
 
     /**
@@ -26,7 +26,7 @@ public class PatientManager {
         ObservableList<String> names = FXCollections.observableArrayList();
 
         for (Patient e : data) {
-            names.add(e.getPatientName());
+            names.add(e.getPatientFullName());
         }
 
         return names;
@@ -40,7 +40,7 @@ public class PatientManager {
     public Patient searchPatientWithName(String patientName) {
         Patient returnPatient = null;
         for (Patient e : data) {
-            if (e.getPatientName().equals(patientName)) {
+            if (e.getPatientFullName().equals(patientName)) {
                 returnPatient = e;
             }
         }

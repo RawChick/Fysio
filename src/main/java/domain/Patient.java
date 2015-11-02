@@ -13,6 +13,7 @@ import java.util.List;
 public class Patient {
     //region Attributes and properties
     private SimpleIntegerProperty patientBSN;
+    private SimpleStringProperty patientFullName;
     private SimpleStringProperty patientFirstName;
     private SimpleStringProperty patientLastName;
     private SimpleStringProperty patientCity;
@@ -29,12 +30,11 @@ public class Patient {
     //endregion
 
     //region Methods
-    public Patient(int bsn, String firstName, String lastName, String city, String country, String street, String houseNumber, String address,  LocalDate dateOfBirth, String zipCode, String phone, String email) {
+    public Patient(int bsn, String firstName, String lastName, String city, String country, String street, String houseNumber, LocalDate dateOfBirth, String zipCode, String phone, String email) {
         this.patientBSN = new SimpleIntegerProperty(this, "patientBSN", bsn);
         this.patientFirstName = new SimpleStringProperty(this, "patientFirstName", firstName);
         this.patientLastName = new SimpleStringProperty(this, "patientLastName", lastName);
         this.patientCity = new SimpleStringProperty(this, "patientCity", city);
-        this.patientAddress = new SimpleStringProperty(this, "patientAddress", address);
         this.patientHouseNumber = new SimpleStringProperty(this, "patientHouseNumber", houseNumber);
         this.patientStreet = new SimpleStringProperty(this, "patientStreet", street);
         this.patientCountry = new SimpleStringProperty(this, "patientCountry", country);
@@ -42,10 +42,38 @@ public class Patient {
         this.patientZipCode = new SimpleStringProperty(this, "patientZipCode", zipCode);
         this.patientPhone = new SimpleStringProperty(this, "patientPhone", phone);
         this.patientEmail = new SimpleStringProperty(this, "patientEmail", email);
+        this.patientFullName = new SimpleStringProperty(this, "patientFullName", firstName + " " + lastName);
+        this.patientAddress = new SimpleStringProperty(this, "patientAddress", street + " " + houseNumber + " " + city);
     }
     //endregion
 
     //region Getters and setters
+
+
+    public String getPatientAddress() {
+        return patientAddress.get();
+    }
+
+    public SimpleStringProperty patientAddressProperty() {
+        return patientAddress;
+    }
+
+    public void setPatientAddress(String patientAddress) {
+        this.patientAddress.set(patientAddress);
+    }
+
+    public String getPatientFullName() {
+        return patientFullName.get();
+    }
+
+    public SimpleStringProperty patientFullNameProperty() {
+        return patientFullName;
+    }
+
+    public void setPatientFullName(String patientFullName) {
+        this.patientFullName.set(patientFullName);
+    }
+
     @XmlElement(name = "ssn")
     public int getPatientBSN() {
         return patientBSN.get();
@@ -135,20 +163,6 @@ public class Patient {
 
     public void setPatientStreet(String patientStreet) {
         this.patientStreet.set(patientStreet);
-    }
-
-
-    @XmlElement(name= "address")
-    public String getPatientAddress() {
-        return patientAddress.get();
-    }
-
-    public SimpleStringProperty patientAddressProperty() {
-        return patientAddress;
-    }
-
-    public void setPatientAddress(String patientAddress) {
-        this.patientAddress.set(patientAddress);
     }
 
     @XmlElement(name = "dateOfBirth")

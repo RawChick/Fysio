@@ -20,8 +20,8 @@ public class EmployeeManager {
     //region Methods
     public EmployeeManager() {
         data = FXCollections.observableArrayList(
-                new Employee("1", "Noureddine Azzagari", "Baas", "22775566", "Goes", "Tak van Poortvlietstraat 19", "11-10-1995", "4463 TA", "0618559116", "nazzagar@avans.nl"),
-                new Employee("2", "Mark van Turnhout", "Baas", "11664455", "Tilburg", "Zwartvenseweg 17", "05-08-1992", "5044 PA", "0614740368", "mlajturn@avans.nl")
+                (new Employee
+                        ("2", "Mark", "Fysio", "1231231", "Tilburg", "Nederland", "17", "Zwartvenseweg", "5-8-1992", "5044 PA", "061234567" ,"mlajturn@avans.nl"))
         );
 
         Workday tempWorkday = new Workday(LocalDate.now(), LocalTime.now(), (LocalTime.now()));

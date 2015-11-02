@@ -261,8 +261,8 @@ public class AppointmentGUI extends Application {
 
                 if (tempAppointment != null) {
                     AlertBox.display("Foutmelding", "Er is al een afspraak met dit nummer: " + tempAppointment.getAppointmentNumber());
-                } else if (validate.validateNumber(appointmentNumber.getText())) {
-                    AlertBox.display("Error", appointmentNumber.getText() + " is geen geldig medewerkersnummer");
+                } else if (!validate.validateNumber(appointmentNumber.getText())) {
+                    AlertBox.display("Error", appointmentNumber.getText() + " is geen geldig afspraaknummer");
                 } else if (dp_AppointmentDate.getValue().equals("")) {
                     AlertBox.display("Foutmelding", "Geen datum gekozen");
                 } else if (appointmentStartTime.getText().equals("")) {

@@ -36,7 +36,10 @@ public class ManageEmployeeGUI extends Application {
     TableColumn nameCol = new TableColumn("Naam");
     TableColumn functionCol = new TableColumn("Function");
     TableColumn bsnCol = new TableColumn("Bsn");
-    TableColumn cityCol = new TableColumn("Stad");
+    TableColumn countryCol = new TableColumn("Stad");
+    TableColumn houseCol = new TableColumn("Land");
+    TableColumn streetCol = new TableColumn("Huisnummer");
+    TableColumn cityCol = new TableColumn("Straat");
     TableColumn addressCol = new TableColumn("Adres");
     TableColumn dateOfBirthCol = new TableColumn("Geboortedatum");
     TableColumn zipCodeCol = new TableColumn("Postcode");
@@ -219,15 +222,59 @@ public class ManageEmployeeGUI extends Application {
                     }
                 }
         );
-        addressCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("employeeAddress"));
-        addressCol.setCellFactory(cellFactory);
-        addressCol.setOnEditCommit(
+        countryCol.setCellValueFactory(
+                new PropertyValueFactory<Employee, String>("employeeCountry"));
+        countryCol.setCellFactory(cellFactory);
+        countryCol.setOnEditCommit(
+                new EventHandler<CellEditEvent<Employee, String>>() {
+                    @Override
+                    public void handle(CellEditEvent<Employee, String> t) {
+                        if (validate.validateName(t.getNewValue())) {
+                            t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow()).setEmployeeCountry(t.getNewValue());
+                            table.getColumns().get(0).setVisible(false);
+                            table.getColumns().get(0).setVisible(true);
+                        } else {
+                            AlertBox.display("Foutmelding", t.getNewValue() + " is geen geldig land");
+                            t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow()).setEmployeeCountry(t.getOldValue());
+                            table.getColumns().get(0).setVisible(false);
+                            table.getColumns().get(0).setVisible(true);
+                        }
+                    }
+                }
+        );
+        houseCol.setCellValueFactory(
+                new PropertyValueFactory<Employee, String>("employeeHouseNumber"));
+        houseCol.setCellFactory(cellFactory);
+        houseCol.setOnEditCommit(
+                new EventHandler<CellEditEvent<Employee, String>>() {
+                    @Override
+                    public void handle(CellEditEvent<Employee, String> t) {
+                        if (validate.validateName(t.getNewValue())) {
+                            t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow()).setEmployeeHouseNumber(t.getNewValue());
+                            table.getColumns().get(0).setVisible(false);
+                            table.getColumns().get(0).setVisible(true);
+                        } else {
+                            AlertBox.display("Foutmelding", t.getNewValue() + " is geen geldig huis nummer");
+                            t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow()).setEmployeeHouseNumber(t.getOldValue());
+                            table.getColumns().get(0).setVisible(false);
+                            table.getColumns().get(0).setVisible(true);
+                        }
+                    }
+                }
+        );
+        streetCol.setCellValueFactory(
+                new PropertyValueFactory<Employee, String>("employeeStreet"));
+        streetCol.setCellFactory(cellFactory);
+        streetCol.setOnEditCommit(
                 new EventHandler<CellEditEvent<Employee, String>>() {
                     @Override
                     public void handle(CellEditEvent<Employee, String> t) {
                         t.getTableView().getItems().get(
-                                t.getTablePosition().getRow()).setEmployeeAddress(t.getNewValue());
+                                t.getTablePosition().getRow()).setEmployeeStreet(t.getNewValue());
                         table.getColumns().get(0).setVisible(false);
                         table.getColumns().get(0).setVisible(true);
                     }
@@ -316,9 +363,9 @@ public class ManageEmployeeGUI extends Application {
         //endregion
 
         //region Creating textfields
-        final TextField addEmployeeNr = new TextField();
-        addEmployeeNr.setPromptText("Nr");
-        addEmployeeNr.setMaxWidth(employeeNrCol.getPrefWidth());
+        final TextField addNr = new TextField();
+        addNr.setPromptText("Nr");
+        addNr.setMaxWidth(employeeNrCol.getPrefWidth());
 
         final TextField addName = new TextField();
         addName.setMaxWidth(nameCol.getPrefWidth());
@@ -329,31 +376,39 @@ public class ManageEmployeeGUI extends Application {
         addFunction.setPromptText("Function");
 
         final TextField addBsn = new TextField();
-        addBsn.setMaxWidth(nameCol.getPrefWidth());
+        addBsn.setMaxWidth(bsnCol.getPrefWidth());
         addBsn.setPromptText("BSN");
 
         final TextField addCity = new TextField();
-        addCity.setMaxWidth(functionCol.getPrefWidth());
+        addCity.setMaxWidth(cityCol.getPrefWidth());
         addCity.setPromptText("Stad");
 
-        final TextField addAddress = new TextField();
-        addAddress.setMaxWidth(nameCol.getPrefWidth());
-        addAddress.setPromptText("Adres");
+        final TextField addCountry = new TextField();
+        addCountry.setMaxWidth(countryCol.getPrefWidth());
+        addCountry.setPromptText("Land");
+
+        final TextField addHouseNumber = new TextField();
+        addHouseNumber.setMaxWidth(houseCol.getPrefWidth());
+        addHouseNumber.setPromptText("Huisnummer");
+
+        final TextField addStreet = new TextField();
+        addStreet.setMaxWidth(streetCol.getPrefWidth());
+        addStreet.setPromptText("Straat");
 
         final TextField addDateOfBirth = new TextField();
-        addDateOfBirth.setMaxWidth(functionCol.getPrefWidth());
+        addDateOfBirth.setMaxWidth(addDateOfBirth.getPrefWidth());
         addDateOfBirth.setPromptText("Geboortedatum");
 
         final TextField addZipCode = new TextField();
-        addZipCode.setMaxWidth(functionCol.getPrefWidth());
+        addZipCode.setMaxWidth(zipCodeCol.getPrefWidth());
         addZipCode.setPromptText("Postcode");
 
         final TextField addPhone = new TextField();
-        addPhone.setMaxWidth(nameCol.getPrefWidth());
+        addPhone.setMaxWidth(phoneCol.getPrefWidth());
         addPhone.setPromptText("Telefoonnummer");
 
         final TextField addEmail = new TextField();
-        addEmail.setMaxWidth(functionCol.getPrefWidth());
+        addEmail.setMaxWidth(emailCol.getPrefWidth());
         addEmail.setPromptText("Email");
         //endregion
 
@@ -376,16 +431,16 @@ public class ManageEmployeeGUI extends Application {
 
         final Button addButton = new Button("Add");
         addButton.setOnAction(e -> {
-                    Employee tempEmployee = manager.searchEmployeeWithNumber(addEmployeeNr.getText());
+                    Employee tempEmployee = manager.searchEmployeeWithNumber(addNr.getText());
 
-                    if (addEmployeeNr.getText().equals("")) {
+                    if (addNr.getText().equals("")) {
                         AlertBox.display("Error", "Er is geen medewerkersnummer ingevuld");
-                    } else if (!validate.validateNumber(addEmployeeNr.getText())) {
-                        AlertBox.display("Error", addEmployeeNr.getText() + " is geen geldig medewerkersnummer");
-                        addEmployeeNr.clear();
+                    } else if (!validate.validateNumber(addNr.getText())) {
+                        AlertBox.display("Error", addNr.getText() + " is geen geldig medewerkersnummer");
+                        addNr.clear();
                     } else if (tempEmployee != null) {
-                        AlertBox.display("Error", addEmployeeNr.getText() + " word al gebruikt als medewerkersnummer");
-                        addEmployeeNr.clear();
+                        AlertBox.display("Error", addNr.getText() + " word al gebruikt als medewerkersnummer");
+                        addNr.clear();
                     } else if (addName.getText().equals("")) {
                         AlertBox.display("Error", "Er is geen naam ingevuld");
                     } else if (!validate.validateName(addName.getText())) {
@@ -406,7 +461,7 @@ public class ManageEmployeeGUI extends Application {
                     } else if (!validate.validateName(addCity.getText())) {
                         AlertBox.display("Error", addCity.getText() + " is geen geldige stad");
                         addCity.clear();
-                    } else if (addAddress.getText().equals("")) {
+                    } else if (addStreet.getText().equals("")) {
                         AlertBox.display("Error", "Er is geen adres ingevuld");
                     } else if (addDateOfBirth.getText().equals("")) {
                         AlertBox.display("Error", "Er is geen geboortedatum ingevuld");
@@ -427,17 +482,19 @@ public class ManageEmployeeGUI extends Application {
                         AlertBox.display("Error", "Er is geen email ingevuld");
                     } else {
                         Employee newEmployee = new Employee(
-                                addEmployeeNr.getText(),
+                                addNr.getText(),
                                 addName.getText(),
                                 addFunction.getText(),
                                 addBsn.getText(),
                                 addCity.getText(),
-                                addAddress.getText(),
+                                addCountry.getText(),
+                                addHouseNumber.getText(),
+                                addStreet.getText(),
                                 addDateOfBirth.getText(),
                                 addZipCode.getText(),
                                 addPhone.getText(),
-                                addEmail.getText());
-
+                                addEmail.getText()
+                        );
                         if (manager.addEmployee(newEmployee)) {
                             if (newEmployee.getEmployeeName().equals("Mark van Turnhout")) {
                                 AlertBox.display("Melding", "Potverdorie, wat is die " + newEmployee.getEmployeeName() + " toch ook een knapperd he?!\n En niet te vergeten hilarisch natuurlijk....!");
@@ -447,12 +504,12 @@ public class ManageEmployeeGUI extends Application {
                         } else {
                             AlertBox.display("Error", "Medewerker " + newEmployee.getEmployeeName() + " niet toegevoegd");
                         }
-                        addEmployeeNr.clear();
+                        addNr.clear();
                         addName.clear();
                         addFunction.clear();
                         addBsn.clear();
                         addCity.clear();
-                        addAddress.clear();
+                        addStreet.clear();
                         addDateOfBirth.clear();
                         addZipCode.clear();
                         addPhone.clear();
@@ -541,7 +598,7 @@ public class ManageEmployeeGUI extends Application {
                 .addAll(employeeNrCol, nameCol, functionCol, bsnCol, cityCol, addressCol, dateOfBirthCol, zipCodeCol, phoneCol, emailCol);
 
         vBox.getChildren()
-                .addAll(addEmployeeNr, addName, addFunction, addBsn, addCity, addAddress, addDateOfBirth, addZipCode, addPhone, addEmail, addButton, deleteButton);
+                .addAll(addNr, addName, addFunction, addBsn, addCity, addStreet, addDateOfBirth, addZipCode, addPhone, addEmail, addButton, deleteButton);
         vBox.setSpacing(5);
 
         borderPane.setLeft(vBox);

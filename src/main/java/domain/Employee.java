@@ -20,8 +20,8 @@ public class Employee {
     private SimpleStringProperty employeeCity;
     private SimpleStringProperty employeeCountry;
     private SimpleStringProperty employeeStreet;
-    private SimpleStringProperty employeeHouseNumber;
     private SimpleStringProperty employeeAddress;
+    private SimpleStringProperty employeeHouseNumber;
     private SimpleStringProperty employeeDateOfBirth;
     private SimpleStringProperty employeeZipCode;
     private SimpleStringProperty employeePhone;
@@ -31,7 +31,7 @@ public class Employee {
     //endregion
 
     //region Methods
-    public Employee(String nr, String name, String employeeFunction, String employeeBSN, String employeeCity, String employeeCountry, String employeeStreet, String employeeHouseNumber,  String employeeAddress, String employeeDateOfBirth, String employeeZipCode, String employeePhone, String employeeMail) {
+    public Employee(String nr, String name, String employeeFunction, String employeeBSN, String employeeCity, String employeeCountry, String employeeStreet, String employeeHouseNumber, String employeeDateOfBirth, String employeeZipCode, String employeePhone, String employeeMail) {
         if (name.equals("Mark van Turnhout") || name.equals("Noureddine Azzagari")) {
             this.employeeFunction = new SimpleStringProperty("Baas!");
         } else {
@@ -44,12 +44,11 @@ public class Employee {
         this.employeeCountry = new SimpleStringProperty(this, "employeeCountry", employeeCountry);
         this.employeeHouseNumber = new SimpleStringProperty(this, "employeeHouseNumber", employeeHouseNumber);
         this.employeeStreet = new SimpleStringProperty(this, "employeeStreet", employeeStreet);
-        this.employeeAddress = new SimpleStringProperty(this, "employeeAddress", employeeAddress);
         this.employeeDateOfBirth = new SimpleStringProperty(this, "employeeDateOFBirth", employeeDateOfBirth);
         this.employeeZipCode = new SimpleStringProperty(this, "employeeZipCode", employeeZipCode);
         this.employeePhone = new SimpleStringProperty(this, "employeePhone", employeePhone);
         this.employeeMail = new SimpleStringProperty(this, "employeeMail", employeeMail);
-
+        this.employeeAddress = new SimpleStringProperty(this, "employeeAddress", employeeStreet + " " + employeeHouseNumber + " " + employeeCity);
         this.employeeWorkdays = new ArrayList<>();
     }
 

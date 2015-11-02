@@ -39,7 +39,7 @@ public class Appointment {
         this.appointmentPatient = patient;
 
         setAppointmentFysioName(fysio.getEmployeeName());
-        setAppointmentPatientName(patient.getPatientName());
+        setAppointmentPatientName(patient.getPatientFullName());
 
         String TIME_PATTERN = "HH:mm";
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern(TIME_PATTERN);
@@ -49,7 +49,7 @@ public class Appointment {
 
     public String ToString() {
         return appointmentNumber + " op: " + appointmentDate + " heeft Fysiotherapeut: " +
-                appointmentFysio.getEmployeeName() + " van: " + appointmentStartTime + " tot: " + appointmentStopTime + " patient: " + appointmentPatient.getPatientName() + " behandeld";
+                appointmentFysio.getEmployeeName() + " van: " + appointmentStartTime + " tot: " + appointmentStopTime + " patient: " + appointmentPatient.getPatientFullName() + " behandeld";
     }
     //endregion
 

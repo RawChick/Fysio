@@ -23,7 +23,8 @@ public class AppointmentManager {
         patientManager = new PatientManager();
 
         data = FXCollections.observableArrayList(
-                new Appointment(1, LocalDate.now(), LocalTime.now(), LocalTime.now(), employeeManager.searchEmployeeWithNumber("1"), patientManager.searchWithBSN(2))
+                new Appointment(1, LocalDate.now(), LocalTime.now(), LocalTime.now(), employeeManager.searchEmployeeWithNumber("2"), patientManager.searchWithBSN(2)),
+                new Appointment(1, LocalDate.of(2015, 11, 1), LocalTime.now(), LocalTime.now(), employeeManager.searchEmployeeWithNumber("2"), patientManager.searchWithBSN(2))
         );
     }
 

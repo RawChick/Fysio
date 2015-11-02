@@ -17,8 +17,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -38,6 +36,11 @@ public class AppointmentGUI extends Application {
 
     private VBox vBox = new VBox();
     private BorderPane borderPane = new BorderPane();
+    TableColumn<Appointment, String> numberCol = new TableColumn<>("Nummer");
+    TableColumn startTimeCol = new TableColumn("Van");
+    TableColumn stopTimeCol = new TableColumn("Tot");
+    TableColumn fysioCol = new TableColumn("Fysio");
+    TableColumn patientCol = new TableColumn("Patient");
     //endregion
 
     @Override
@@ -95,15 +98,15 @@ public class AppointmentGUI extends Application {
         //endregion
 
         //region Creating columns for table
-        TableColumn numberCol = new TableColumn("Nummer");
-        numberCol.setCellValueFactory(
-                new PropertyValueFactory<Appointment, String>("appointmentNumber"));
-        numberCol.setMinWidth(100);
 
-        TableColumn startTimeCol = new TableColumn("Van");
+        numberCol.setCellValueFactory(
+                new PropertyValueFactory<>("appointmentNumber"));
+
+
+
         startTimeCol.setCellValueFactory(
                 new PropertyValueFactory<Appointment, LocalDate>("appointmentStartTimeString"));
-        startTimeCol.setMinWidth(100);
+
         startTimeCol.setOnEditCommit(
                 new EventHandler<CellEditEvent>() {
                     @Override
@@ -113,10 +116,10 @@ public class AppointmentGUI extends Application {
                 }
         );
 
-        TableColumn stopTimeCol = new TableColumn("Tot");
+
         stopTimeCol.setCellValueFactory(
                 new PropertyValueFactory<Appointment, LocalDate>("appointmentStopTimeString"));
-        stopTimeCol.setMinWidth(100);
+
         stopTimeCol.setOnEditCommit(
                 new EventHandler<CellEditEvent>() {
                     @Override
@@ -126,10 +129,10 @@ public class AppointmentGUI extends Application {
                 }
         );
 
-        TableColumn fysioCol = new TableColumn("Fysio");
+
         fysioCol.setCellValueFactory(
                 new PropertyValueFactory<Appointment, String>("appointmentFysioName"));
-        fysioCol.setMinWidth(100);
+
         fysioCol.setOnEditCommit(
                 new EventHandler<CellEditEvent>() {
                     @Override
@@ -139,10 +142,9 @@ public class AppointmentGUI extends Application {
                 }
         );
 
-        TableColumn patientCol = new TableColumn("Patient");
+
         patientCol.setCellValueFactory(
                 new PropertyValueFactory<Appointment, String>("appointmentPatientName"));
-        patientCol.setMinWidth(100);
         patientCol.setOnEditCommit(
                 new EventHandler<CellEditEvent>() {
                     @Override
@@ -158,6 +160,7 @@ public class AppointmentGUI extends Application {
         SortedList<Appointment> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedData);
+
         //endregion
 
         //region Creating Textfields
@@ -165,14 +168,8 @@ public class AppointmentGUI extends Application {
         dp_AppointmentDate.valueProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(appointment -> {
                 // If filter text is empty, display all appointments.
-                if (newValue == null) {
-                    return true;
-                }
+                return newValue == null || appointment.getAppointmentDate().equals(newValue);
 
-                if (appointment.getAppointmentDate().equals(newValue)) {
-                    return true; //Filter matched date
-                }
-                return false;
             });
         });
         dp_AppointmentDate.setPromptText("Kies datum");
@@ -187,10 +184,10 @@ public class AppointmentGUI extends Application {
         TextField appointmentStopTime = new TextField();
         appointmentStopTime.setPromptText("Tot");
 
-        ComboBox appointmentFysio = new ComboBox(employeeManager.getEmployeeNames());
+        ComboBox<String> appointmentFysio = new ComboBox<>(employeeManager.getEmployeeNames());
         appointmentFysio.setPromptText("Fysio");
 
-        ComboBox appointmentPatient = new ComboBox(patientManager.getPatientNames());
+        ComboBox<String> appointmentPatient = new ComboBox<>(patientManager.getPatientNames());
         appointmentPatient.setPromptText("Patient");
 
         Label lbl_Afspraak = new Label("Nieuwe Afspraak: ");
@@ -225,7 +222,7 @@ public class AppointmentGUI extends Application {
                     AlertBox.display("Foutmelding", "Er is al een afspraak met dit nummer: " + tempAppointment.getAppointmentNumber());
                 } else if (validate.validateNumber(appointmentNumber.getText())) {
                     AlertBox.display("Error", appointmentNumber.getText() + " is geen geldig medewerkersnummer");
-                } else if (dp_AppointmentDate.getValue().equals("")) {
+                } else if (dp_AppointmentDate.getValue().toString().equals("")) {
                     AlertBox.display("Foutmelding", "Geen datum gekozen");
                 } else if (appointmentStartTime.getText().equals("")) {
                     AlertBox.display("Foutmelding", "Geen start tijd ingevoerd");

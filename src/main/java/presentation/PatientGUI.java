@@ -5,6 +5,7 @@ import businesslogic.PatientManager;
 import domain.Appointment;
 import domain.Patient;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -51,6 +52,12 @@ public class PatientGUI extends Application {
     private Label dateOfBirthLabel;
     private Label phoneLabel;
     private Label emailLabel;
+
+    TableColumn numberCol = new TableColumn("Nummer");
+    TableColumn datumCol = new TableColumn("Datum");
+    TableColumn startTimeCol = new TableColumn("Van");
+    TableColumn stopTimeCol = new TableColumn("Tot");
+    TableColumn fysioCol = new TableColumn("Fysio");
     //endregion
 
     @Override
@@ -106,19 +113,15 @@ public class PatientGUI extends Application {
         //endregion
 
         //region Creating columns for tables
-        TableColumn numberCol = new TableColumn("Nummer");
+
         numberCol.setCellValueFactory(
                 new PropertyValueFactory<Appointment, Integer>("appointmentNumber"));
-        TableColumn datumCol = new TableColumn("Datum");
         datumCol.setCellValueFactory(
                 new PropertyValueFactory<Appointment, LocalDate>("appointmentDate"));
-        TableColumn startTimeCol = new TableColumn("Van");
         startTimeCol.setCellValueFactory(
                 new PropertyValueFactory<Appointment, LocalDate>("appointmentStartTimeString"));
-        TableColumn stopTimeCol = new TableColumn("Tot");
         stopTimeCol.setCellValueFactory(
                 new PropertyValueFactory<Appointment, LocalDate>("appointmentStopTimeString"));
-        TableColumn fysioCol = new TableColumn("Fysio");
         fysioCol.setCellValueFactory(
                 new PropertyValueFactory<Appointment, String>("appointmentFysioName"));
         //endregion
@@ -197,7 +200,8 @@ public class PatientGUI extends Application {
             dateOfBirthLabel.setText(String.valueOf(tempPatient.getPatientDateOfBirth()));
             phoneLabel.setText(tempPatient.getPatientPhone());
             emailLabel.setText(tempPatient.getPatientEmail());
-            table.setItems(appointmentManager.searchWithPatientBSN(tempPatient.getPatientBSN()));
+            ObservableList<Appointment> data = appointmentManager.searchWithPatientBSN(tempPatient.getPatientBSN());
+            table.setItems(data);
         } else {
             AlertBox.display("Foutmelding", "Geen patient gevonden met BSN: " + bsn);
         }

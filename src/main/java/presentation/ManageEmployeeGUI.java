@@ -32,6 +32,17 @@ public class ManageEmployeeGUI extends Application {
     private Tab customerTab;
     private Tab manageEmployeeTab;
 
+    TableColumn employeeNrCol = new TableColumn("Nummer");
+    TableColumn nameCol = new TableColumn("Naam");
+    TableColumn functionCol = new TableColumn("Function");
+    TableColumn bsnCol = new TableColumn("Bsn");
+    TableColumn cityCol = new TableColumn("Stad");
+    TableColumn addressCol = new TableColumn("Adres");
+    TableColumn dateOfBirthCol = new TableColumn("Geboortedatum");
+    TableColumn zipCodeCol = new TableColumn("Postcode");
+    TableColumn phoneCol = new TableColumn("Telefoonnummer");
+    TableColumn emailCol = new TableColumn("Email");
+
     @Override
     public void start(Stage stage) throws Exception {
         table = new TableView<>();
@@ -87,8 +98,8 @@ public class ManageEmployeeGUI extends Application {
         //endregion
 
         //region Creating columns for the table
-        TableColumn employeeNrCol = new TableColumn("Nummer");
-        employeeNrCol.setMinWidth(100);
+
+
         employeeNrCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("employeeNr"));
         employeeNrCol.setCellFactory(cellFactory);
@@ -120,9 +131,6 @@ public class ManageEmployeeGUI extends Application {
                     }
                 }
         );
-
-        TableColumn nameCol = new TableColumn("Naam");
-        nameCol.setMinWidth(100);
         nameCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("employeeName"));
         nameCol.setCellFactory(cellFactory);
@@ -145,9 +153,6 @@ public class ManageEmployeeGUI extends Application {
                     }
                 }
         );
-
-        TableColumn functionCol = new TableColumn("Function");
-        functionCol.setMinWidth(200);
         functionCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("employeeFunction"));
         functionCol.setCellFactory(cellFactory);
@@ -170,9 +175,6 @@ public class ManageEmployeeGUI extends Application {
                     }
                 }
         );
-
-        TableColumn bsnCol = new TableColumn("Bsn");
-        bsnCol.setMinWidth(200);
         bsnCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("employeeBSN"));
         bsnCol.setCellFactory(cellFactory);
@@ -195,9 +197,6 @@ public class ManageEmployeeGUI extends Application {
                     }
                 }
         );
-
-        TableColumn cityCol = new TableColumn("Stad");
-        cityCol.setMinWidth(200);
         cityCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("employeeCity"));
         cityCol.setCellFactory(cellFactory);
@@ -220,9 +219,6 @@ public class ManageEmployeeGUI extends Application {
                     }
                 }
         );
-
-        TableColumn addressCol = new TableColumn("Adres");
-        addressCol.setMinWidth(200);
         addressCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("employeeAddress"));
         addressCol.setCellFactory(cellFactory);
@@ -237,9 +233,6 @@ public class ManageEmployeeGUI extends Application {
                     }
                 }
         );
-
-        TableColumn dateOfBirthCol = new TableColumn("Geboortedatum");
-        dateOfBirthCol.setMinWidth(200);
         dateOfBirthCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("employeeDateOfBirth"));
         dateOfBirthCol.setCellFactory(cellFactory);
@@ -262,9 +255,6 @@ public class ManageEmployeeGUI extends Application {
                     }
                 }
         );
-
-        TableColumn zipCodeCol = new TableColumn("Postcode");
-        zipCodeCol.setMinWidth(200);
         zipCodeCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("employeeZipCode"));
         zipCodeCol.setCellFactory(cellFactory);
@@ -287,9 +277,6 @@ public class ManageEmployeeGUI extends Application {
                     }
                 }
         );
-
-        TableColumn phoneCol = new TableColumn("Telefoonnummer");
-        phoneCol.setMinWidth(200);
         phoneCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("employeePhone"));
         phoneCol.setCellFactory(cellFactory);
@@ -312,9 +299,6 @@ public class ManageEmployeeGUI extends Application {
                     }
                 }
         );
-
-        TableColumn emailCol = new TableColumn("Email");
-        emailCol.setMinWidth(200);
         emailCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("employeeEmail"));
         emailCol.setCellFactory(cellFactory);

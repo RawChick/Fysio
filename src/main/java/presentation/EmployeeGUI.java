@@ -15,7 +15,6 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.scene.control.TableView;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -48,6 +47,9 @@ public class EmployeeGUI extends Application {
     String TIME_PATTERN = "HH:mm";
     DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DATE_PATTERN);
     DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern(TIME_PATTERN);
+
+    TableColumn numberCol = new TableColumn("Nummer");
+    TableColumn fysioCol = new TableColumn("Patient");
     //endregion
 
     @Override
@@ -103,10 +105,9 @@ public class EmployeeGUI extends Application {
         //endregion
 
         //region Creating columns for table
-        TableColumn numberCol = new TableColumn("Nummer");
+
         numberCol.setCellValueFactory(
                 new PropertyValueFactory<Appointment, Integer>("appointmentNumber"));
-        TableColumn fysioCol = new TableColumn("Patient");
         fysioCol.setCellValueFactory(
                 new PropertyValueFactory<Appointment, String>("appointmentPatientName"));
         //endregion
@@ -186,7 +187,6 @@ public class EmployeeGUI extends Application {
                 lbl_EmployeeDate.setText(dateFormat.format(tempWorkday.getWorkDate()));
                 lbl_EmployeeStartTime.setText(timeFormat.format(tempWorkday.getStartTime()));
                 lbl_EmployeeStopTime.setText(timeFormat.format(tempWorkday.getStopTime()));
-
                 table.setItems(appointmentManager.searchWithWorkDateAndEmployeeName(localdate, tempEmployee.getEmployeeName()));
             }
         }

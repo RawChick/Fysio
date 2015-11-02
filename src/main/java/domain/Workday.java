@@ -1,11 +1,14 @@
 package domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
  * Created by Barrie on 31-10-2015.
  */
+@XmlRootElement(name = "Workday")
 public class Workday {
     //region Attributes and properties
     private LocalDate workDate;
@@ -22,14 +25,18 @@ public class Workday {
     //endregion
 
     //region Getters and setters
+
+    @XmlElement(name = "workDate")
     public LocalDate getWorkDate() {
         return workDate;
     }
 
+    @XmlElement(name = "startTime")
     public LocalTime getStartTime() {
         return startTime;
     }
 
+    @XmlElement(name = "stopTime")
     public LocalTime getStopTime() {
         return stopTime;
     }

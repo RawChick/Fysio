@@ -6,10 +6,14 @@ import javafx.beans.property.SimpleStringProperty;
 import jdk.internal.org.objectweb.asm.tree.analysis.Value;
 import sun.java2d.pipe.SpanShapeRenderer;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+
+@XmlRootElement(name = "appointment")
 public class Appointment {
     //region Attributes and properties
     private SimpleIntegerProperty appointmentNumber;
@@ -50,6 +54,7 @@ public class Appointment {
     //endregion
 
     //region Getters and setters
+    @XmlElement(name = "appointmentNr")
     public Integer getAppointmentNumber() {
         return appointmentNumber.get();
     }
@@ -62,6 +67,7 @@ public class Appointment {
         this.appointmentNumber.set(appointmentNumber);
     }
 
+    @XmlElement(name = "appointmentDate")
     public LocalDate getAppointmentDate() {
         return appointmentDate;
     }
@@ -70,6 +76,7 @@ public class Appointment {
         this.appointmentDate = appointmentDate;
     }
 
+    @XmlElement(name = "startTime")
     public LocalTime getAppointmentStartTime() {
         return appointmentStartTime;
     }
@@ -78,6 +85,7 @@ public class Appointment {
         this.appointmentStartTime = appointmentStartTime;
     }
 
+    @XmlElement(name = "stopTime")
     public LocalTime getAppointmentStopTime() {
         return appointmentStopTime;
     }

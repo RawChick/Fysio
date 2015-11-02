@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@XmlRootElement(name = "planning")
 public class Planning {
 	private int PlanningNr;
 	private String bsn;

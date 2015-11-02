@@ -36,7 +36,7 @@ public class AppointmentGUI extends Application {
 
     private VBox vBox = new VBox();
     private BorderPane borderPane = new BorderPane();
-    TableColumn<Appointment, String> numberCol = new TableColumn<>("Nummer");
+    TableColumn<Appointment, String> numberCol = new TableColumn<Appointment, String>("Nummer");
     TableColumn startTimeCol = new TableColumn("Van");
     TableColumn stopTimeCol = new TableColumn("Tot");
     TableColumn fysioCol = new TableColumn("Fysio");
@@ -100,7 +100,7 @@ public class AppointmentGUI extends Application {
         //region Creating columns for table
 
         numberCol.setCellValueFactory(
-                new PropertyValueFactory<>("appointmentNumber"));
+                new PropertyValueFactory<Appointment, String>("appointmentNumber"));
 
 
 
@@ -160,6 +160,47 @@ public class AppointmentGUI extends Application {
         SortedList<Appointment> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedData);
+
+        for (Appointment aSortedData : sortedData) {
+            int length = 0;
+            if (aSortedData.getAppointmentStartTime().toString().length() > length) {
+                length = aSortedData.getAppointmentStartTime().toString().length();
+                startTimeCol.setMinWidth(length*8.5);
+            }
+
+        }
+
+        for (Appointment aSortedData : sortedData) {
+            int length = 0;
+            if (aSortedData.getAppointmentNumber().toString().length() > length) {
+                length = aSortedData.getAppointmentNumber().toString().length();
+                numberCol.setMinWidth(length*8.5);
+            }
+        }
+
+        for (Appointment aSortedData : sortedData) {
+            int length = 0;
+            if (aSortedData.getAppointmentStopTime().toString().length() > length) {
+                length = aSortedData.getAppointmentStopTime().toString().length();
+                stopTimeCol.setMinWidth(length*8.5);
+            }
+        }
+
+        for (Appointment aSortedData : sortedData) {
+            int length = 0;
+            if (aSortedData.getAppointmentFysioName().length() > length) {
+                length = aSortedData.getAppointmentFysioName().length();
+                fysioCol.setMinWidth(length*8.5);
+            }
+        }
+
+        for (Appointment aSortedData : sortedData) {
+            int length = 0;
+            if (aSortedData.getAppointmentPatientName().length() > length) {
+                length = aSortedData.getAppointmentPatientName().length();
+                patientCol.setMinWidth(length*8.5);
+            }
+        }
 
         //endregion
 
@@ -222,7 +263,7 @@ public class AppointmentGUI extends Application {
                     AlertBox.display("Foutmelding", "Er is al een afspraak met dit nummer: " + tempAppointment.getAppointmentNumber());
                 } else if (validate.validateNumber(appointmentNumber.getText())) {
                     AlertBox.display("Error", appointmentNumber.getText() + " is geen geldig medewerkersnummer");
-                } else if (dp_AppointmentDate.getValue().toString().equals("")) {
+                } else if (dp_AppointmentDate.getValue().equals("")) {
                     AlertBox.display("Foutmelding", "Geen datum gekozen");
                 } else if (appointmentStartTime.getText().equals("")) {
                     AlertBox.display("Foutmelding", "Geen start tijd ingevoerd");

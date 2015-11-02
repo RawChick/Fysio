@@ -463,6 +463,80 @@ public class ManageEmployeeGUI extends Application {
         //endregion
 
         table.setItems(manager.getData());
+        for (int i = 0;i<manager.getData().size();i++){
+            int lenght = 0;
+            if (lenght < manager.getData().get(i).getEmployeeNr().length()){
+                lenght = manager.getData().get(i).getEmployeeNr().length();
+                employeeNrCol.setMinWidth(lenght*8.5);
+            }
+        }
+        for (int i = 0;i<manager.getData().size();i++){
+            int lenght = 0;
+            if (lenght <manager.getData().get(i).getEmployeeName().length()){
+                lenght = manager.getData().get(i).getEmployeeName().length();
+                nameCol.setMinWidth(lenght*8.5);
+            }
+        }
+        for (int i = 0;i<manager.getData().size();i++){
+            int lenght = 0;
+            if (lenght <manager.getData().get(i).getEmployeeFunction().length()){
+                lenght = manager.getData().get(i).getEmployeeFunction().length();
+                functionCol.setMinWidth(lenght*8.5);
+            }
+        }
+        for (int i = 0;i<manager.getData().size();i++){
+            int lenght = 0;
+            if (lenght <manager.getData().get(i).getEmployeeBSN().length()){
+                lenght = manager.getData().get(i).getEmployeeBSN().length();
+                bsnCol.setMinWidth(lenght*8.5);
+            }
+        }
+        for (int i = 0;i<manager.getData().size();i++){
+            int lenght = 0;
+            if (lenght <manager.getData().get(i).getEmployeeCity().length()){
+                lenght = manager.getData().get(i).getEmployeeCity().length();
+                cityCol.setMinWidth(lenght*8.5);
+            }
+        }
+        for (int i = 0;i<manager.getData().size();i++){
+            int lenght = 0;
+            if (lenght <manager.getData().get(i).getEmployeeAddress().length()){
+                lenght = manager.getData().get(i).getEmployeeAddress().length();
+                addressCol.setMinWidth(lenght*8.5);
+            }
+        }
+        for (int i = 0;i<manager.getData().size();i++){
+            int lenght = 0;
+            if (lenght <manager.getData().get(i).getEmployeeDateOfBirth().length()){
+                lenght = manager.getData().get(i).getEmployeeDateOfBirth().length();
+                if (lenght>dateOfBirthCol.getText().length()) {
+                    dateOfBirthCol.setMinWidth(lenght * 8.5);
+                }
+            }
+        }
+        for (int i = 0;i<manager.getData().size();i++){
+            int lenght = 0;
+            if (lenght <manager.getData().get(i).getEmployeeZipCode().length()){
+                lenght = manager.getData().get(i).getEmployeeZipCode().length();
+                zipCodeCol.setMinWidth(lenght*8.5);
+            }
+        }
+        for (int i = 0;i<manager.getData().size();i++){
+            int lenght = 0;
+            if (lenght <manager.getData().get(i).getEmployeePhone().length()){
+                lenght = manager.getData().get(i).getEmployeePhone().length();
+                if (lenght>phoneCol.getText().length()) {
+                    phoneCol.setMinWidth(lenght * 8.5);
+                }
+            }
+        }
+        for (int i = 0;i<manager.getData().size();i++){
+            int lenght = 0;
+            if (lenght <manager.getData().get(i).getEmployeeEmail().length()){
+                lenght = manager.getData().get(i).getEmployeeEmail().length();
+                emailCol.setMinWidth(lenght*8.5);
+            }
+        }
         table.getColumns()
                 .addAll(employeeNrCol, nameCol, functionCol, bsnCol, cityCol, addressCol, dateOfBirthCol, zipCodeCol, phoneCol, emailCol);
 

@@ -6,6 +6,7 @@ import domain.Appointment;
 import domain.Employee;
 import domain.Workday;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -187,7 +188,24 @@ public class EmployeeGUI extends Application {
                 lbl_EmployeeDate.setText(dateFormat.format(tempWorkday.getWorkDate()));
                 lbl_EmployeeStartTime.setText(timeFormat.format(tempWorkday.getStartTime()));
                 lbl_EmployeeStopTime.setText(timeFormat.format(tempWorkday.getStopTime()));
-                table.setItems(appointmentManager.searchWithWorkDateAndEmployeeName(localdate, tempEmployee.getEmployeeName()));
+
+                ObservableList<Appointment> data = appointmentManager.searchWithWorkDateAndEmployeeName(localdate, tempEmployee.getEmployeeName());
+                table.setItems(data);
+                for (Appointment aData : data) {
+                    int length = 0;
+                    if (aData.getAppointmentNumber().toString().length() > length) {
+                        length = aData.getAppointmentNumber().toString().length();
+                        numberCol.setMinWidth(length*8.5);
+                    }
+
+                }
+                for (Appointment aData : data) {
+                    int length = 0;
+                    if (aData.getAppointmentPatientName().length() > length) {
+                        length = aData.getAppointmentPatientName().length();
+                        fysioCol.setMinWidth(length*8.5);
+                    }
+                }
             }
         }
     }

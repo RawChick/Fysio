@@ -202,6 +202,42 @@ public class PatientGUI extends Application {
             emailLabel.setText(tempPatient.getPatientEmail());
             ObservableList<Appointment> data = appointmentManager.searchWithPatientBSN(tempPatient.getPatientBSN());
             table.setItems(data);
+
+            for (Appointment aData : data) {
+                int lenght = 0;
+                if (aData.getAppointmentNumber().toString().length() > lenght) {
+                    lenght = aData.getAppointmentNumber().toString().length();
+                    numberCol.setMinWidth(lenght*8.5);
+                }
+            }
+            for (Appointment aData : data) {
+                int lenght = 0;
+                if (aData.getAppointmentDate().toString().length() > lenght) {
+                    lenght = aData.getAppointmentDate().toString().length();
+                    datumCol.setMinWidth(lenght*8.5);
+                }
+            }
+            for (Appointment aData : data) {
+                int lenght = 0;
+                if (aData.getAppointmentStartTimeString().length() > lenght) {
+                    lenght = aData.getAppointmentStartTimeString().length();
+                    startTimeCol.setMinWidth(lenght*8.5);
+                }
+            }
+            for (Appointment aData : data) {
+                int lenght = 0;
+                if (aData.getAppointmentStopTimeString().length() > lenght) {
+                    lenght = aData.getAppointmentStopTimeString().length();
+                    stopTimeCol.setMinWidth(lenght*8.5);
+                }
+            }
+            for (Appointment aData : data) {
+                int lenght = 0;
+                if (aData.getAppointmentFysioName().length() > lenght) {
+                    lenght = aData.getAppointmentFysioName().length();
+                    fysioCol.setMinWidth(lenght*8.5);
+                }
+            }
         } else {
             AlertBox.display("Foutmelding", "Geen patient gevonden met BSN: " + bsn);
         }

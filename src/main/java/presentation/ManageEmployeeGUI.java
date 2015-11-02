@@ -34,7 +34,7 @@ public class ManageEmployeeGUI extends Application {
 
     TableColumn employeeNrCol = new TableColumn("Nummer");
     TableColumn nameCol = new TableColumn("Naam");
-    TableColumn functionCol = new TableColumn("Function");
+    TableColumn functionCol = new TableColumn("Functie");
     TableColumn bsnCol = new TableColumn("Bsn");
     TableColumn countryCol = new TableColumn("Stad");
     TableColumn houseCol = new TableColumn("Land");
@@ -373,7 +373,7 @@ public class ManageEmployeeGUI extends Application {
 
         final TextField addFunction = new TextField();
         addFunction.setMaxWidth(functionCol.getPrefWidth());
-        addFunction.setPromptText("Function");
+        addFunction.setPromptText("Functie");
 
         final TextField addBsn = new TextField();
         addBsn.setMaxWidth(bsnCol.getPrefWidth());

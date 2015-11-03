@@ -1,6 +1,8 @@
 package presentation;
 
-import businesslogic.*;
+import businesslogic.AppointmentManager;
+import businesslogic.EmployeeManager;
+import businesslogic.PatientManager;
 import domain.*;
 import javafx.application.Application;
 import javafx.collections.transformation.FilteredList;
@@ -25,8 +27,6 @@ public class AppointmentGUI extends Application {
     private AppointmentManager appointmentManager;
     private EmployeeManager employeeManager;
     private PatientManager patientManager;
-    private TreatmentManager treatmentManager;
-    private unmarshall unMarshall;
     private ValidateInput validate;
 
     private TabPane pane;
@@ -49,8 +49,6 @@ public class AppointmentGUI extends Application {
         appointmentManager = new AppointmentManager();
         employeeManager = new EmployeeManager();
         patientManager = new PatientManager();
-        treatmentManager = new TreatmentManager();
-        unMarshall = new unmarshall();
         table = new TableView<>();
         validate = new ValidateInput();
 
@@ -264,8 +262,8 @@ public class AppointmentGUI extends Application {
 
                 if (tempAppointment != null) {
                     AlertBox.display("Foutmelding", "Er is al een afspraak met dit nummer: " + tempAppointment.getAppointmentNumber());
-                } else if (!validate.validateNumber(appointmentNumber.getText())) {
-                    AlertBox.display("Error", appointmentNumber.getText() + " is geen geldig afspraaknummer");
+                } else if (validate.validateNumber(appointmentNumber.getText())) {
+                    AlertBox.display("Error", appointmentNumber.getText() + " is geen geldig medewerkersnummer");
                 } else if (dp_AppointmentDate.getValue().equals("")) {
                     AlertBox.display("Foutmelding", "Geen datum gekozen");
                 } else if (appointmentStartTime.getText().equals("")) {
@@ -318,7 +316,5 @@ public class AppointmentGUI extends Application {
         stage.setScene(scene);
         stage.show();
         stage.getIcons().add(new Image("/fysio_icon1.png"));
-        Image image = new Image("/1.png");
-
     }
 }

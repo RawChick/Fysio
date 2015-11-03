@@ -9,6 +9,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
+import java.net.URL;
 import java.time.LocalDate;
 
 import static javax.xml.bind.JAXBContext.newInstance;
@@ -25,7 +26,9 @@ public class PatientManager {
         Patient patient = new Patient(2, "Mark", "van Turnhout",  "Tilburg", "Nederland", "Zwartvenseweg", "17", LocalDate.of(1992, 8, 5), "5044 PA", "0614740368", "mlajturn@avans.nl");
 
         Patients patients = new Patients();
-        File file = new File("C:\\Users\\rvroe\\workspace\\fysio-2015-10-26\\fysio\\src\\main\\java\\datastorage\\xml\\patient.xml");
+        URL url = getClass().getResource("/datastorage/xml/patient.xml");
+        File file = new File(url.getPath());
+
 
 
         try {

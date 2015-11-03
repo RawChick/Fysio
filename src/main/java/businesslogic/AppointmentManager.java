@@ -4,11 +4,14 @@ import domain.Appointment;
 import domain.Appointments;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sun.tools.jar.resources.jar;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -26,8 +29,9 @@ public class AppointmentManager {
     //endregion
 
     Appointments appointments = new Appointments();
-    File file = new File("C:\\Users\\rvroe\\workspace\\fysio-2015-10-26\\fysio\\src\\main\\java\\datastorage\\xml\\appointment.xml");
+    URL url = getClass().getResource("/datastorage/xml/appointment.xml");
 
+    File file = new File(url.getPath());
     //region Methods
     public AppointmentManager() {
         employeeManager = new EmployeeManager();

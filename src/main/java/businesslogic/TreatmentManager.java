@@ -4,6 +4,7 @@ import domain.Treatment;
 import domain.Treatments;
 
 import java.io.File;
+import java.net.URL;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -19,7 +20,8 @@ public class TreatmentManager {
     Treatment treatment2 = new Treatment(2, "voetkraken", 2, 2000, 20);
 
     Treatments treatments = new Treatments();
-    File file = new File("C:\\Users\\rvroe\\workspace\\fysio-2015-10-26\\fysio\\src\\main\\java\\datastorage\\xml\\treatment.xml");
+    URL url = getClass().getResource("/datastorage/xml/treatment.xml");
+    File file = new File(url.getPath());
 
     public TreatmentManager() {
         try {

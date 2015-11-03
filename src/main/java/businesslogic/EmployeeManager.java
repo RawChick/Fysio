@@ -11,6 +11,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -38,7 +39,8 @@ public class EmployeeManager {
         Boolean testWorkday = addWorkday("1", tempWorkday);
 
         Employees employees = new Employees();
-        File file = new File("C:\\Users\\rvroe\\workspace\\fysio-2015-10-26\\fysio\\src\\main\\java\\datastorage\\xml\\employee.xml");
+        URL url = getClass().getResource("/datastorage/xml/employee.xml");
+        File file = new File(url.getPath());
 
 
             try {

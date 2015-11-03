@@ -5,6 +5,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
+import java.net.URL;
 
 
 /**
@@ -19,15 +20,14 @@ public class unmarshall {
     {
 
         try {
-            File file = new File( "C:\\Users\\rvroe\\workspace\\fysio-2015-10-26\\fysio\\src\\main\\java\\datastorage\\xml\\treatment.xml" );
+            URL url = getClass().getResource("/datastorage/xml/treatment.xml");
+            File file = new File(url.getPath());
+
             JAXBContext jaxbContext = JAXBContext.newInstance(Treatments.class);
 
-            /**
-             * the only difference with the marshaling operation is here
-             */
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            Treatments countres = (Treatments)jaxbUnmarshaller.unmarshal(file);
-            System.out.println( countres );
+            Treatments treatmentlist = (Treatments)jaxbUnmarshaller.unmarshal(file);
+            System.out.println( treatmentlist );
 
         } catch (JAXBException e) {
             e.printStackTrace();

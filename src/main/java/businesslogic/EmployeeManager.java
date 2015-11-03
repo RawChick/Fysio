@@ -54,7 +54,7 @@ public class EmployeeManager {
                 jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
                 jaxbMarshaller.marshal(employees, file);
-                jaxbMarshaller.marshal(employees, System.out);
+
 
 
             } catch (JAXBException e) {

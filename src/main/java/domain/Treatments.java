@@ -32,4 +32,16 @@ public class Treatments {
 
     }
 
+    @Override
+    public String toString()
+    {
+        StringBuffer str = new StringBuffer();
+        for( Treatment treatmentlist : this.treatments )
+        {
+            str.append( treatmentlist.toString() );
+        }
+        return str.toString();
+    }
+
+
 }

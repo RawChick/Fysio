@@ -42,7 +42,7 @@ public class PatientManager {
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
             jaxbMarshaller.marshal(patients, file);
-            jaxbMarshaller.marshal(patients, System.out);
+
 
 
         } catch (JAXBException e) {

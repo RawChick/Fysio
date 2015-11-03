@@ -13,7 +13,6 @@ public class datastore {
 
 
 
-    private int revision;
     private List<Patient> patientList;
     private List<Treatment> treatmentList;
 

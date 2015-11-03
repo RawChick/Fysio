@@ -14,11 +14,11 @@ import java.util.List;
 @XmlRootElement(name = "treatment")
 public class Treatment {
 	//region Attributes and properties
-	private SimpleIntegerProperty treatmentCode;
+	private SimpleIntegerProperty treatmentCode = new SimpleIntegerProperty();
 	private SimpleStringProperty treatmentName;
-	private SimpleIntegerProperty treatmentSessions;
-	private SimpleDoubleProperty treatmentSessionCost;
-	private SimpleDoubleProperty treatmentSessionDuration;
+	private SimpleIntegerProperty treatmentSessions = new SimpleIntegerProperty();
+	private SimpleDoubleProperty treatmentSessionCost = new SimpleDoubleProperty();
+	private SimpleDoubleProperty treatmentSessionDuration = new SimpleDoubleProperty();
 
 	//endregion
 

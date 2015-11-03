@@ -56,7 +56,7 @@ public class AppointmentManager {
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
             jaxbMarshaller.marshal(appointments, file);
-            jaxbMarshaller.marshal(appointments, System.out);
+
 
 
         } catch (JAXBException e) {

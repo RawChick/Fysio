@@ -1,7 +1,7 @@
 import businesslogic.AppointmentManager;
+import domain.Patient;
 import domain.Appointment;
 import domain.Employee;
-import domain.Patient;
 import junit.framework.TestCase;
 import java.time.LocalDate;
 import java.time.LocalTime;

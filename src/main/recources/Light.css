@@ -232,7 +232,10 @@
     -fx-opacity: 1;
 }
 .root{
-    -fx-background-color: linear-gradient(#ebfffa, #fdfdff);
+    -fx-background-image: url("1.png");
+}
+.table-view{
+    -fx-opacity: .8;
 }
 .label{
     -fx-text-fill: #F8F8F8;

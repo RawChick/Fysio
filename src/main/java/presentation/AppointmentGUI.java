@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.time.LocalDate;
@@ -317,5 +318,8 @@ public class AppointmentGUI extends Application {
         scene.getStylesheets().addAll(AppointmentGUI.class.getResource("/Light.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
+        stage.getIcons().add(new Image("/fysio_icon1.png"));
+        Image image = new Image("/1.png");
+
     }
 }

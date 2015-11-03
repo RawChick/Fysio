@@ -20,8 +20,8 @@ public class unmarshall {
     {
 
         try {
-            URL url = getClass().getResource("/datastorage/xml/treatment.xml");
-            File file = new File(url.getPath());
+
+            File file = new File("C:\\Users\\rvroe\\workspace\\fysio-2015-10-26\\fysio\\src\\main\\java\\datastorage\\xml\\treatment.xml");
 
             JAXBContext jaxbContext = JAXBContext.newInstance(Treatments.class);
 

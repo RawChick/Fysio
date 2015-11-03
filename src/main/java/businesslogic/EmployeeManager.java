@@ -23,43 +23,52 @@ import static javax.xml.bind.JAXBContext.newInstance;
 public class EmployeeManager {
     //region Attributes and properties
     private final ObservableList<Employee> data;
+    Employees employees = new Employees();
+    File file = new File("C:\\Users\\rvroe\\workspace\\fysio-2015-10-26\\fysio\\src\\main\\java\\datastorage\\xml\\employee.xml");
+
     //endregion
 
     //region Methods
     public EmployeeManager() {
         data = FXCollections.observableArrayList(
                 (new Employee
-                        ("2", "Mark", "Fysio", "1231231", "Tilburg", "Nederland", "17", "Zwartvenseweg", "5-8-1992", "5044 PA", "061234567" ,"mlajturn@avans.nl"))
+                        ("1", "Renee", "Fysio", "123", "Breda", "Nederland", "46", "Op de hoek", "6-11-1992", "1212 CC", "061234765" ,"renee@avans.nl")),
+                new Employee
+                        ("2", "Mark", "Fysio", "1234", "Tilburg", "Nederland", "17", "Zwartvenseweg", "5-8-1992", "5044 PA", "061234567" ,"mlajturn@avans.nl")
         );
 
-        Employee employee = new Employee
-                ("2", "Mark", "Fysio", "1231231", "Tilburg", "Nederland", "17", "Zwartvenseweg", "5-8-1992", "5044 PA", "061234567" ,"mlajturn@avans.nl");
+        Workday tempWorkdayRenee = new Workday(LocalDate.now(), LocalTime.now(), (LocalTime.now()));
+        Workday tempWorkdayMark = new Workday(LocalDate.now(), LocalTime.now(), (LocalTime.now()));
 
-        Workday tempWorkday = new Workday(LocalDate.now(), LocalTime.now(), (LocalTime.now()));
-        Boolean testWorkday = addWorkday("1", tempWorkday);
+        Boolean testWorkdayRenee = addWorkday("1", tempWorkdayRenee);
+        Boolean testWorkdayMark = addWorkday("2", tempWorkdayMark);
+       Save(data);
+    }
 
-        Employees employees = new Employees();
-        URL url = getClass().getResource("/datastorage/xml/employee.xml");
-        File file = new File(url.getPath());
-
-
-            try {
-
-                employees.add(employee);
+    public boolean Save(ObservableList<Employee> observableList)
+    {
+        boolean tempBool = true;
 
 
-                JAXBContext jaxbContext = newInstance(Employees.class);
-                Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-
-                jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-                jaxbMarshaller.marshal(employees, file);
-
-
-
-            } catch (JAXBException e) {
-                e.printStackTrace();
+        try {
+            for (Employee e : observableList) {
+                employees.add(e);
             }
+
+
+            JAXBContext jaxbContext = newInstance(Employees.class);
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+            jaxbMarshaller.marshal(employees, file);
+
+
+
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+        return tempBool;
     }
 
     /**
@@ -95,6 +104,7 @@ public class EmployeeManager {
 
         if (oldEmployee == null) {
             data.add(employee);
+            Save(data);
             returnBoolean = true;
         }
         return returnBoolean;

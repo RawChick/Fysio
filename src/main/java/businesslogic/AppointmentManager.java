@@ -29,26 +29,31 @@ public class AppointmentManager {
     //endregion
 
     Appointments appointments = new Appointments();
-    URL url = getClass().getResource("/datastorage/xml/appointment.xml");
 
-    File file = new File(url.getPath());
+
+    File file = new File("C:\\Users\\rvroe\\workspace\\fysio-2015-10-26\\fysio\\src\\main\\java\\datastorage\\xml\\appointment.xml");
     //region Methods
     public AppointmentManager() {
         employeeManager = new EmployeeManager();
         patientManager = new PatientManager();
 
         data = FXCollections.observableArrayList(
-                new Appointment(1, LocalDate.now(), LocalTime.now(), LocalTime.now(), employeeManager.searchEmployeeWithNumber("2"), patientManager.searchWithBSN(2)),
-                new Appointment(1, LocalDate.of(2015, 11, 1), LocalTime.now(), LocalTime.now(), employeeManager.searchEmployeeWithNumber("2"), patientManager.searchWithBSN(2))
+                new Appointment(1, LocalDate.now(), LocalTime.now(), LocalTime.now(), employeeManager.searchEmployeeWithNumber("2"), patientManager.searchWithBSN(2))
         );
 
-        Appointment appointment1 = new Appointment(1, LocalDate.now(), LocalTime.now(), LocalTime.now(), employeeManager.searchEmployeeWithNumber("2"), patientManager.searchWithBSN(2));
-        Appointment appointment2 = new Appointment(1, LocalDate.of(2015, 11, 1), LocalTime.now(), LocalTime.now(), employeeManager.searchEmployeeWithNumber("2"), patientManager.searchWithBSN(2));
+        Save(data);
+    }
+
+    public boolean Save(ObservableList<Appointment> observableList)
+    {
+        boolean tempBool = true;
+
 
         try {
+            for (Appointment a : observableList) {
+                appointments.add(a);
+            }
 
-            appointments.add(appointment1);
-            appointments.add(appointment2);
 
             JAXBContext jaxbContext = newInstance(Appointments.class);
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
@@ -62,9 +67,8 @@ public class AppointmentManager {
         } catch (JAXBException e) {
             e.printStackTrace();
         }
+        return tempBool;
     }
-
-
 
     /**
      *
@@ -85,6 +89,7 @@ public class AppointmentManager {
 
         if (tempAppointment == null) {
             data.add(appointment);
+            Save(data);
             tempBool = true;
         }
 

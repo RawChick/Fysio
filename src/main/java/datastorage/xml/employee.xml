@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <employees>
+    <employee city="Breda" country="Nederland" houseNumber="Op de hoek" street="46" postalCode="1212 CC">
+        <address>46 Op de hoek Breda</address>
+        <ssn>123</ssn>
+        <dateOfBirth>6-11-1992</dateOfBirth>
+        <mail>renee@avans.nl</mail>
+        <function>Fysio</function>
+        <name>Renee</name>
+        <employeeId>1</employeeId>
+        <phone>061234765</phone>
+        <employeeWorkdays>
+            <startTime/>
+            <stopTime/>
+            <workDate/>
+        </employeeWorkdays>
+    </employee>
     <employee city="Tilburg" country="Nederland" houseNumber="Zwartvenseweg" street="17" postalCode="5044 PA">
         <address>17 Zwartvenseweg Tilburg</address>
-        <ssn>1231231</ssn>
+        <ssn>1234</ssn>
         <dateOfBirth>5-8-1992</dateOfBirth>
         <mail>mlajturn@avans.nl</mail>
         <function>Fysio</function>
         <name>Mark</name>
         <employeeId>2</employeeId>
         <phone>061234567</phone>
+        <employeeWorkdays>
+            <startTime/>
+            <stopTime/>
+            <workDate/>
+        </employeeWorkdays>
     </employee>
 </employees>

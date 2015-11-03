@@ -15,7 +15,7 @@ import java.util.List;
 public class Treatment {
 	//region Attributes and properties
 	private SimpleIntegerProperty treatmentCode = new SimpleIntegerProperty();
-	private SimpleStringProperty treatmentName;
+	private SimpleStringProperty treatmentName = new SimpleStringProperty();
 	private SimpleIntegerProperty treatmentSessions = new SimpleIntegerProperty();
 	private SimpleDoubleProperty treatmentSessionCost = new SimpleDoubleProperty();
 	private SimpleDoubleProperty treatmentSessionDuration = new SimpleDoubleProperty();

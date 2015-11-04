@@ -25,7 +25,7 @@ public class EditingCellAppointment extends TableCell<Appointment, String> {
     public void cancelEdit() {
         super.cancelEdit();
 
-        setText((String) getItem());
+        setText(getItem());
         setGraphic(null);
     }
 
@@ -61,6 +61,6 @@ public class EditingCellAppointment extends TableCell<Appointment, String> {
     }
 
     private String getString() {
-        return getItem() == null ? "" : getItem().toString();
+        return getItem() == null ? "" : getItem();
     }
 }

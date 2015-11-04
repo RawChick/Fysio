@@ -2,10 +2,6 @@ package domain;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import jdk.internal.org.objectweb.asm.tree.analysis.Value;
-import sun.java2d.pipe.SpanShapeRenderer;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
@@ -15,6 +11,10 @@ import java.time.format.DateTimeFormatter;
 
 @XmlRootElement(name = "appointment")
 public class Appointment {
+
+    public Appointment() {
+    }
+
     //region Attributes and properties
     private SimpleIntegerProperty appointmentNumber;
     private LocalDate appointmentDate;
@@ -28,10 +28,6 @@ public class Appointment {
     private String appointmentStartTimeString;
     private String appointmentStopTimeString;
     //endregion
-
-    public Appointment(){
-
-    }
 
 
     //region Methods

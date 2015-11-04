@@ -2,29 +2,26 @@ package domain;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Patient {
     //region Attributes and properties
-    private SimpleIntegerProperty patientBSN;
-    private SimpleStringProperty patientFullName;
-    private SimpleStringProperty patientFirstName;
-    private SimpleStringProperty patientLastName;
-    private SimpleStringProperty patientCity;
-    private SimpleStringProperty patientCountry;
-    private SimpleStringProperty patientStreet;
-    private SimpleStringProperty patientHouseNumber;
-    private SimpleStringProperty patientAddress;
+    private final SimpleIntegerProperty patientBSN;
+    private final SimpleStringProperty patientFullName;
+    private final SimpleStringProperty patientFirstName;
+    private final SimpleStringProperty patientLastName;
+    private final SimpleStringProperty patientCity;
+    private final SimpleStringProperty patientCountry;
+    private final SimpleStringProperty patientStreet;
+    private final SimpleStringProperty patientHouseNumber;
+    private final SimpleStringProperty patientAddress;
     private LocalDate patientDateOfBirth;
-    private SimpleStringProperty patientZipCode;
-    private SimpleStringProperty patientPhone;
-    private SimpleStringProperty patientEmail;
+    private final SimpleStringProperty patientZipCode;
+    private final SimpleStringProperty patientPhone;
+    private final SimpleStringProperty patientEmail;
     private ArrayList<Treatment> patientTreatments;
     //endregion
 

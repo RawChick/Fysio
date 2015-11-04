@@ -31,8 +31,8 @@
         </appointmentPatient>
         <appointmentPatientName>Mark van Turnhout</appointmentPatientName>
         <startTime/>
-        <appointmentStartTimeString>17:27</appointmentStartTimeString>
+        <appointmentStartTimeString>14:01</appointmentStartTimeString>
         <stopTime/>
-        <appointmentStopTimeString>17:27</appointmentStopTimeString>
+        <appointmentStopTimeString>14:01</appointmentStopTimeString>
     </appointment>
 </appointments>

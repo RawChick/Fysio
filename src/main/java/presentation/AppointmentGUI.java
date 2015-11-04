@@ -7,13 +7,9 @@ import domain.*;
 import javafx.application.Application;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -29,19 +25,13 @@ public class AppointmentGUI extends Application {
     private PatientManager patientManager;
     private ValidateInput validate;
 
-    private TabPane pane;
-    private Tab appointmentTab;
-    private Tab employeeTab;
-    private Tab patientTab;
-    private Tab manageEmployeeTab;
-
-    private VBox vBox = new VBox();
-    private BorderPane borderPane = new BorderPane();
-    TableColumn<Appointment, String> numberCol = new TableColumn<Appointment, String>("Nummer");
-    TableColumn startTimeCol = new TableColumn("Van");
-    TableColumn stopTimeCol = new TableColumn("Tot");
-    TableColumn fysioCol = new TableColumn("Fysio");
-    TableColumn patientCol = new TableColumn("Patient");
+    private final VBox vBox = new VBox();
+    private final BorderPane borderPane = new BorderPane();
+    private final TableColumn<Appointment, String> numberCol = new TableColumn<>("Nummer");
+    private final TableColumn startTimeCol = new TableColumn("Van");
+    private final TableColumn stopTimeCol = new TableColumn("Tot");
+    private final TableColumn fysioCol = new TableColumn("Fysio");
+    private final TableColumn patientCol = new TableColumn("Patient");
     //endregion
 
     @Override
@@ -57,11 +47,11 @@ public class AppointmentGUI extends Application {
         table.setEditable(true);
 
         //region Creating tabs
-        pane = new TabPane();
-        appointmentTab = new Tab("Afspraak");
-        employeeTab = new Tab("Medewerker");
-        patientTab = new Tab("Patient");
-        manageEmployeeTab = new Tab("Overzicht Werknemers");
+        TabPane pane = new TabPane();
+        Tab appointmentTab = new Tab("Afspraak");
+        Tab employeeTab = new Tab("Medewerker");
+        Tab patientTab = new Tab("Patient");
+        Tab manageEmployeeTab = new Tab("Overzicht Werknemers");
 
         pane.getSelectionModel().select(appointmentTab);
 
@@ -101,7 +91,7 @@ public class AppointmentGUI extends Application {
         //region Creating columns for table
 
         numberCol.setCellValueFactory(
-                new PropertyValueFactory<Appointment, String>("appointmentNumber"));
+                new PropertyValueFactory<>("appointmentNumber"));
 
 
 
@@ -109,11 +99,8 @@ public class AppointmentGUI extends Application {
                 new PropertyValueFactory<Appointment, LocalDate>("appointmentStartTimeString"));
 
         startTimeCol.setOnEditCommit(
-                new EventHandler<CellEditEvent>() {
-                    @Override
-                    public void handle(CellEditEvent event) {
+                event -> {
 
-                    }
                 }
         );
 
@@ -122,11 +109,8 @@ public class AppointmentGUI extends Application {
                 new PropertyValueFactory<Appointment, LocalDate>("appointmentStopTimeString"));
 
         stopTimeCol.setOnEditCommit(
-                new EventHandler<CellEditEvent>() {
-                    @Override
-                    public void handle(CellEditEvent event) {
+                event -> {
 
-                    }
                 }
         );
 
@@ -135,11 +119,8 @@ public class AppointmentGUI extends Application {
                 new PropertyValueFactory<Appointment, String>("appointmentFysioName"));
 
         fysioCol.setOnEditCommit(
-                new EventHandler<CellEditEvent>() {
-                    @Override
-                    public void handle(CellEditEvent event) {
+                event -> {
 
-                    }
                 }
         );
 
@@ -147,11 +128,8 @@ public class AppointmentGUI extends Application {
         patientCol.setCellValueFactory(
                 new PropertyValueFactory<Appointment, String>("appointmentPatientName"));
         patientCol.setOnEditCommit(
-                new EventHandler<CellEditEvent>() {
-                    @Override
-                    public void handle(CellEditEvent event) {
+                event -> {
 
-                    }
                 }
         );
         //endregion
@@ -264,7 +242,7 @@ public class AppointmentGUI extends Application {
                     AlertBox.display("Foutmelding", "Er is al een afspraak met dit nummer: " + tempAppointment.getAppointmentNumber());
                 } else if (!validate.validateNumber(appointmentNumber.getText())) {
                     AlertBox.display("Error", appointmentNumber.getText() + " is geen geldig afspraaksnummer");
-                } else if (dp_AppointmentDate.getValue().equals("")) {
+                } else if (dp_AppointmentDate.getValue().toString().equals("")) {
                     AlertBox.display("Foutmelding", "Geen datum gekozen");
                 } else if (appointmentStartTime.getText().equals("")) {
                     AlertBox.display("Foutmelding", "Geen start tijd ingevoerd");
@@ -304,8 +282,8 @@ public class AppointmentGUI extends Application {
         borderPane.setCenter(table);
         borderPane.setPrefSize(1200, 600);
         borderPane.setPadding(new Insets(10, 20, 10, 20));
-        borderPane.setMargin(vBox, new Insets(12, 12, 12, 12));
-        borderPane.setMargin(table, new Insets(12, 12, 12, 12));
+        BorderPane.setMargin(vBox, new Insets(12, 12, 12, 12));
+        BorderPane.setMargin(table, new Insets(12, 12, 12, 12));
 
         pane.getTabs().addAll(appointmentTab, employeeTab, patientTab, manageEmployeeTab);
         appointmentTab.setContent(borderPane);

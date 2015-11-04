@@ -11,7 +11,7 @@ import java.util.List;
 @XmlRootElement(name = "plannings")
 public class Plannings {
 
-    List<Planning> plannings;
+    private List<Planning> plannings;
 
     public List<Planning> getPlannings() { return plannings;}
 
@@ -26,7 +26,7 @@ public class Plannings {
     {
         if( this.plannings == null )
         {
-            this.plannings = new ArrayList<Planning>();
+            this.plannings = new ArrayList<>();
         }
         this.plannings.add( planning );
 

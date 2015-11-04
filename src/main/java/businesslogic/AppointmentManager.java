@@ -4,16 +4,13 @@ import domain.Appointment;
 import domain.Appointments;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sun.tools.jar.resources.jar;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.stream.Collectors;
 
 import static javax.xml.bind.JAXBContext.newInstance;
 
@@ -23,19 +20,17 @@ import static javax.xml.bind.JAXBContext.newInstance;
  */
 public class AppointmentManager {
     //region Attributes and propperties
-    private ObservableList<Appointment> data;
-    private EmployeeManager employeeManager;
-    private PatientManager patientManager;
+    private final ObservableList<Appointment> data;
     //endregion
 
-    Appointments appointments = new Appointments();
+    private final Appointments appointments = new Appointments();
 
 
-    File file = new File("C:\\Users\\rvroe\\workspace\\fysio-2015-10-26\\fysio\\src\\main\\java\\datastorage\\xml\\appointment.xml");
+    private final File file = new File("C:\\Users\\ids1\\Desktop\\Fysio\\src\\main\\java\\datastorage\\xml\\appointment.xml");
     //region Methods
     public AppointmentManager() {
-        employeeManager = new EmployeeManager();
-        patientManager = new PatientManager();
+        EmployeeManager employeeManager = new EmployeeManager();
+        PatientManager patientManager = new PatientManager();
 
         data = FXCollections.observableArrayList(
                 new Appointment(1, LocalDate.now(), LocalTime.now(), LocalTime.now(), employeeManager.searchEmployeeWithNumber("2"), patientManager.searchWithBSN(2))
@@ -50,9 +45,7 @@ public class AppointmentManager {
 
 
         try {
-            for (Appointment a : observableList) {
-                appointments.add(a);
-            }
+            observableList.forEach(appointments::add);
 
 
             JAXBContext jaxbContext = newInstance(Appointments.class);
@@ -137,11 +130,7 @@ public class AppointmentManager {
      */
     public ObservableList<Appointment> searchWithWorkDate(LocalDate workDate) {
         ObservableList<Appointment> tempAppointments  = FXCollections.observableArrayList();
-        for (Appointment a : data) {
-            if (a.getAppointmentDate().equals(workDate)) {
-                tempAppointments.add(a);
-            }
-        }
+        tempAppointments.addAll(data.stream().filter(a -> a.getAppointmentDate().equals(workDate)).collect(Collectors.toList()));
         return tempAppointments;
     }
 
@@ -152,11 +141,7 @@ public class AppointmentManager {
      */
     public ObservableList<Appointment> searchWithPatientBSN(int BSN) {
         ObservableList<Appointment> tempAppointments  = FXCollections.observableArrayList();
-        for (Appointment a : data) {
-            if (a.getAppointmentPatient().getPatientBSN() == BSN) {
-                tempAppointments.add(a);
-            }
-        }
+        tempAppointments.addAll(data.stream().filter(a -> a.getAppointmentPatient().getPatientBSN() == BSN).collect(Collectors.toList()));
         return tempAppointments;
     }
 
@@ -169,11 +154,7 @@ public class AppointmentManager {
     public ObservableList<Appointment> searchWithWorkDateAndEmployeeName(LocalDate workDate, String employeeName)
     {
         ObservableList<Appointment> tempAppointments = FXCollections.observableArrayList();
-        for (Appointment a : data) {
-            if (a.getAppointmentDate().equals(workDate) && a.getAppointmentFysio().getEmployeeName().equals(employeeName)) {
-                tempAppointments.add(a);
-            }
-        }
+        tempAppointments.addAll(data.stream().filter(a -> a.getAppointmentDate().equals(workDate) && a.getAppointmentFysio().getEmployeeName().equals(employeeName)).collect(Collectors.toList()));
         return tempAppointments;
     }
     //endregion

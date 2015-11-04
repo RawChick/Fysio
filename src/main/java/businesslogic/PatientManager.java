@@ -11,12 +11,13 @@ import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 import static javax.xml.bind.JAXBContext.newInstance;
 
 public class PatientManager {
     //region Attributes and properties
-    private ObservableList<Patient> data;
+    private final ObservableList<Patient> data;
     //endregion
 
     //region Methods
@@ -58,9 +59,7 @@ public class PatientManager {
     public ObservableList<String> getPatientNames() {
         ObservableList<String> names = FXCollections.observableArrayList();
 
-        for (Patient e : data) {
-            names.add(e.getPatientFullName());
-        }
+        names.addAll(data.stream().map(Patient::getPatientFullName).collect(Collectors.toList()));
 
         return names;
     }

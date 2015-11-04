@@ -22,28 +22,13 @@ public class PatientGUI extends Application {
     private PatientManager patientManager;
     private AppointmentManager appointmentManager;
 
-    private HBox hBox = new HBox();
-    private VBox vBox = new VBox();
-    private BorderPane borderPane = new BorderPane();
-    private GridPane gridPane = new GridPane();
-
-    private TabPane pane = new TabPane();
-    private Tab employeeTab = new Tab("Medewerker");
-    private Tab appointmentTab = new Tab("Afspraak");
-    private Tab customerTab = new Tab("Patient");
-    private Tab manageEmployeeTab = new Tab("Overzicht Werknemers");
+    private final HBox hBox = new HBox();
+    private final VBox vBox = new VBox();
+    private final BorderPane borderPane = new BorderPane();
+    private final GridPane gridPane = new GridPane();
 
     private TextField patientBSN;
-    private Button searchButton;
 
-    private static Label BSN;
-    private static Label NAME;
-    private static Label ADDRESS;
-    private static Label ZIPCODE;
-    private static Label CITY;
-    private static Label DATEOFBIRTH;
-    private static Label PHONE;
-    private static Label EMAIL;
     private Label bsnLabel;
     private Label nameLabel;
     private Label adressLabel;
@@ -53,11 +38,11 @@ public class PatientGUI extends Application {
     private Label phoneLabel;
     private Label emailLabel;
 
-    TableColumn numberCol = new TableColumn("Nummer");
-    TableColumn datumCol = new TableColumn("Datum");
-    TableColumn startTimeCol = new TableColumn("Van");
-    TableColumn stopTimeCol = new TableColumn("Tot");
-    TableColumn fysioCol = new TableColumn("Fysio");
+    private final TableColumn numberCol = new TableColumn("Nummer");
+    private final TableColumn datumCol = new TableColumn("Datum");
+    private final TableColumn startTimeCol = new TableColumn("Van");
+    private final TableColumn stopTimeCol = new TableColumn("Tot");
+    private final TableColumn fysioCol = new TableColumn("Fysio");
     //endregion
 
     @Override
@@ -71,11 +56,11 @@ public class PatientGUI extends Application {
                 p -> new EditingCellManageEmployee();
 
         //region Creating tabs
-        pane = new TabPane();
-        appointmentTab = new Tab("Afspraak");
-        customerTab = new Tab("Patient");
-        employeeTab = new Tab("Medewerker");
-        manageEmployeeTab = new Tab("Overzicht Werknemers");
+        TabPane pane = new TabPane();
+        Tab appointmentTab = new Tab("Afspraak");
+        Tab customerTab = new Tab("Patient");
+        Tab employeeTab = new Tab("Medewerker");
+        Tab manageEmployeeTab = new Tab("Overzicht Werknemers");
 
         pane.getSelectionModel().select(customerTab);
 
@@ -127,14 +112,14 @@ public class PatientGUI extends Application {
         //endregion
 
         //region Creating buttons
-        BSN = new Label("BSN:");
-        NAME = new Label("Naam:");
-        ADDRESS = new Label("Adres:");
-        ZIPCODE = new Label("Postcode:");
-        CITY = new Label("Woonplaats:");
-        DATEOFBIRTH = new Label("Geboorte datum:");
-        PHONE = new Label("Telefoon nummer:");
-        EMAIL = new Label("Email-adres:");
+        Label BSN = new Label("BSN:");
+        Label NAME = new Label("Naam:");
+        Label ADDRESS = new Label("Adres:");
+        Label ZIPCODE = new Label("Postcode:");
+        Label CITY = new Label("Woonplaats:");
+        Label DATEOFBIRTH = new Label("Geboorte datum:");
+        Label PHONE = new Label("Telefoon nummer:");
+        Label EMAIL = new Label("Email-adres:");
 
         bsnLabel = new Label();
         nameLabel = new Label();
@@ -157,7 +142,7 @@ public class PatientGUI extends Application {
         patientBSN = new TextField();
         patientBSN.setPromptText("BSN");
 
-        searchButton = new Button("Zoek");
+        Button searchButton = new Button("Zoek");
         searchButton.setOnAction(e -> searchWithBSN());
         //endregion
 
@@ -173,8 +158,8 @@ public class PatientGUI extends Application {
         borderPane.setCenter(table);
         borderPane.setPrefSize(1200, 600);
         borderPane.setPadding(new Insets(10, 20, 10, 20));
-        borderPane.setMargin(vBox, new Insets(12, 12, 12, 12));
-        borderPane.setMargin(gridPane, new Insets(12, 12, 12, 12));
+        BorderPane.setMargin(vBox, new Insets(12, 12, 12, 12));
+        BorderPane.setMargin(gridPane, new Insets(12, 12, 12, 12));
 
         pane.getTabs().addAll(appointmentTab, employeeTab, customerTab, manageEmployeeTab);
         customerTab.setContent(borderPane);

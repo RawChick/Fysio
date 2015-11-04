@@ -4,7 +4,6 @@ import domain.*;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -14,16 +13,12 @@ public class datastore {
 
 
     private List<Patient> patientList;
-    private List<Treatment> treatmentList;
 
 
-
-
-
-     public datastore() {
+    public datastore() {
 
         patientList = new ArrayList<>();
-        treatmentList = new ArrayList<>();
+        List<Treatment> treatmentList = new ArrayList<>();
     }
 
 

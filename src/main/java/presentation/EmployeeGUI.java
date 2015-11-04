@@ -15,7 +15,6 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.scene.control.TableView;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -25,32 +24,26 @@ public class EmployeeGUI extends Application {
     private EmployeeManager employeeManager;
     private AppointmentManager appointmentManager;
 
-    private HBox hBox = new HBox();
-    private VBox vBox = new VBox();
-    private TabPane pane;
-    private Tab appointmentTab;
-    private Tab customerTab;
-    private Tab employeeTab;
-    private Tab manageEmployeeTab;
-    private BorderPane borderPane = new BorderPane();
+    private final HBox hBox = new HBox();
+    private final VBox vBox = new VBox();
+    private final BorderPane borderPane = new BorderPane();
 
-    ComboBox<String> cb_Employee;
-    DatePicker dp_AppointmentDate;
-    Label lbl_EmployeeNr;
-    Label lbl_EmployeePhone;
-    Label lbl_workDays;
-    Label lbl_EmployeeDate;
-    Label lbl_EmployeeStartTime;
-    Label lbl_EmployeeStopTime;
-    Label lbl_EmployeeEmail;
+    private DatePicker dp_AppointmentDate;
+    private Label lbl_EmployeeNr;
+    private Label lbl_EmployeePhone;
+    private Label lbl_workDays;
+    private Label lbl_EmployeeDate;
+    private Label lbl_EmployeeStartTime;
+    private Label lbl_EmployeeStopTime;
+    private Label lbl_EmployeeEmail;
 
-    String DATE_PATTERN = "dd:MM:yyyy";
-    String TIME_PATTERN = "HH:mm";
-    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DATE_PATTERN);
-    DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern(TIME_PATTERN);
+    private final String DATE_PATTERN = "dd:MM:yyyy";
+    private final String TIME_PATTERN = "HH:mm";
+    private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DATE_PATTERN);
+    private final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern(TIME_PATTERN);
 
-    TableColumn numberCol = new TableColumn("Nummer");
-    TableColumn fysioCol = new TableColumn("Patient");
+    private final TableColumn numberCol = new TableColumn("Nummer");
+    private final TableColumn fysioCol = new TableColumn("Patient");
     //endregion
 
     @Override
@@ -64,11 +57,11 @@ public class EmployeeGUI extends Application {
                 p -> new EditingCellManageEmployee();
 
         //region Creating tabs
-        pane = new TabPane();
-        appointmentTab = new Tab("Afspraak");
-        customerTab = new Tab("Patient");
-        employeeTab = new Tab("Medewerker");
-        manageEmployeeTab = new Tab("Overzicht Werknemers");
+        TabPane pane = new TabPane();
+        Tab appointmentTab = new Tab("Afspraak");
+        Tab customerTab = new Tab("Patient");
+        Tab employeeTab = new Tab("Medewerker");
+        Tab manageEmployeeTab = new Tab("Overzicht Werknemers");
 
         pane.getSelectionModel().select(employeeTab);
 
@@ -123,7 +116,7 @@ public class EmployeeGUI extends Application {
         lbl_EmployeeEmail = new Label("Email");
         Line line = new Line(-100, 0, 50, 0);
 
-        cb_Employee = new ComboBox<>(employeeManager.getEmployeeNames());
+        ComboBox<String> cb_Employee = new ComboBox<>(employeeManager.getEmployeeNames());
         cb_Employee.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             Employee tempEmployee = employeeManager.searchEmployeeWithName(newValue);
             lbl_EmployeeNr.setText(tempEmployee.getEmployeeNr());
@@ -148,9 +141,9 @@ public class EmployeeGUI extends Application {
         borderPane.setCenter(table);
         borderPane.setPrefSize(1200,600);
         borderPane.setPadding(new Insets(10, 20, 10, 20));
-        borderPane.setMargin(hBox, new Insets(12,12,12,12));
-        borderPane.setMargin(vBox, new Insets(12,12,12,12));
-        borderPane.setMargin(table, new Insets(12,12,12,12));
+        BorderPane.setMargin(hBox, new Insets(12, 12, 12, 12));
+        BorderPane.setMargin(vBox, new Insets(12, 12, 12, 12));
+        BorderPane.setMargin(table, new Insets(12, 12, 12, 12));
 
         pane.getTabs().addAll(appointmentTab, employeeTab, customerTab, manageEmployeeTab);
         employeeTab.setContent(borderPane);

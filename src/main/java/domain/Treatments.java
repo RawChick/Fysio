@@ -11,7 +11,7 @@ import java.util.List;
 @XmlRootElement(name = "treatments")
 public class Treatments {
 
-    List<Treatment> treatments;
+    private List<Treatment> treatments;
 
     public List<Treatment> getTreatments() { return treatments;}
 
@@ -26,7 +26,7 @@ public class Treatments {
     {
         if( this.treatments == null )
         {
-            this.treatments = new ArrayList<Treatment>();
+            this.treatments = new ArrayList<>();
         }
         this.treatments.add( treatment );
 
@@ -35,7 +35,7 @@ public class Treatments {
     @Override
     public String toString()
     {
-        StringBuffer str = new StringBuffer();
+        StringBuilder str = new StringBuilder();
         for( Treatment treatmentlist : this.treatments )
         {
             str.append( treatmentlist.toString() );

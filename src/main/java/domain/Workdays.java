@@ -11,7 +11,7 @@ import java.util.List;
     @XmlRootElement(name = "workdays")
     public class Workdays {
 
-        List<Workday> workdays;
+    private List<Workday> workdays;
 
         public List<Workday> getWorkdays() { return workdays;}
 
@@ -26,7 +26,7 @@ import java.util.List;
         {
             if( this.workdays == null )
             {
-                this.workdays = new ArrayList<Workday>();
+                this.workdays = new ArrayList<>();
             }
             this.workdays.add( workday );
 

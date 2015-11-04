@@ -26,7 +26,7 @@ public class EditingCellManageEmployee extends TableCell<Employee, String> {
     public void cancelEdit() {
         super.cancelEdit();
 
-        setText((String) getItem());
+        setText(getItem());
         setGraphic(null);
     }
 
@@ -62,7 +62,7 @@ public class EditingCellManageEmployee extends TableCell<Employee, String> {
     }
 
     private String getString() {
-        return getItem() == null ? "" : getItem().toString();
+        return getItem() == null ? "" : getItem();
     }
 }
 

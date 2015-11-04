@@ -1,19 +1,17 @@
 package businesslogic;
 
-import com.sun.xml.internal.ws.api.pipe.FiberContextSwitchInterceptor;
 import domain.Employee;
 import domain.Employees;
 import domain.Workday;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.stream.Collectors;
 
 import static javax.xml.bind.JAXBContext.newInstance;
 
@@ -23,8 +21,8 @@ import static javax.xml.bind.JAXBContext.newInstance;
 public class EmployeeManager {
     //region Attributes and properties
     private final ObservableList<Employee> data;
-    Employees employees = new Employees();
-    File file = new File("C:\\Users\\rvroe\\workspace\\fysio-2015-10-26\\fysio\\src\\main\\java\\datastorage\\xml\\employee.xml");
+    private final Employees employees = new Employees();
+    private final File file = new File("C:\\Users\\ids1\\Desktop\\Fysio\\src\\main\\java\\datastorage\\xml\\employee.xml");
 
     //endregion
 
@@ -51,9 +49,7 @@ public class EmployeeManager {
 
 
         try {
-            for (Employee e : observableList) {
-                employees.add(e);
-            }
+            observableList.forEach(employees::add);
 
 
             JAXBContext jaxbContext = newInstance(Employees.class);
@@ -86,9 +82,7 @@ public class EmployeeManager {
     public ObservableList<String> getEmployeeNames() {
         ObservableList<String> names = FXCollections.observableArrayList();
 
-        for (Employee e : data) {
-            names.add(e.getEmployeeName());
-        }
+        names.addAll(data.stream().map(Employee::getEmployeeName).collect(Collectors.toList()));
 
         return names;
     }
@@ -192,12 +186,7 @@ public class EmployeeManager {
         return tempBool;
     }
 
-    /**
-     *
-     * @param employeeNr
-     * @param workDate
-     * @return
-     */
+
     public Workday searchWorkdayWithDate(String employeeNr, LocalDate workDate) {
         Workday tempWorkday = null;
         Employee tempEmployee = searchEmployeeWithNumber(employeeNr);

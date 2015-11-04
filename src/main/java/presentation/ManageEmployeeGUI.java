@@ -23,28 +23,22 @@ public class ManageEmployeeGUI extends Application {
     private EmployeeManager manager;
     private ValidateInput validate;
 
-    private VBox vBox = new VBox();
-    private BorderPane borderPane = new BorderPane();
+    private final VBox vBox = new VBox();
+    private final BorderPane borderPane = new BorderPane();
 
-    private TabPane pane;
-    private Tab appointmentTab;
-    private Tab employeeTab;
-    private Tab customerTab;
-    private Tab manageEmployeeTab;
-
-    TableColumn employeeNrCol = new TableColumn("Nummer");
-    TableColumn nameCol = new TableColumn("Naam");
-    TableColumn functionCol = new TableColumn("Functie");
-    TableColumn bsnCol = new TableColumn("Bsn");
-    TableColumn countryCol = new TableColumn("Stad");
-    TableColumn houseCol = new TableColumn("Land");
-    TableColumn streetCol = new TableColumn("Huisnummer");
-    TableColumn cityCol = new TableColumn("Straat");
-    TableColumn addressCol = new TableColumn("Adres");
-    TableColumn dateOfBirthCol = new TableColumn("Geboortedatum");
-    TableColumn zipCodeCol = new TableColumn("Postcode");
-    TableColumn phoneCol = new TableColumn("Telefoonnummer");
-    TableColumn emailCol = new TableColumn("Email");
+    private final TableColumn employeeNrCol = new TableColumn("Nummer");
+    private final TableColumn nameCol = new TableColumn("Naam");
+    private final TableColumn functionCol = new TableColumn("Functie");
+    private final TableColumn bsnCol = new TableColumn("Bsn");
+    private final TableColumn countryCol = new TableColumn("Stad");
+    private final TableColumn houseCol = new TableColumn("Land");
+    private final TableColumn streetCol = new TableColumn("Huisnummer");
+    private final TableColumn cityCol = new TableColumn("Straat");
+    private final TableColumn addressCol = new TableColumn("Adres");
+    private final TableColumn dateOfBirthCol = new TableColumn("Geboortedatum");
+    private final TableColumn zipCodeCol = new TableColumn("Postcode");
+    private final TableColumn phoneCol = new TableColumn("Telefoonnummer");
+    private final TableColumn emailCol = new TableColumn("Email");
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -60,11 +54,11 @@ public class ManageEmployeeGUI extends Application {
 
 
         //region Creating tabs
-        pane = new TabPane();
-        appointmentTab = new Tab("Afspraak");
-        employeeTab = new Tab("Medewerker");
-        customerTab = new Tab("Patient");
-        manageEmployeeTab = new Tab("Overzicht Werknemers");
+        TabPane pane = new TabPane();
+        Tab appointmentTab = new Tab("Afspraak");
+        Tab employeeTab = new Tab("Medewerker");
+        Tab customerTab = new Tab("Patient");
+        Tab manageEmployeeTab = new Tab("Overzicht Werknemers");
 
         pane.getSelectionModel().select(manageEmployeeTab);
 
@@ -605,8 +599,8 @@ public class ManageEmployeeGUI extends Application {
         borderPane.setCenter(table);
         borderPane.setPrefSize(1200, 600);
         borderPane.setPadding(new Insets(10, 20, 10, 20));
-        borderPane.setMargin(vBox, new Insets(12,12,12,12));
-        borderPane.setMargin(table, new Insets(12,12,12,12));
+        BorderPane.setMargin(vBox, new Insets(12, 12, 12, 12));
+        BorderPane.setMargin(table, new Insets(12, 12, 12, 12));
 
         pane.getTabs().addAll(appointmentTab, employeeTab, customerTab, manageEmployeeTab);
         manageEmployeeTab.setContent(borderPane);
